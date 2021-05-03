@@ -1,0 +1,84 @@
+<div class="text-muted chk-shp" *ngIf="productDetails?.productOption?.length > 0">
+    <p>Available Option</p>
+    <ng-container  *ngFor="let optionsValue of productDetails?.productOption">
+
+    <div class="flex aop"  *ngIf="optionsValue.optiontype=='Select'">
+        <p *ngIf="optionsValue.required==1">{{optionsValue.optionname}} <sup class="supvalidation">*</sup></p>
+        <p *ngIf="optionsValue.required==0">{{optionsValue.optionname}}</p>
+
+        <div class="avl-opt">
+                <mat-form-field>
+                        <mat-label>Choose any Option</mat-label>
+                        <ng-container *ngIf="optionsValue.required==1">
+                            <mat-select [(value)]="modeSelect[optionsValue.productOptionId]"
+                                (selectionChange)="selectOptionValue($event.value,optionsValue.optionname, optionsValue)">
+                                <mat-option [value]="value" *ngFor="let value of optionsValue.optionValue"><span>
+                                        <ng-container *ngIf="value.pricePrefix==1;else minusValue">
+                                            {{value.optionValueName}}(+{{calculateOptionPrice(value.price, '+', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                                        </ng-container>
+                                        <ng-template #minusValue>
+                                            {{value.optionValueName}}(-{{calculateOptionPrice(value.price, '-', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                                        </ng-template>
+                                    </span>
+                                </mat-option>
+                            </mat-select>
+                        </ng-container>
+                        <ng-container *ngIf="optionsValue.required==0">
+                            <mat-select
+                                (selectionChange)="selectOptionValue($event.value,optionsValue.optionname, optionsValue)">
+                                <mat-option [value]="value" *ngFor="let value of optionsValue.optionValue"><span>
+                                        <ng-container *ngIf="value.pricePrefix==1;else minusValue">
+                                            {{value.optionValueName}}
+                                            (+{{calculateOptionPrice(value.price, '+', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                                        </ng-container>
+                                        <ng-template #minusValue>
+                                            {{value.optionValueName}}(-{{calculateOptionPrice(value.price, '-', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                                        </ng-template>
+                                    </span>
+                                </mat-option>
+                            </mat-select>
+                        </ng-container>
+                    </mat-form-field>
+        </div>
+    </div>
+    </ng-container>
+    <ng-container *ngFor="let optionsValue of productDetails.productOption">
+
+    <div class="flex aop aop-sc" *ngIf="optionsValue.optiontype=='Radio'">
+            <p *ngIf="optionsValue.required==1">{{optionsValue.optionname}}<sup
+                class="supvalidation">*</sup>
+        </p>
+        <p *ngIf="optionsValue.required==0">{{optionsValue.optionname}}</p>                
+        <div class="aopsc-rt">
+            <mat-radio-group aria-label="Select an option" *ngIf="optionsValue.required==0">
+                <mat-radio-button
+                    (click)="radioOptionValue(value.price,value.pricePrefix,value.optionValueName,optionsValue.optionname, optionsValue.productOptionId, value)"
+                    *ngFor="let value of optionsValue.optionValue;let i=index" [value]="i">
+                    <span>
+                        <ng-container *ngIf="value.pricePrefix==1;else minusValue">
+                            {{value.optionValueName}}(+{{calculateOptionPrice(value.price, '+', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                        </ng-container>
+                        <ng-template #minusValue>
+                            {{value.optionValueName}}(-{{calculateOptionPrice(value.price, '-', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                        </ng-template>
+                    </span>
+                </mat-radio-button>
+            </mat-radio-group>
+            <mat-radio-group aria-label="Select an option" *ngIf="optionsValue.required==1">
+                <mat-radio-button [checked]="i==0"
+                    (click)="radioOptionValue(value.price,value.pricePrefix,value.optionValueName,optionsValue.optionname, optionsValue.productOptionId, value)"
+                    *ngFor="let value of optionsValue.optionValue;let i=index" [value]="i">
+                    <span>
+                        <ng-container *ngIf="value.pricePrefix==1;else minusValue">
+                            {{value.optionValueName}}(+ {{calculateOptionPrice(value.price, '+', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                        </ng-container>
+                        <ng-template #minusValue>
+                            {{value.optionValueName}}(- {{calculateOptionPrice(value.price, '-', productDetails?.taxType, productDetails?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}})
+                        </ng-template>
+                    </span>
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    </ng-container>
+</div>

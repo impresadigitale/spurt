@@ -1,0 +1,149 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="page-title">
+    <h3>Archive Payments</h3>
+</div>
+<div class="flex search-exp">
+    <div class="search-left flex">
+        <input type="text" placeholder="Search Order Id, Name" class="search-menu"
+            (keyup)="searchPayment($event.target.value)">
+        <div ngbDropdown class="d-inline-block">
+            <form [formGroup]="filterForm">
+                <img src="assets/imgs/filter.svg" title="filter" class="btn cursor" id="dropdownConfig" ngbDropdownToggle />
+                <div ngbDropdownMenu aria-labelledby="dropdownConfig" style="left: -22px !important;"
+                    class="act-filter-dropdown filter-menu" autoClose="false">
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <p class="filter-title">Filters</p>
+                    <div class="" style="    display: flex;
+                          justify-content: space-around;">
+                        <p class="act-filter-labels">From Date</p>
+                        <div class="input-group w-100 filter-group">
+                            <input class="form-control  placeholder-fix date-input" autocomplete="off"
+                                (dateSelect)="onDateSelect($event)" name="dp" id="cal-in" ngbDatepicker
+                                #f="ngbDatepicker" formControlName="fromDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary no-shadow border-clr calendar-btn"
+                                    (click)="f.toggle()" type="button">
+                                    <img src="assets/imgs/calender-ico.png"> </button>
+                            </div>
+                        </div>
+                        <p class="act-filter-labels">To Date</p>
+                        <div class="input-group w-100 filter-group">
+                            <input class="form-control  placeholder-fix date-input" name="dp" autocomplete="off"
+                                id="cal-in" ngbDatepicker #d="ngbDatepicker" formControlName="toDate"
+                                [ngClass]="{'disabled': dateError !== ''}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary border-clr no-shadow calendar-btn"
+                                    type="button" (click)="setMinValue(d)">
+                                    <img src="assets/imgs/calender-ico.png"> </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="error">
+                        {{dateError}}
+                    </div>
+                    <div class="error" *ngIf="isRequired">
+                        To Date is required
+                    </div>
+                    <button class="btn" style="background-color:#1b5ed8; color: white; margin: 20px 7px 0px 24px;
+                      float: right;" type="submit" (click)="applyFilter()"> Apply Filters </button>
+               
+                </div>
+            </form>
+        </div>
+    </div>
+    <div *ngIf="filterDataId.length > 0" class="search-right flex" [title]=" filterDataId.length === 0 ? 'Bulk export' : 'Export'">
+        <a href="javascript:void(0)" class="flex ripple" (click)="exportPayment()"> <img src="assets/imgs/export.svg"> Export</a>
+        <span class="multi-spin" *ngIf="(paymentSandbox.exportArchivePaymentLoading$ | async) || (paymentSandbox.MultiplePaymentExportLoading$ | async)"><i
+                class="fas fa-spinner fa-spin fa-2x" style="color: blue;"></i></span>
+    </div>
+
+    <div *ngIf="filterDataId.length === 0" class="search-right flex" [title]=" filterDataId.length === 0 ? 'Bulk export' : 'Export'">
+        <a href="javascript:void(0)" class="flex ripple" (click)="exportAllArchivePayment()"> <img src="assets/imgs/export.svg"> Export All</a>
+        <span class="multi-spin" *ngIf="(paymentSandbox.exportAllArchivePaymentLoading$ | async)"><i
+                class="fas fa-spinner fa-spin fa-2x" style="color: blue;"></i></span>
+    </div>
+</div>
+<span *ngIf="filter" class="date-tag">{{startDate}} to {{endDate}}
+    <img class="cursor" title="Reset Filter" (click)="resetFilter()" src="assets/imgs/close-white-ico.png">
+</span>
+<!---->
+
+<div class="product-list-wrap">
+    <div class="loading" *ngIf="(paymentSandbox.archivePaymentListLoading$ | async)">
+        <app-loader></app-loader>
+    </div>
+    <div class="no-data"
+        *ngIf="(paymentSandbox.archivePaymentList$ | async)?.length === 0 && (paymentSandbox.archivePaymentListLoaded$ | async)">
+        <span>No Payments found</span> </div>
+    <div class="table-responsive "
+        *ngIf="(paymentSandbox.archivePaymentList$ | async)?.length > 0 && (paymentSandbox.archivePaymentListLoaded$ | async)">
+        <table class="table" [ngClass]="{'pay-table': (paymentSandbox.downloadCsvLoading$ | async)}">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-group" title="click to export">
+                            <input type="checkbox" id="checkbox1" [(ngModel)]="selectedAll" (change)="selectAll($event)"
+                                [ngModelOptions]="{standalone: true}">
+                            <label for="checkbox1"></label>
+                        </div>
+                    </th>
+                    <th>Order ID</th>
+                    <th>Date & Time</th>
+                    <th>Buyer</th>
+                    <th class="amt text-center">Amount</th>
+                    <th class="cmsn text-center">Commission</th>
+                    <th class="cmsn text-center">Net Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let array of (paymentSandbox.archivePaymentList$ | async); let i = index;">
+                    <td>
+                        <div class="form-group" title="click to export">
+                            <input type="checkbox" [id]="array.vendorOrderId" class="custom-control-input chk"
+                                [(ngModel)]="array.selected" (change)="checkIfAllSelected()"
+                                [value]="array.productId" [ngModelOptions]="{standalone: true}">
+                            <label [for]="array.vendorOrderId"></label>
+                        </div>
+                    </td>
+                    <td class="cursor">
+                        <h3>{{array?.orderProductPrefixId}}</h3>
+                    </td>
+                    <td>
+                        <p>{{array?.createdDate | date:'dd/MM/yy'}}</p>
+                        <p>{{array?.createdDate | date:'hh:mm a'}}</p>
+                    </td>
+                    <td>
+                        <div class="flex buyer">
+                            <span class="flex logo">{{((array?.customerFirstName).charAt(0)) | uppercase}}</span>
+                            <p><span class="name">{{array?.customerFirstName}}</span>{{array?.shippingCity}},
+                                {{array?.shippingCountry}}</p>
+                        </div>
+                    </td>
+                    <td class="amt text-center">
+                        {{array?.currencySymbolLeft}} {{array?.amount}} {{array?.currencySymbolRight}}
+                    </td>
+
+                    <td class="cmsn text-center">{{array?.currencySymbolLeft}}
+                        {{array?.commissionAmount ? array.commissionAmount : 0}} {{array?.currencySymbolRight}}</td>
+                    <td class="amt text-center">
+                        {{array?.currencySymbolLeft}} {{array?.NetAmount}} {{array?.currencySymbolRight}}
+                    </td>
+               
+                </tr>
+            </tbody>
+            <i class="fas inv-loader fa-spinner fa-spin fa-2x" *ngIf="(paymentSandbox.downloadCsvLoading$ | async)" style="color: blue;"></i>
+
+        </table>
+        <div class="pager" style="position: absolute; bottom: 30px; right: 0;">
+            <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage"
+              [counts]="(paymentSandbox.archivePaymentListCount$ | async)"></app-pager>
+          
+          </div>
+    </div>
+
+
+</div>

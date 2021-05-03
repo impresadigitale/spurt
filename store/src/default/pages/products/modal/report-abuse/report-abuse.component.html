@@ -1,0 +1,43 @@
+
+
+  <div class="sd-header flex">
+    <div class="sdh-l">
+        <h3>Report Abuse</h3>
+    </div>
+    <div class="close-btn-outer">
+        <button mat-mini-fab color="warn" (click)="close()"><mat-icon>close</mat-icon></button>
+    </div>
+  </div>
+   <mat-dialog-content class="mat-typography">
+     <form [formGroup]="reportAbuseForm">
+      <div class='some-page-wrapper'>
+          <div class='row'>
+            <div class='column'>
+              <div class='left-column'>
+                <label>Reason</label>
+                <select formControlName="reason">
+                  <option selected disabled hidden value="">Select reason</option>
+                  <option *ngFor="let list of sandbox.abuseReasonList$ | async" [value]="list.id">{{list.reason}}</option>
+                </select>
+                <div class="error" *ngIf="reportAbuseForm.controls['reason'].hasError('required') && submitted">Please select reason</div>              
+
+              </div>
+            </div>
+            <div class='column'>
+              <div class='right-column'>
+                  <label class="remark">Remark</label>
+                  <textarea name="remark" formControlName="remark"></textarea>
+                  <div class="error remark" *ngIf="reportAbuseForm.controls['remark'].hasError('required') && submitted">Please enter remark</div>              
+                </div>
+            </div>
+          </div>
+        </div>
+        </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="foot button-container"> 
+    <button type="button" class="btn spinner-button" mat-raised-button (click)="submit()" [disabled]="(sandbox.reportAbuseLoading$ | async)">
+        <mat-spinner diameter="25" color="primary" *ngIf="sandbox.reportAbuseLoading$ | async">
+          </mat-spinner> <span>Submit</span>
+    </button>
+    <button type="button" [mat-dialog-close]="true" mat-raised-button class="btn">Cancel</button>
+  </mat-dialog-actions>

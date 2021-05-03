@@ -1,0 +1,41 @@
+.swiper-btn {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    .atc {
+        cursor: pointer;
+        width: 49%;
+        height: 58px;
+        line-height: 58px;
+        border-radius: 2px;
+        background-color: #ff9f00;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        border: 0;
+        text-transform: uppercase;
+        img {
+            margin-right: 10px;
+        }
+    }
+    .byn {
+        cursor: pointer;
+        width: 49%;
+        height: 58px;
+        line-height: 58px;
+        border-radius: 2px;
+        background-color: #fb641c;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        border: 0;
+        text-transform: uppercase;
+        img {
+            margin-right: 10px;
+        }
+    }
+}

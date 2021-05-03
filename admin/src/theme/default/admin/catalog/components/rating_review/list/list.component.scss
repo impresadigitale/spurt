@@ -1,0 +1,58 @@
+/* LOGIN VALIDATION*/
+
+.validationcolor {
+    border-color: red;
+}
+
+.toggle .tgl:checked+.toggle-btn:after {
+    top: -1px !important;
+}
+
+.toggle .tgl+.toggle-btn:after {
+    top: -1px !important;
+}
+
+.toggle .tgl:checked+.tgl-btn:after {
+    background-color: #ed571f !important;
+}
+
+.filter-lft {
+     ::ng-deep .filter .tgl-light+.filter-btn {
+        width: 100% !important;
+        height: 1.2em !important;
+    }
+    .filter .filter-tgl:checked+.filter-btn {
+        background: #008c00 !important;
+    }
+    .filter-btn:after {
+        top: -2px !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
+
+
+.toggle .tgl+.toggle-btn {
+    height: 1.7em !important;
+    width: 75% !important;
+}
+
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #ed571f !important;
+    border: #ed571f !important;
+}
+
+.view-content {
+    width: 400px;
+}
+
+::ng-deep .popover {
+    max-width: 600px !important;
+    width: 400px;
+}
+
+.products-section .toggle .tgl:checked + .tgl-btn:after {
+    background-color: #ed571f !important;
+  }

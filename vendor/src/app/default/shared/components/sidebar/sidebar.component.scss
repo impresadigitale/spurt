@@ -1,0 +1,39 @@
+.sidebar-nav {
+    ul {
+        margin: 0px;
+        padding: 0px;
+        li {
+            list-style: none;
+        }
+    }
+}
+
+.in-show {
+    display: block !important;
+}
+
+.first-level {
+    display: none !important;
+}
+
+ul {
+    width: 100%;
+}
+a:focus {
+    background-color: transparent !important;
+}
+a {
+span {
+    display: block;
+    width: 100%;
+    color: white;
+}
+}
+::ng-deep .tooltip-inner {
+    font-family: 'Poppins', sans-serif !important;
+}
+.act-route {
+span{
+color:#1d5ed8 !important;
+}
+}

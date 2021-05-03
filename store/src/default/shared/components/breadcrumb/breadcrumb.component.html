@@ -1,0 +1,39 @@
+<div fxLayout="row wrap" *ngIf="router.url != '/'" style="margin-top:10px;">
+    <div fxFlex="100">
+        <mat-card fxLayout="row" class="breadcrumb light-block">
+            <a *ngIf="router.url != '/'" routerLink="/" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" (click)="closeSubMenus()">
+                <mat-icon>home</mat-icon>
+                <span class="breadcrumb-title">{{pageInfo?.title}}</span>
+            </a>
+            <ng-container *ngIf="isEmpty(pageInfo)">
+                <div *ngFor="let breadcrumb of pageInfo?.urls; let i = index;" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center">
+
+                    <ng-container *ngIf="isProductPage && lastPath != ''">
+                        <a [hidden]="i == (pageInfo.length - 1)" *ngIf="breadcrumb.url" [routerLink]="['/products', 'All']">{{breadcrumb.title}}</a>
+                    </ng-container>
+                    <ng-container *ngIf="lastPath == ''">
+                        <a [hidden]="i == (pageInfo.length - 1)" *ngIf="breadcrumb.url">{{breadcrumb.title}}</a>
+                    </ng-container>
+                        <a [hidden]="i == (pageInfo.length - 1)" *ngIf="!breadcrumb.url">{{breadcrumb.title}}</a>
+                        <span [hidden]="i != (pageInfo.length - 1)" class="breadcrumb-title active"><b>{{breadcrumb.title}}</b></span>
+                </div>
+            </ng-container>
+               
+            <div *ngIf="isProductDetail" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center">
+                <span class="breadcrumb-title"><b>{{((listSandbox.productDetails$ | async)?.name)}}</b></span>
+            </div>
+            <ng-container *ngIf="isProductPage && (listSandbox.categoryLevel$ | async)?.length > 0">
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" *ngFor="let cat of (listSandbox.categoryLevel$ | async); let i = index">
+                    <a *ngIf="i < ((listSandbox.categoryLevel$ | async)?.length - 1) " [routerLink]="['/products', cat.categorySlug]" class="breadcrumb-title act-link">{{cat.categoryName}}</a>
+                    <span *ngIf="i == ((listSandbox.categoryLevel$ | async)?.length - 1) " class="breadcrumb-title">{{cat.categoryName}}</span>
+
+                </div>
+            </ng-container>
+
+            <div *ngIf="isKeyword" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center">
+                <span class="breadcrumb-title">Searched Products</span>
+            </div>
+        </mat-card>
+    </div> 
+</div>
+

@@ -1,0 +1,105 @@
+<div class="row products-section vendor-section vsetting-section">
+  <div class="">
+    <div class="breadcrumbs-row">
+      <div class="bc-col">
+        <ul>
+          <li> <a href="javascript:void(0)"> Sales </a> </li>
+          <li> Orders </li>
+        </ul>
+      </div>
+      <div class="filter-nav-list service-nav-list">
+
+      </div>
+      <!-- Right -->
+    </div>
+  </div>
+  <!-- Breadcrumbs -->
+</div>
+
+
+<div class="flex vendorsettings-wrap vendorsales-wrap">
+
+  <div class="vs-list">
+    <div class="vsl-top">
+      <h3 class="flex">Orders List
+        <div ngbDropdown class="d-inline-block">
+          <form [formGroup]="filterForm">
+            <img src="assets/img/filter.svg" class="btn" id="dropdownConfig" ngbDropdownToggle />
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig" style="left: -22px !important;"
+              class="act-filter-dropdown" autoClose="false">
+              <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">×</span>
+              </button>
+              <p>Filters</p>
+                <div class="" style="    display: flex;
+                justify-content: space-around;">
+                    <p class="act-filter-labels">From Date</p>
+                    <div class="input-group w-100">
+                      <input class="form-control  placeholder-fix date-input"  (dateSelect)="onDateSelect($event)" name="dp" id="cal-in" ngbDatepicker
+                        #f="ngbDatepicker"  formControlName="fromDate">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary no-shadow border-clr calendar-btn"
+                          (click)="f.toggle()" type="button">
+                          <img src="assets/img/calender-ico.png"> </button>
+                      </div>
+                    </div>
+                    <p class="act-filter-labels">To Date</p>
+                    <div class="input-group w-100">
+                      <input class="form-control  placeholder-fix date-input" name="dp" id="cal-in" ngbDatepicker
+                        #d="ngbDatepicker" [maxDate]="maxDate"  formControlName="toDate" [ngClass]="{'disabled': dateError !== ''}">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary border-clr no-shadow calendar-btn" type="button" (click)="setMinValue(d)">
+                          <img src="assets/img/calender-ico.png"> </button>
+                      </div>
+                    </div>
+               
+                </div>
+                <div class="error">
+                  {{dateError}}
+              </div>
+              <div class="error" *ngIf="isRequired">
+                To Date is required
+            </div>
+            <button class="btn" style="background-color:#42b3b3; margin: 20px 7px 0px 24px;
+            float: right;" type="submit" (click)="applyFilter()"> Apply Filters </button>
+          
+              </div>
+          </form>
+        </div>
+      </h3>
+
+      <input class="input" type="text" placeholder="Search by customer name & Order Id" (keyup)="searchOrder($event.target.value)">
+    </div>
+    <span *ngIf="filter" class="date-tag">{{displayStartDate}} to {{displayEndDate}}
+      <img class="cursor" title="Reset Filter" (click)="resetFilter()" src="assets/img/close-white-ico.png">
+    </span>
+    <span class="no-data" *ngIf="(orderSandbox.getOrdersList$ | async)?.length === 0">No Orders found</span>
+    <div class="vsl-vendor">
+      <div class="vslv-row flex" *ngFor="let orders of (orderSandbox.getOrdersList$ | async)"
+        [ngClass]="{'active' : orders.orderId === activeOrderId}" (click)="getOrderDetail(orders.orderId)">
+        <div class="vslv-col">
+          <h3 class="flex order-no">{{orders.orderPrefixId}}
+            <span>{{orders.createdDate | date:'dd-MMM-yyyy:h:mm a'}}</span></h3>
+          <h4>{{orders.shippingFirstName}}</h4>
+          <div class="vol-prd flex">
+            <h4>{{orders?.productCount}} {{orders?.productCount == 1 ? 'Product' : 'Products'}}</h4>
+            <p>{{orders?.vendorCount}} {{orders?.vendorCount == 1 ? 'Vendor' : 'Vendors'}}</p>
+          </div>
+        </div>
+
+        <div class="no_data" *ngIf="(orderSandbox.getOrdersList$ | async)?.length == 0">
+          <p>Data Not Found</p>
+        </div>
+      </div>
+
+      <!--Row-->
+    </div>
+  </div>
+  <!--Left-->
+
+
+  <!--Right-->
+  <router-outlet></router-outlet>
+</div>
+
+<!-- </div> -->

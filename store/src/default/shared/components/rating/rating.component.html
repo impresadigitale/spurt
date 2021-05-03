@@ -1,0 +1,7 @@
+
+
+<button [ngStyle]="{'color': 'rgb(255,165,0)', 'width': 'unset'}" mat-icon-button class="text-warning" *ngFor="let ratingId of ratingArr;index as i" [id]="'star_'+i">
+    <mat-icon>
+      {{showIcon(i)}}
+    </mat-icon>
+</button>

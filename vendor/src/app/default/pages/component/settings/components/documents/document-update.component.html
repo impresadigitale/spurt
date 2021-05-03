@@ -1,0 +1,82 @@
+        <div class="flex search-exp bulk-header" *ngIf="listEnable">
+            <h2>Document List</h2>
+            <button class="ripple flex" (click)="upload()"> <img src="assets/imgs/download-white.svg"> Upload Document </button>
+        </div>
+
+        <div class="product-list-wrap" *ngIf="listEnable">
+            <div class="loading" *ngIf="(commonSandbox.documentLoading$ | async)">
+                <app-loader></app-loader>
+            </div>
+            <div class="no-data"
+                *ngIf="(commonSandbox.getDocumentList$ | async)?.length === 0 && (commonSandbox.documentLoaded$ | async)">
+                <span>No Documents found</span> </div>
+            <div class="table-responsive" *ngIf="(commonSandbox.documentLoaded$ | async) && (commonSandbox.getDocumentList$ | async)?.length > 0">
+                <table class="table" [ngClass]="{'doc-table': commonSandbox.downloadDocumentLoading$ | async}">
+                    <thead>
+                        <tr>
+                            <th width="40px"> S.No </th>
+                            <th width="200px">Date/Time</th>
+                            <th>Title</th>
+                            <th class="text-center">Status</th>
+                            <th width="70px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let array of (commonSandbox.getDocumentList$ | async); let i = index;">
+                            <td> {{i+1}}</td>
+                            <td>{{array.createdDate| date: 'dd MMMM, yyyy'}} at
+                                {{array.createdDate| date: "hh:m a "}} </td>
+                            <td class="text-light"> {{array.title}} </td>
+                            <td class="text-center"><span [ngClass]="array?.documentStatus === 1 ? 'verify' : 'non-verify'">{{array?.documentStatus === 0 ? 'not verified' : 'verified'}}</span></td>
+                            <td class="text-center" (click)="download(array?.customerDocumentId)" title="dowload document"> <button class="flex dload">
+                                    <img src="assets/imgs/download-blue.svg"> </button> </td>
+                                
+                        </tr>
+                    </tbody>
+                    <i class="fas doc-loader fa-spinner fa-spin fa-2x" *ngIf="(commonSandbox.downloadDocumentLoading$ | async)" style="color: blue;"></i>
+
+                </table>
+            </div>
+        </div>
+        <div class="pager" style="position: absolute; bottom: 30px; right: 0;">
+
+        </div>
+        <!---->
+        <div class="flex search-exp bulk-header" *ngIf="!listEnable">
+            <h2>Upload Document</h2>
+            <span (click)="listEnable = true; reset()"><< Back</span>
+        </div>
+        <div class="bup-file-upload" *ngIf="!listEnable">
+            <div class="csv-upload flex">
+                <div class="browse-upload">
+                    <p>* Only .pdf files and all type of images accepted</p>
+                    <div class="bu-box flex cursor">
+                        <input class="cursor" type="file" [(ngModel)]="uploadFile" accept="image/*, .pdf"
+                            (change)="onUpload($event.target.files)">
+                        <a href="javascript:void(0)">Browse and upload Files</a>
+                    </div>
+                    <div class="error" *ngIf="(!fileData && uploadSubmit)">Please choose the file</div>
+                    <div class="error" *ngIf="documentTypeError">Please upload (.png, .jpeg, .jpg, .pdf) files only</div>
+                </div>
+                <div class="csv-title">
+                    <p>Title</p>
+                    <textarea rows="1" style="resize: none;" (keyup)="getTitle($event.target.value)" [value]="title"
+                        [ngClass]="{'error-field' : (title === '' && uploadSubmit)}"></textarea>
+                    <div class="error" *ngIf="(title === '' && uploadSubmit)">Title is required</div>
+                    <div class="flex csvname" *ngIf="fileName !== ''"> {{fileName}} </div>
+                </div>
+            </div>
+            <!--Row-->
+
+            <div class="all-btn flex">
+                <button class="ripple allocate" (click)="uploadSuccess()"><span><i
+                            *ngIf="commonSandbox.updateDocumentLoading$ | async"
+                            class="fas fa-spinner fa-spin fa-5x"></i>Upload</span></button>
+                <button class="ripple" (click)="reset()">Reset</button>
+            </div>
+
+        </div>
+
+
+
+

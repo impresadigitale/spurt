@@ -1,0 +1,27 @@
+
+
+ <div class="sd-header flex">
+  <div class="sdh-l">
+      <h3>Post Your Question</h3>
+  </div>
+  <div class="close-btn-outer">
+      <button mat-mini-fab color="warn" (click)="close()"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+   <mat-dialog-content class="mat-typography">
+    <div class="mod-container">
+        <div class="row">
+          <label style="color: gray">Question</label>
+          <textarea [(ngModel)]="question" name="question"></textarea>
+          <div class="error" *ngIf="error">Please enter your question</div>
+        </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="foot button-container"> 
+     
+    <button style="color: white;background: #474747" type="button" class="btn spinner-button" mat-raised-button (click)="submit()" [disabled]="(sandbox.postAnswerLoading$ | async)">
+        <mat-spinner diameter="25" color="primary" *ngIf="sandbox.postQuestionLoading$ | async">
+          </mat-spinner> <span>Submit</span>
+    </button>
+    <button style="color: gray" type="button" [mat-dialog-close]="true" mat-raised-button class="btn" (click)="close()">Cancel</button>
+  </mat-dialog-actions>

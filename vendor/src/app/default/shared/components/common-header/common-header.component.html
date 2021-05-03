@@ -1,0 +1,23 @@
+<header class="flex">
+  <div class="hdr-lft flex">
+      <h4>Welcome {{userProfileDetails?.firstName}},</h4>
+  </div>
+  <div class="flex alert-profile">
+    
+      <div class="profile">
+          <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img *ngIf="userProfileDetails?.avatar && userProfileDetails?.avatarPath" class="profile-img" [src]="imageUrl + '?path=' + userProfileDetails.avatarPath + '&name=' + userProfileDetails.avatar + '&width=300&height=300'">
+                        <img *ngIf="!userProfileDetails?.avatar || !userProfileDetails?.avatarPath" class="profile-img" src="assets/imgs/default-profile.png">
+                    </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <p>Logged in as {{userProfileDetails?.firstName | uppercase}}</p>
+                  <a class="dropdown-item" [routerLink]="['/settings']"><img class="dropdown-img"  src="assets/imgs/wallet.svg">
+                    Settings</a>
+                  <a class="dropdown-item cursor" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>
+                    Logout</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</header>

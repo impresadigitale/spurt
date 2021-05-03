@@ -1,0 +1,111 @@
+
+<app-sales-count></app-sales-count>
+
+<div class="row products-section vendor-section">
+
+  <div class="col-12">
+    <div class="breadcrumbs-row">
+      <div class="bc-col mar">
+        <ul>
+            <li><a href="javascript:void(0)">{{'Sales.Orders.Sales'| translate}} </a></li>
+            <li> Backorder List</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn addserv addvend margin">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="flex filter-row">
+      <div class="filter-lft">
+        <div class="toggle">
+          <p>Filters</p>
+          <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="check($event)" />
+          <label class="tgl-btn" for="cb1"></label>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex product-wrap">
+  <div class="filter-details" *ngIf="filterEnable">
+        <form (ngSubmit)="onSubmit()" [formGroup]="backorderForm" class="">
+          <div class="form-group">
+            <label for="firstName">Keyword</label>
+            <input type="text" type="text" class="form-control" formControlName="name" placeholder="Keyword" />
+          </div>
+          <div class="text-right filter-btns">
+            <a href="javascript:void(0)" (click)="reset()">Reset</a>
+            <button type="submit" class="btn" style="background-color:#dc4d5b">
+              Apply Filters
+            </button>
+          </div>
+        </form>
+  </div>
+  <!--Filter-->
+  <div class="product-table " [ngClass]="{ 'expand-list': !buttonActive }">
+    <div class="table-responsive">
+        <table class="table" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col" width="5%">
+                </th>
+
+                <th scope="col" width="35%">Order Id</th>
+                <th scope="col" style="text-align:center; ">Customer Name</th>
+                <th scope="col" style="text-align:center; ">Total Amount</th>
+                <th scope="col" style="text-align:center; ">Order Created</th>
+              </tr>
+            </thead>
+            <tbody class="panel">
+              <ng-container *ngFor="let list of sandbox.backorderList$ | async;let i = index">
+                <tr>
+                  <th scope="row">
+      
+                  </th>
+                  <td class="vendid vname" width="35%" style="cursor:pointer; position: relative;" (click)="list.isCollapsed = !list.isCollapsed">
+                    {{list.orderProductPrefixId}}
+                    <a href="javascript:void(0)" class="lst-xpnd"
+                    [attr.aria-expanded]="!list.isCollapsed" [attr.aria-controls]="'demo-' + (i + 1)">
+                    <img [src]="list.isCollapsed ? 'assets/img/arrow-right-ico.png' : 'assets/img/arrow-drop.png'" />
+                    </a>
+                  </td>
+                  <td style="text-align:center; ">{{list.customerFirstName}}</td>
+                  <td style="text-align:center; ">{{list.total}}</td>
+                  <td style="text-align:center; ">{{list.createdDate | date: "dd MMM yyyy h:mm a"}}</td>
+                </tr>
+    
+                <tr id="demo-{{i + 1}}" class="acc-table" [ngbCollapse]="list.isCollapsed">
+                  <td colspan="9" class="hiddenRow" [@smoothCollapse]="list.isCollapsed?'initial':'final'">
+                    <table class="table">
+                      <tr>
+                        <th class="text-right" colspan="7"><a href="javascript:void(0)" (click)="list.isCollapsed = !list.isCollapsed" class="acc-tbl-close">x</a></th>
+                      </tr>
+                      <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                      </tr>
+                      <tr>
+                        <td>{{list.name}}</td>
+                        <td>{{list.quantity}}</td>
+                        <td>{{list.productPrice}}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+      <div class="no_data" *ngIf="(sandbox.backorderList$ |async)?.length==0 && (sandbox.backorderListLoaded$ |async)">
+        <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+    </div>
+    <mat-paginator [length]="sandbox.backorderListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+    </mat-paginator>
+    </div>
+  </div>
+  <!--Table-->
+</div>

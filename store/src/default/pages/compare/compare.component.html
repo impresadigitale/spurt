@@ -1,0 +1,84 @@
+<h3 class="cpr-tit">{{'compare.CompareProduct'|translate}}</h3>
+
+<div class="table-responsive" *ngIf="(compareSandbox.compareList$ | async)?.length > 0">
+
+    <table>
+        <tr>
+            <th width="20%"> <a href="javascript:void(0)" (click)="removeAll()">{{'compare.RemoveAll'|translate}}</a> </th>
+            <th width="30%" *ngFor="let product of compareSandbox.compareList$ | async"> <a href="javascript:void(0)" (click)="removeProduct(product)">x {{'compare.Remove'|translate}}</a> </th>
+        </tr>
+        <tr>
+            <td>
+                <h3>{{(compareSandbox.compareList$ | async)?.length}}</h3>
+                <h3>{{'compare.Product'|translate}}</h3>
+                <p>{{'compare.Compare'|translate}}</p>
+            </td>
+            <td *ngFor="let product of compareSandbox.compareList$ | async">
+                <h4 class="prd-tit">{{product.name}}</h4>
+                <h5 class="prd-price">
+                        <ng-container *ngIf="(product.flag == '' && product.pricerefer == '');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</ng-container>
+                        <ng-template #one>
+                            <span *ngIf="product.flag === 0">{{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                            <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                        </ng-template>
+                </h5>
+                <ng-container *ngIf="product.productImage; else default" >
+                    <div class="prd-img"> <img [src]="imagePath + '?path=' + product.productImage.containerName + '&name=' + product.productImage.image + '&width=280&height=380'" onError="this.src='/assets/images/default_image.png';"> </div>
+                </ng-container>
+                <ng-template #default>
+                    <div class="prd-img">
+                        <img src='/assets/images/default_image.png'>
+                    </div>
+                </ng-template>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3 class="td-tit">{{'compare.Brand'|translate}}</h3>
+            </td>
+            <td *ngFor="let product of compareSandbox.compareList$ | async">
+                <h5 class="prd-price">{{product.manufacturerName}}</h5>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3 class="td-tit">{{'compare.Summary'|translate}}</h3>
+            </td>
+            <td *ngFor="let product of compareSandbox.compareList$ | async">
+                <div class="inner-comp" [innerHtml]="product.description"></div>
+            </td>
+        </tr>
+        <tr>
+            <!-- product.rating -->
+            <td>
+                <h3 class="td-tit">{{'compare.Rating'|translate}}</h3>
+            </td>
+            <td *ngFor="let product of compareSandbox.compareList$ | async">
+            </td>
+        </tr>
+        <tr class="cart-tr">
+            <td>
+                <h3 class="td-tit"></h3>
+            </td>
+            <td *ngFor="let product of compareSandbox.compareList$ | async">
+                <p class="td-cont"><a href="javascript:void(0)" (click)="addToCart(product)" class="cart"> {{'compare.AddToCart'|translate}} </a></p>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+
+<div class="no-product-compare" *ngIf="(compareSandbox.compareList$ | async)?.length === 0 && !(compareSandbox.compareAdding$ | async)">
+
+    <p><img src="assets/images/no-compare.png"></p>
+    <p>{{'compare.NoCompareProducts'|translate}}</p>
+
+</div>
+<div class="no-product-compare" *ngIf="compareSandbox.compareAdding$ | async">
+
+    <app-spinner [isShow]="compareSandbox.compareAdding$ | async"></app-spinner>
+
+</div>

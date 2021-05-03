@@ -1,0 +1,104 @@
+<div fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.gt-sm="50" class="p-2">
+        <h2 class="text-muted text-center">{{'account.AccountDetails'|translate}}</h2>
+        <form [formGroup]="infoForm">
+
+        <div class="editImage">
+
+            <img class="img" *ngIf="!ifImageAvailable" (click)="uploadButtonClick()" src="./assets/images/others/user.jpg" onError="this.src='/assets/images/default_image.png';">
+            <img class="img" *ngIf="ifImageAvailable" (click)="uploadButtonClick()" [src]="imageUrl">
+
+
+            <input type="file" name="userImg" (change)="uploadChange($event)" accept="image/*" #filePath style="display: none">
+            <input type="hidden" name="fileHidden" formControlName="profileImage"/>
+
+            <span class="editProfile" *ngIf="(ifImageAvailable)" (click)="uploadButtonClick()">Change</span>
+            <div *ngIf="imageSizeError" class="upload-error">{{'Error.ImageShouldBe2MB'|translate}}</div>
+            <div *ngIf="imageTypeError" class="upload-error">{{'Error.UploadImageOnly'|translate}}</div>
+            <div class="upload-error" *ngIf="ifSubmitted && infoForm.get('profileImage').hasError('required')">{{'Error.UploadProfileImage'|translate}}</div>
+
+        </div>
+            <mat-form-field class="w-100 mt-2" [ngClass]="{'validationcolor':((infoForm.controls.firstName.errors?.required)&&(ifSubmitted==true))}">
+                <input matInput placeholder="{{'account.FirstName'|translate}}" formControlName="firstName" required>
+                <mat-error class="validation-error" *ngIf="((infoForm['controls'].firstName.errors?.required)&&(ifSubmitted==true))">
+                    {{'Error.FirstNameRequired'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="((infoForm['controls'].firstName.hasError('minlength'))&&(ifSubmitted==true))">
+                        {{'Error.FirstNameMinimumLength'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['firstName'].hasError('maxlength')">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['firstName'].hasError('minlength')">{{'Error.FirstNameMinimumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['firstName'].hasError('pattern')">{{'Error.NameMustBeString'|translate}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100 mt-1" [ngClass]="{'validationcolor':((infoForm.controls.lastName.errors?.required)&&(ifSubmitted==true))}">
+                <input matInput placeholder="{{'account.LastName'|translate}}" formControlName="lastName" required>
+                <mat-error class="validation-error" *ngIf="((infoForm['controls'].lastName.errors?.required)&&(ifSubmitted==true))">
+                    {{'Error.LastNameIsRequired'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="((infoForm['controls'].lastName.hasError('minlength'))&&(ifSubmitted==true))">
+                    {{'Error.LastNameLong'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['lastName'].hasError('maxlength')">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['lastName'].hasError('minlength')">{{'Error.FirstNameMinimumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['lastName'].hasError('pattern')">{{'Error.NameMustBeString'|translate}}</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="w-100 mt-1" [ngClass]="{'validationcolor':((infoForm.controls.email.errors?.required)&&(ifSubmitted==true))}">
+                <input matInput placeholder="{{'account.Email'|translate}}" formControlName="email" required>
+                <mat-error class="validation-error" *ngIf="((infoForm['controls'].email.errors?.required)&&(ifSubmitted==true))">
+                    {{'Error.EmailIsRequired'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="((infoForm['controls'].email.hasError('invalidEmail'))&&(ifSubmitted==true))">
+                    {{'Error.InvalidEmailAddress'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['email'].hasError('maxlength')">{{'Error.EmailMaximumLength'|translate}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100 mt-1">
+                <input matInput type="text" required appOnlyNumber placeholder="{{'account.PhoneNumber'|translate}}" formControlName="phoneNumber">
+                <mat-error class="validation-error" *ngIf="infoForm.controls['phoneNumber'].errors?.required && ifSubmitted">
+                    {{'Error.MobilNumberRequired'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['phoneNumber'].hasError('maxlength')">{{'Error.MobilNumberMaximumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="infoForm.controls['phoneNumber'].hasError('minlength')">{{'Error.MobilNumberMinimumLength'|translate}}</mat-error>
+            </mat-form-field>
+
+            <div class="text-center mt-2">
+                <button mat-raised-button color="primary" (click)="onInfoFormSubmit()">{{'account.Save'|translate}}
+                    <i width="" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" *ngIf="accountSandbox.getEditProfileLoading$ | async"></i> 
+
+                </button>
+            </div>
+        </form>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="50" class="p-2" ngClass.sm="mt-2" ngClass.xs="mt-2">
+        <h2 class="text-muted text-center">{{'account.PasswordChange'|translate}}</h2>
+        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordFormSubmit()">
+            <mat-form-field class="w-100 mt-2" [ngClass]="{'validationcolor':
+            ((passwordForm.controls.currentPassword.errors?.required)&&(ifPasswordForm==true))}">
+                <input matInput placeholder="{{'account.CurrentPassword'|translate}}" formControlName="currentPassword" type="password">
+                <mat-error class="validation-error" *ngIf="((passwordForm.controls['currentPassword'].errors?.required)&&(ifPasswordForm==true))">
+                    {{'Error.CurrentPasswordIsRequired'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100 mt-1" [ngClass]="{'validationcolor':
+            ((passwordForm.controls.newPassword.errors?.required)&&(ifPasswordForm==true))}">
+                <input matInput placeholder="{{'account.NewPassword'|translate}}" formControlName="newPassword" type="password">
+            </mat-form-field>
+            <mat-error class="validation-error" *ngIf="passwordForm.controls['newPassword'].hasError('required') && (ifPasswordForm==true)">{{'Error.PasswordisRequired'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="passwordForm.controls['newPassword'].hasError('minlength')">{{'Error.PasswordMustEightLetter'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="passwordForm.controls['newPassword'].hasError('hasCapitalCase')">{{'Error.PasswordMustContainCapitalCase'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="passwordForm.controls['newPassword'].hasError('hasSmallCase')">{{'Error.PasswordMustContainSmallCase'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="passwordForm.controls['newPassword'].hasError('hasNumber')">{{'Error.PasswordMustContainNumberOrSymbol'|translate}}</mat-error>
+        
+            <div class="text-center mt-2">
+                <button mat-raised-button color="primary" type="submit">{{'account.Change'|translate}}
+                    <i width="" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" *ngIf="accountSandbox.changePasswordLoading$ | async"></i> 
+
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

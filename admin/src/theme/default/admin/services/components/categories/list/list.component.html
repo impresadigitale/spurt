@@ -1,0 +1,126 @@
+<div class="col-12">
+    <div class="breadcrumbs-row">
+        <div class="bc-col">
+            <ul>
+                <li> <a href="javascript:void(0)"> Services </a> </li>
+                <li> Categories </li>
+            </ul>
+        </div>
+        <div class="bc-col-btn addserv">
+            <button class="btn" (click)='addServiceCategory()' [appHideIfUnauthorized]="'create-service-category'"> <img src="assets/img/add-white-ico.png"> Add Categories </button>
+        </div>
+    </div>
+</div>
+<!--Breadcrumbs-->
+<div class="col-12">
+    <div class="flex filter-row">
+        <div class="filter-lft">
+            <div class="toggle">
+                <p>Filters</p>
+                <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                <label class="tgl-btn" for="cb1"></label>
+            </div>
+        </div>
+        <!--Lft-->
+        <div class="filter-nav-list">
+           
+        </div>
+        <!--Right-->
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container w3-animate-left">
+            <app-servicescategory-filters (progressEmits)="receiveProgress($event)"></app-servicescategory-filters>
+        </div>
+    </div>
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%" >
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                        <th scope="col">{{'catalog.product.Image'| translate}}</th>
+                        <th scope="col" width="20%">Categories Name</th>
+                        <th scope="col" width="%40">Levels</th>
+                        <th scope="col" class="text-center">Sort Order</th>
+                        <th scope="col" class="text-center"  [appHideIfUnauthorized]="'edit-service-category' || 'delete-service-category'">Action</th>
+                        <th scope="col" width="100px" class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of serviceCategorySandBox.getServiceCategoriesList$ | async;let i=index">
+                        <th scope="row" [appHideIfUnauthorized]="'delete-service-category' || 'export-service-category'">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" id="{{data.serviceCategoryId}}" value="check">
+                                    <label class="custom-control-label" for="{{data.serviceCategoryId}}"></label>
+                                </div>
+                            </div>
+                        </th>
+                        <td style="cursor: pointer">
+                            <img class="api-img" [src]="imageUrl + '?path=' + data?.imagePath + '&name=' + data?.image + '&width=60&height=60'" onError="this.src='/assets/error-images/Load-icon-Products.png';" (load)="categoryImageLoading(data.categoryId)" [hidden]="!categoryImage[data.categoryId]">
+                            <img src="./assets/error-images/Load-icon-Products.png" [hidden]="categoryImage[data.categoryId]">
+                        </td>
+                        <td>{{data.name}}</td>
+                        <td>{{data.levels}}</td>
+                        <td class="text-center">{{data.sortOrder}}</td>
+                        <td class="text-center" [appHideIfUnauthorized]="'delete-service-category' || 'edit-service-category'">
+                            <a href="javascript:void(0)" (click)="editServiceCategory(data)" [appHideIfUnauthorized]="'edit-service-category'"> <img src="assets/img/edit-ico.png"> </a>
+
+                            <i [ngbPopover]="deleteContent" placement="bottom" #deletePop="ngbPopover" style="margin-left: 15px;" [appHideIfUnauthorized]="'delete-service-category'" class="fas fa-trash">
+                            <ng-template #deleteContent>
+                                <div class="style">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title"
+                                            style="margin-left: 17%;"> {{'catalog.product.DoYouWantToDelete'|
+                                            translate}}</h6>
+                                    </div>
+
+                                    <div class="modal-footer" style="margin-right: 23%;">
+                                        <button type="button" class="btn btn-danger" (click)="deletePop.close()"
+                                                data-dismiss="modal">{{'catalog.product.No'| translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success"
+                                                (click)="deleteServiceCategory(data.serviceCategoryId)"
+                                                data-dismiss="modal">{{'catalog.product.Yes'| translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </i>
+                        </td>
+                      
+                        <td class="text-center">
+                            <div *ngIf="data.isActive == 1">
+                                <span               class="tag-active"
+                                style="width: 41px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.Active'| translate}}</span>
+
+                            </div>
+                            <div *ngIf="data.isActive == 0">
+                                <span               class="tag-inactive"
+                                style="width: 63px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.InActive'| translate}}</span>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(serviceCategorySandBox.getServiceCategoriesList$ | async)?.length==0">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator #paginator [length]="serviceCategorySandBox.getServiceCategoriesListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+
+</div>

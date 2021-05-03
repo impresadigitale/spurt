@@ -1,0 +1,159 @@
+<div class="row products-section">
+  <div class="col-12">
+    <div class="breadcrumbs-row">
+      <div class="bc-col">
+        <ul>
+          <li>
+            <a href="javascript:void(0)" [routerLink]="['/customers/customer']"
+              >{{ 'Customers.Customer.Customer' | translate }}
+            </a>
+          </li>
+          <li>{{ 'Customers.Customer.ViewCustomer' | translate }}</li>
+        </ul>
+      </div>
+
+      <div class="bc-col-btn">
+        <button class="btn" routerLink="/customers">
+          <img src="assets/img/close-white-ico.png" />{{
+            'Customers.Customer.Cancel' | translate
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+</div>
+<div
+class=""
+>
+<div
+  class="flex viewcustomer-wrap"
+  *ngIf="sandbox.getDetailCustomer$ | async as detail"
+>
+  <div class="view-customer">
+    <div class="flex vc-header">
+      <div class="vch-detail">
+        <div class="vchd-image" *ngIf="detail && !detail.avatar">
+          <img src="./assets/img/avatar-img1.png" width="13%" height="13%" />
+        </div>
+        <div class="vchd-image" *ngIf="detail.avatar">
+          <img
+            [src]="
+              imageUrl +
+              detail.avatarPath +
+              detail.avatar +
+              '?width=60&height=60'
+            "
+            class="avatar"
+          />
+        </div>
+        <div class="vchd-content">
+          <h3>
+            {{ detail.firstName }}
+            <!--<sup>#00304</sup> -->
+          </h3>
+          <p>
+            <span> <img src="./assets/img/group-ico-sm.png" /> </span>
+            Group(Default)
+          </p>
+          <p class="d-inline-block">
+            <span> <img src="assets/img/mail-ico-sm.png" /> </span>
+            {{ detail.email }}
+          </p>
+          <p class="d-inline-block">
+            <span> <img src="assets/img/mobile-ico-sm.png" /> </span>
+            {{ detail.mobileNumber }}
+          </p>
+          <p>
+            <span> <img src="assets/img/addr-ico-sm.png" /> </span>
+            {{ detail.address }}
+          </p>
+        </div>
+      </div>
+      <!--Detail-->
+      <div class="vch-social"></div>
+      <!--Social-->
+    </div>
+    <!--Header-->
+    <div class="flex vc-header">
+
+    <div class="customer-activity">
+      <article>
+
+        <h5>Last Login Activity</h5>
+
+        <div class="lastlog">
+          {{ detail.lastLogin | date: 'MMM d, y, h:mm:ss a' }}
+        </div>
+
+      </article>
+
+   
+    </div>
+
+  </div>
+    <div class="flex vc-header">
+      <div class="vch-detail">
+        <h4>View Product</h4>
+
+        <ul>
+          <li *ngFor="let array of detail.productViewedData">
+            <img
+              [src]="
+                imageUrl +
+                '?path=' +
+                array.containerName +
+                '&name=' +
+                array.image +
+                '&width=100&height=100'
+              "
+              onError="this.src='/assets/error-images/Load-icon-Products.png';"
+            />
+
+            <br />
+            <b class="bh-content"><h5>{{ array.productName }}</h5></b>
+            <br />
+            {{ array.createdDate | date: 'MMM d, y, h:mm:ss a' }}
+          </li>
+   
+        </ul>
+      </div>
+      <!--Detail-->
+      <div class="vch-social"></div>
+    </div>
+    <!---->
+  </div>
+  <!--Left-->
+  <!-- <div
+    class="d-grid grid-template-col-2 grid-template-col-lg-5 grid-template-col-xl-4 grid-gap-2 grid-gap-xl-3 mt-4 mb-3"
+  > -->
+   
+  <div class="buying-history card custom-card">
+    <h4 class ="">
+     Order Products
+      <span>{{ detail.productLists.length }}</span>
+    </h4>
+    <ul class = "">
+      <li *ngFor="let array of detail.productLists">
+        <img
+          [src]="
+            imageUrl +
+            '?path=' +
+            array.containerName +
+            '&name=' +
+            array.image +
+            '&width=60&height=60'
+          "
+          onError="this.src='/assets/error-images/Load-icon-Products.png';"
+        />
+
+        <br />
+        <b class="bh-content"><h5> {{ array.productName }}</h5></b>
+        <br />
+        {{ array.createdDate | date: 'MMM d, y, h:mm:ss a' }}
+      </li>
+    </ul>
+  </div>
+  </div>
+  <!--Right-->
+</div>

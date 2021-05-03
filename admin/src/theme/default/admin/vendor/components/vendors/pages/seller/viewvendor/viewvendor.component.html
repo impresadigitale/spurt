@@ -1,0 +1,201 @@
+
+  <div class="row products-section vendor-section" style="margin-top:50px">
+    <div class="col-12">
+      <div class="breadcrumbs-row vvbc">
+        <div class="bc-col">
+          <ul>
+            <li> <a href="javascript:void(0)" [routerLink]="['/vendors/vendor/seller']"> <img src="assets/img/arrow-left.png"> </a> </li>
+            <li> <a href="javascript:void(0)" style="color: gray"> Vendors </a> </li>
+
+            <li> View Vendor </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--Breadcrumbs-->
+      <div class="col-12">
+
+        <div class="flex vvcard" *ngIf = "(sellerSandbox.pageDetails$ | async) as detail">
+
+          <div class="vvc-detail"  >
+            <div class="vvcd-top flex">
+              <div class="vvcdt-img"  style="border: 1px solid #eeeeee;"> <img style="max-width: 100%;
+                max-height: 100%;"
+                [src]="
+                  ImageUrl +
+                  '?path=' +
+                  detail.customerDetail.avatarPath +
+                  '&name=' +
+                  detail.customerDetail.avatar +
+                  '&width=100&height=100'
+                "
+                onError="this.src='/assets/error-images/Load-icon-Products.png';"
+                class="vendor-img"
+              /> </div>
+              <div class="vvcdt-nme">
+                <h4><span>{{ detail.vendorPrefixId}}</span></h4>
+                <h3> {{ detail.customerDetail.firstName}} <span class="">
+                    <div *ngIf="detail.customerDetail.isActive === 1">
+                      <span
+                      class="tag-active"
+        
+                        style="width: 63px;margin-left: -10px;   color:  #56b768;
+                        display: inline-block;padding: 1px 4px;"
+                        >Active</span
+                      >
+                    </div>
+                    <div *ngIf="detail.customerDetail.isActive === 0">
+                      <span
+                      class="tag-inactive"
+                      style="width: 63px; margin-left: -10px;   color:  #f14e6e;
+                      display: inline-block;padding: 1px 4px;"
+                        >InActive</span
+                      >
+                    </div></span
+                  > </h3>
+              </div>
+              <div class="vvcdt-nme">
+                <p class="flex"><img src="assets/img/mobile-icon.png"> {{ detail.customerDetail.mobileNumber}} </p>
+                <p class="flex"><img src="assets/img/mail-icon.png"> {{ detail.customerDetail.email}}</p>
+              </div>
+            </div>
+            <!---->
+            <div class="vvcd-cdtl">
+              <h2>Company Information</h2>
+              <div class="flex vvcdtl">
+                <div class="vvcdt-img"  style="border: 1px solid #eeeeee;"> <img style="max-width: 100%;
+                  max-height: 100%;"
+                  [src]="
+                    ImageUrl +
+                    '?path=' +
+                    detail.companyLogoPath +
+                    '&name=' +
+                    detail.companyLogo +
+                    '&width=100&height=100'
+                  "
+                  onError="this.src='/assets/error-images/Load-icon-Products.png';"
+                  class="vendor-img"
+                />  </div>
+                <div class="vvcdt-nme">
+                  <h3>{{detail.companyName}} </h3>
+                  <h5>{{detail.companyCity}} </h5>
+                </div>
+              </div>
+              <div class="vvcdtl-para" [innerHTML]="detail.companyDescription">
+                {{ detail.companyDescription}}
+              </div>
+            </div>
+            <div class="vvcd-cdtl">
+              <h2>Other Information</h2>
+              <ul class="flex">
+                <li class="cld1">Company Email</li>
+                <li class="cld2">{{ detail.companyEmailId ? detail.companyEmailId : '-'}}</li>
+              </ul>
+              <ul class="flex">
+                <li class="cld1">Company Mobile No</li>
+                <li class="cld2">{{ detail.companyMobileNumber ? detail.companyMobileNumber : '-'}}</li>
+              </ul>
+              <ul class="flex">
+                <li class="cld1">Company Website</li>
+                <li class="cld2">{{ detail.companyWebsite ? detail.companyWebsite : '-'}}</li>
+              </ul>
+              <ul class="flex">
+                <li class="cld1">GST Number</li>
+                <li class="cld2">{{ detail.companyGstNumber ? detail.companyGstNumber : '-'}}</li>
+              </ul>
+              <ul class="flex">
+                <li class="cld1">Pan Number</li>
+                <li class="cld2">{{ detail.companyPanNumber ? detail.companyPanNumber : '-'}}</li>
+              </ul>
+            </div>
+            <div class="vvcd-cdtl">
+              <div class="flex search-exp bulk-header">
+                <h2>Document List</h2>
+            </div>
+    
+            <div class="product-list-wrap">
+                <div class="no-data"
+                    *ngIf="(documentSandbox.getDocumentList$ | async)?.length === 0 && (documentSandbox.getDocumentListLoaded$ | async)">
+                    <span>No Documents found</span> </div>
+                <div class="table-responsive" *ngIf="(documentSandbox.getDocumentListLoaded$ | async) && (documentSandbox.getDocumentList$ | async)?.length > 0">
+                    <table class="table" [ngClass]="{'doc-table': documentSandbox.downloadDocumentLoading$ | async}">
+                        <thead>
+                            <tr>
+                                <th width="40px"> SI.No </th>
+                                <th width="200px">Date/Time</th>
+                                <th>Title</th>
+                                <th class="text-center">Status</th>
+                                <th width="70px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let array of (documentSandbox.getDocumentList$ | async); let i = index;">
+                                <td> {{i+1}}</td>
+                                <td>{{array.createdDate| date: 'dd MMMM, yyyy'}} at
+                                    {{array.createdDate| date:'hh:m a'}} </td>
+                                <td> {{array.title}} </td>
+                                <td class="text-center">
+                                  <div class="toggle">
+                                    <input
+                                      class="tgl tgl-light"
+                                      id="{{array.name}}"
+                                      [(ngModel)]="array.documentStatus"
+                                      (change)="changeStatus($event, array)"
+                                      type="checkbox"
+                                    />
+                                    <label class="tgl-btn" for="{{ array.name }}"></label>
+
+                                  </div>
+                                </td>
+                                <td class="text-center" style="padding: 5px !important;" (click)="download(array?.customerDocumentId)" title="dowload document"> <button class="flex dload">
+                                        <img src="assets/img/download-blue.svg"> </button> </td>
+                        
+                            </tr>
+                        </tbody>
+                          
+                    </table>
+                </div>
+            </div>
+            </div>
+
+          </div>
+          <!--left-->
+
+          <div class="vvcd-products">
+            <h2>Products</h2>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Total Product</th>
+                  <th (click)="gotoProduct(detail.customerDetail.firstName)" style="cursor: pointer;"> {{detail.productCount}} products   </th>
+                </tr>
+                </thead>
+              </table>
+            </div>
+            <h2>Assigned Categories</h2>
+            <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr  *ngFor = "let array of detail?.vendorCategories">
+                    <td>{{array.categoryName}}</td>
+                    <td></td>
+                
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        
+
+        </div>
+        <!--Card-->
+
+      </div>
+
+  </div>
+
+
+
+<!-- </div> -->

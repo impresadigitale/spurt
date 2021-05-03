@@ -1,0 +1,44 @@
+<div class="flex setting2-inner-header">
+    <h3> {{'Settings.Common.Settings' | translate}} >{{'Settings.SiteSettings.SiteSettings' | translate}} >{{'Settings.Social.Social' | translate}} </h3>
+
+</div>
+<div class="settings-right-wrapper addnewuser">
+
+    <div class="new-user">
+        <form (ngSubmit)="onSubmit()" [formGroup]="socialForm" class="form-horizontal m-t-20">
+            <div class="row">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Social.Facebook' | translate}}</label>
+                        <input [appDisableIfUnauthorized]="'edit-social-url'" type="text" placeholder="{{'Settings.Social.Facebook'| translate}}" formControlName="facebook" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Social.Google'| translate}}</label>
+                        <input [appDisableIfUnauthorized]="'edit-social-url'" type="text" formControlName="google" class="form-control" placeholder="{{'Settings.Social.GoogleLink' | translate}}">
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Social.Twitter' | translate}}</label>
+                        <input [appDisableIfUnauthorized]="'edit-social-url'"type="text" class="form-control" formControlName="twitter" placeholder="{{'Settings.Social.TwitterLink' | translate}}">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Social.Instagram' | translate}}</label>
+                        <input [appDisableIfUnauthorized]="'edit-social-url'" type="text" class="form-control" formControlName="instagram" placeholder="{{'Settings.Social.Instagram'| translate}}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="flex user-btn">`
+                        <button [appHideIfUnauthorized]="'edit-social-url'" type="submit" class="btn btn-add">{{'Settings.Social.Save' | translate}}</button>
+                        <button [appHideIfUnauthorized]="'edit-social-url'" (click)="cancel()" class="btn btn-cancel">{{'Settings.Social.Cancel' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

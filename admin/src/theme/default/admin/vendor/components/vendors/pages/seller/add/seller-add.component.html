@@ -1,0 +1,615 @@
+<div class="row products-section" id="connect">
+  <div class="col-12">
+    <div class="breadcrumbs-row noborder">
+      <div class="bc-col">
+        <ul>
+          <li>
+            <a href="javascript:void(0)" [routerLink]="['/component/vendors']" style="color: gray">
+              Vendors
+            </a>
+          </li>
+          <li>Add Vendor</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn ap-col-btn margin">
+        <button class="btn btn-save final" id="final" (click)="onSubmit()">
+          <img src="assets/img/tick-round-white.png" /> Save
+        </button>
+        <button class="btn btn-cancel" (click)="cancel()">
+          <img src="assets/img/close-white-ico.png" /> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+  <form [formGroup]="sellerAddForm">
+    <div class="flex addproduct-wrap">
+
+      <div class="card ap-general">
+
+        <div class="ap-header">
+          <span class="span"> 1 </span> Vendor Information
+          <div class="flex ap-body">
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>First Name <sup>*</sup></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="firstName"
+                  formControlName="firstName"
+                  placeholder="First name"
+                  [ngClass]="{'is-invalid': submitted && f.firstName.errors}"
+                  required/>
+                <div *ngIf="submitted && f.firstName.errors" class="validation-error">
+                  <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                  <div *ngIf="sellerAddForm.controls['firstName'].hasError('minlength')">Must be atleast 3 characters long</div>
+                  <div *ngIf="sellerAddForm.controls['firstName'].hasError('maxlength')">Must be max 32 characters long</div>
+                  <div *ngIf="sellerAddForm.controls['firstName'].hasError('pattern')">Must be string</div>
+                </div>
+              </div>
+            </div>
+            <!--Col-->
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Last Name<sup>*</sup></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="lastName"
+                  placeholder="Last name"
+                  [ngClass]="{'is-invalid': submitted && f.lastName.errors}"
+                  required/>
+                <div
+                  *ngIf="submitted && f.lastName.errors"
+                  class="validation-error">
+                  <div *ngIf="f.lastName.errors.required">
+                    Last Name is required
+                  </div>
+                  <div *ngIf="sellerAddForm.controls['lastName'].hasError('maxlength')">Must be max 32 characters long</div>
+                  <div *ngIf="sellerAddForm.controls['lastName'].hasError('pattern')">Must be string</div>
+                </div>
+              </div>
+            </div>
+            <!--Col-->
+            <div class="ap-body-col" *ngIf="!id">
+              <div class="form-group">
+                <label>Email <sup>*</sup></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="email"
+                  placeholder="Email"
+                  [ngClass]="{'is-invalid': submitted && f.email.errors}"
+                  required/>
+                <div
+                  *ngIf="submitted && f.email.errors"
+                  class="validation-error">
+                  <div *ngIf="f.email.errors.required">
+                    Email is required
+                  </div>
+                  <div *ngIf="f.email.errors.email">
+                    Email must be a valid email address
+                  </div>
+                  <div *ngIf="sellerAddForm.controls['email'].hasError('maxlength')">Must be max 96 characters long</div>
+                </div>
+              </div>
+            </div>
+            <!--Col-->
+
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Mobile Number <sup>*</sup></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="mobileNumber"
+                  appOnlyNumber
+                  formControlName="mobileNumber"
+                  placeholder="Mobile Number"
+                  [ngClass]="{'is-invalid': submitted && f.mobileNumber.errors}"
+                  required/>
+                <div
+                  *ngIf="submitted && f.mobileNumber.errors"
+                  class="validation-error">
+                  <div *ngIf="f.mobileNumber.errors.required">Mobile Number is required</div>
+                  <div *ngIf="sellerAddForm.controls['mobileNumber'].hasError('maxlength')">Must be max 15 numbers</div>
+                  <div *ngIf="sellerAddForm.controls['mobileNumber'].hasError('minlength')">Must be at least 4 numbers</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ap-body-col" *ngIf="!id">
+              <div class="form-group">
+                <label>Password <sup *ngIf="!id">*</sup></label>
+                <input
+                #psd
+                  type="password"
+                  class="form-control"
+                  formControlName="password"
+                  placeholder="Password"
+                  (keyup)="enterPassword(psd.value)"
+                  [ngClass]="{'is-invalid': submitted && f.password.errors}"
+                  required/>
+                  <div class="validation-error" *ngIf="submitted && sellerAddForm.controls['password'].hasError('required')">
+                    Password is required
+                  </div>
+                  <div class="validation-error" *ngIf="sellerAddForm.controls['password'].hasError('minlength')">
+                    Must be at least 8 characters
+                  </div>
+                  <div class="validation-error" *ngIf="sellerAddForm.controls['password'].hasError('hasNumber')">
+                    Must have at least 1 number or Symbol
+                  </div>
+                  <div class="validation-error" *ngIf="sellerAddForm.controls['password'].hasError('hasCapitalCase')">
+                    Must contain at least 1 in Capital Case
+                  </div>
+                  <div class="validation-error" *ngIf="sellerAddForm.controls['password'].hasError('hasSmallCase')">
+                    Must contain at least 1 in Small Case
+                  </div>
+                  <div class="validation-error" *ngIf="sellerAddForm.controls['password'].hasError('maxlength')">
+                    Must be max 50 characters
+                  </div>
+              </div>
+            </div>
+
+            <div class="ap-body-col" *ngIf="!id">
+              <div class="form-group">
+                <label>Confirm Password <sup *ngIf="!id">*</sup></label>
+                <input
+                  type="password"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm Password"
+                  [ngClass]="{'is-invalid': submitted && f.confirmPassword.errors}"
+                  required maxlength="50"/>
+                <div
+                  *ngIf="submitted && f.confirmPassword.errors"
+                  class="validation-error" >
+                  <div *ngIf="f.confirmPassword.errors.required">
+                    Confirm Password is required
+                  </div>
+                  <div *ngIf="f.confirmPassword.errors.mustMatch">
+                    Passwords must match
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Status<sup>*</sup></label>
+                <select
+                  class="custom-select col-12"
+                  [ngClass]="{ 'is-invalid': submitted && f.status.errors }"
+                  formControlName="status">
+                  <option value="" selected>- -Select Status- -</option>
+                  <option value="1" class="opt">Active</option>
+                  <option value="0">In Active</option>
+                </select>
+                <div
+                  *ngIf="submitted && f.status.errors"
+                  class="validation-error">
+                  <div *ngIf="f.status.errors.required">
+                    Status Is Required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--Col-->
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>GST Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="gst"
+                  placeholder="GST Number"/>
+              </div>
+            </div>
+
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Profile Image </label>
+                <div class="upl-img cursor">
+                  <input
+                    type="file"
+                    formControlName="avatar"
+                    accept="image/*"
+                    #filePath
+                    (change)="profileChange($event)"
+                    class="cursor"/>
+                  <a href="javascript:void(0)"
+                    class="cursor"
+                    (click)="profileButtonClick()">Browse
+                  </a>
+                  <img
+                    class="mar cursor"
+                    style="margin-left:20px"
+                    [src]="postImageUrl"
+                    width="25%"
+                    height="25%"
+                    onError="this.src='./assets/upload-banner/upload.png';"/>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- cover image -->
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Cover Image </label>
+
+                <div class="upl-img cursor">
+                  <input
+                    type="file"
+                    formControlName="coverLogo"
+                    accept="image/*"
+                    #filePathCover
+                    (change)="coverChange($event)"
+                    class="cursor"/>
+                  <a href="javascript:void(0)"
+                    class="cursor"
+                    (click)="coverButtonClick()">Browse
+                  </a>
+                  <img
+                    class="mar cursor"
+                    style="margin-left:20px"
+                    [src]="coverPostImageUrl"
+                    width="25%"
+                    height="25%"
+                    onError="this.src='./assets/upload-banner/upload.png';"/>
+                </div>
+              </div>
+            </div>
+            <!--Col-->
+          </div>
+
+          <div class="is-active" [ngClass]="{'disable-mail' : id}">
+            <div class="form-group">
+              <div class="custom-control custom-checkbox ">
+                <input
+                  type="checkbox"
+                  class="custom-control-input "
+                  id="checkbox1"
+                  value="check"
+                  [(ngModel)]="myValue"
+                  formControlName="mailStatus"
+                  style="cursor:inherit"/>
+                <label
+                  class="custom-control-label mail-tooltip"
+                  for="checkbox1">Send Email invite to the Vendor
+                  <button
+                    type="button"
+                    class="btn"
+                    placement="right"
+                    style="padding: unset"
+                    ngbTooltip="Notify the Vendor through Email Id and password">
+                    <img src="assets/img/info-ico.png" />
+                  </button>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--General-->
+
+      <div class="card ap-general">
+        <div class="ap-header">
+            <div class="scrollContainer" style="height: 10px;" *ngIf="submitted" appScrollTo></div>
+          <span class="span"> 2</span> Company Information
+          <!-- row - 1 -->
+          <div class="flex ap-body av-body">
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Company Logo</label>
+                <div class="comp-logo flex">
+                  <div class="upl-img">
+                    <input
+                      type="file"
+                      formControlName="companyLogo"
+                      accept="image/*"
+                      #filePathCompany
+                      (change)="logoChange($event)"
+                      class="cursor"/>
+                    <a href="javascript:void(0)"
+                      class="cursor"
+                      (click)="logoButtonClick()">Upload Logo</a>
+                    <img
+                      class="left cursor"
+                      [src]="postImageUrls"
+                      width="25%"
+                      height="25%"
+                      onError="this.src='./assets/upload-banner/upload.png';"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Company Name <sup>*</sup></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Company name"
+                  formControlName="companyName"
+                  [ngClass]="{'is-invalid': submitted && f.companyName.errors}"
+                  required/>
+                <div
+                  *ngIf="submitted && f.companyName.errors"
+                  class="validation-error">
+                  <div *ngIf="f.companyName.errors.required">
+                    Company Name is required
+                  </div>
+                  <div *ngIf="sellerAddForm.controls['companyName'].hasError('maxlength')">Must be max 32 characters</div>
+
+                  <div *ngIf="f.companyName.errors.pattern">
+                    <span style="color: red;">Only characters are allowed.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Col-->
+            <div class="ap-body-col">
+              <div class="form-group">
+                <label>Commission <sup>*</sup>
+                  <button
+                    type="button"
+                    class="btn"
+                    placement="right"
+                    ngbTooltip="Set commission in percentage for this Vendor.">
+                    <img src="assets/img/info-ico.png" />
+                  </button>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="commission"
+                  appOnlyNumber
+                  placeholder="Commission Percentage %"
+                  formControlName="commission"
+                  [ngClass]="{'is-invalid': submitted && f.commission.errors}"
+                  maxlength="2"
+                  required/>
+                <div
+                  *ngIf="submitted && f.commission.errors"
+                  class="validation-error">
+                  <div *ngIf="f.commission.errors.required">
+                    Commission is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="">
+            <div class="form-group">
+              <label>Company Description </label>
+              <ckeditor
+                formControlName="companyDescription"
+                [config]="{
+                  toolbar: [
+                    [
+                      'Bold',
+                      'Italic',
+                      'Strike',
+                      'RemoveFormat',
+                      'NumberedList',
+                      'BulletedList',
+                      'Indent',
+                      'Outdent',
+                      'Blockquote',
+                      'Styles',
+                      'Format',
+                      'About'
+                    ],
+                    ['Table']
+                  ]
+                }">
+              </ckeditor>
+              <div
+                *ngIf="submitted && f.companyDescription.errors"
+                class="validation-error">
+                <div *ngIf="f.companyDescription.errors.required">
+                  Company Description is required
+                </div>
+                <div *ngIf="sellerAddForm.controls['companyDescription'].hasError('maxlength')">Must be max 255 characters</div>
+
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+          <div class="flex ap-body av-body">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Address - 1</label>
+                <input
+                  type="text"
+                  class="form-control "
+                  placeholder="Address - 1"
+                  formControlName="companyAddress1"
+                  [ngClass]="{'is-invalid': f.companyAddress1.errors}"
+
+                />
+                <div *ngIf="f.companyAddress1.errors" class="validation-error">
+                    <div *ngIf="sellerAddForm.controls['companyAddress1'].hasError('maxlength')">Must be max 128 characters</div>
+                </div>
+
+              </div>
+            </div>
+            <!--Col-->
+            <div class="col-6">
+              <div class="form-group">
+                <label>Address - 2</label>
+                <input
+                  type="text"
+                  class="form-control "
+                  placeholder="Address - 2"
+                  [ngClass]="{'is-invalid': f.companyAddress2.errors}"
+
+                  formControlName="companyAddress2"/>
+                  <div *ngIf="f.companyAddress2.errors" class="validation-error">
+                    <div *ngIf="sellerAddForm.controls['companyAddress2'].hasError('maxlength')">Must be max 128 characters</div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex ap-body av-body">
+            <div class="col-4">
+              <div class="form-group">
+                <label>City </label>
+                <input
+                  type="text"
+                  [(ngModel)]="companyCity"
+                  class="form-control"
+                  placeholder="City"
+                  [ngClass]="{'is-invalid': f.companyCity.errors}"
+                  formControlName="companyCity"/>
+                  <div *ngIf="f.companyCity.errors" class="validation-error">
+                      <div *ngIf="sellerAddForm.controls['companyCity'].hasError('maxlength')">Must be max 128 characters</div>
+                  </div>
+              </div>
+            </div>
+            <!--Col-->
+            <div class="col-4" *ngIf="countryId !== 99">
+              <div class="form-group">
+                <label>State </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="State"
+                  formControlName="companyState"
+                  [ngClass]="{'is-invalid': f.companyState.errors}"/>
+                  <div *ngIf="f.companyState.errors" class="validation-error">
+                     <div *ngIf="sellerAddForm.controls['companyState'].hasError('maxlength')">Must be max 128 characters</div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-4" *ngIf="countryId === 99">
+                <div class="form-group">
+                  <label>State</label>
+  
+                  <select
+                    class="custom-select"
+                    formControlName="companyState">
+                    <option value=""> --Select state-- </option>
+                    <option
+                      *ngFor="let array of sellerSandbox.zoneList$ | async"
+                      [value]="array.name">
+                      {{ array.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="f.companyState.errors" class="validation-error">
+                      <div *ngIf="sellerAddForm.controls['companyState'].hasError('maxlength')">Must be max 128 characters</div>
+                   </div>
+                </div>
+              </div>
+
+            <div class="col-4">
+              <div class="form-group">
+                <label>Country<sup style="color:red">*</sup></label>
+
+                <select
+                  class="custom-select"
+                  formControlName="companyCountryId"
+                  [ngClass]="{'is-invalid': submitted && f.companyCountryId.errors}"
+                  (change)="selectCountry($event)">
+                  <option value=""> --Select Country-- </option>
+                  <option
+                    *ngFor="let array of sellerSandbox.getCountryList$ | async"
+                    [value]="array.countryId">
+                    {{ array.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="submitted && f.companyCountryId.errors"
+                  class="validation-error" >
+                  <div *ngIf="f.companyCountryId.errors.required">
+                    Country Is Required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex ap-body av-body">
+            
+            <!--Col-->
+            <div class="col-3">
+              <div class="form-group">
+                <label>Pin Code <sup style="color:red">*</sup></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  appOnlyNumber
+                  placeholder="Pin code"
+                  formControlName="pincode"
+                  [ngClass]="{'is-invalid': submitted && f.pincode.errors}"
+                  required/>
+                <div
+                  *ngIf="submitted && f.pincode.errors"
+                  class="validation-error">
+                  <div *ngIf="f.pincode.errors.required">
+                    Pincode Is Required
+                  </div>
+                  <div *ngIf="sellerAddForm.controls['pincode'].hasError('maxlength')">Must be max 6 numbers</div>
+                  <div *ngIf="sellerAddForm.controls['pincode'].hasError('minlength')">Must be at least 4 numbers</div>
+
+                </div>
+              </div>
+            </div>
+            <!--Col-->
+          </div>
+        </div>
+      </div>
+      <!--General-->
+
+      <div class="card ap-general ap-info">
+        <div class="ap-header">
+          <span class="span"> 3</span> Payment Information
+          <button
+            type="button"
+            class="btn"
+            placement="right"
+            ngbTooltip=" Provide bank details with Name, Account Number, Branch and IFSC code">
+            <img src="assets/img/info-ico.png" />
+          </button>
+          <div class="flex ap-body av-body">
+            <div class="form-group">
+              <div>
+                <textarea
+                  type="text"
+                  style="width: 350px; height: 75px;"
+                  class="form-control"
+                  formControlName="paymentInformation"
+                  placeholder="Give The Bank Details">
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--More Information-->
+    </div>
+  </form>
+  <script>
+  $("#commentForm").validate();
+  </script>
+  
+  <div class="col-12">
+    <div class="breadcrumbs-row noborder">
+      <div class="bc-col-btn ap-col-btn margin" style="width:1125px"></div>
+      <div
+        *ngIf="showBackToTop"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="back-to-top transition cursor"
+        (click)="scrollToTop()">
+        <mat-icon>arrow_upward</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

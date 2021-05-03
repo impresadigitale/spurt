@@ -1,0 +1,34 @@
+
+
+<div class="address">
+
+  <button  style="cursor: pointer;" class="btn btn-new" routerLink="/account/addaddresses"> <i class="material-icons"> add </i> {{'account.AddNewAddress'|translate}} </button>
+
+  <div class="address-row flex">
+   <ng-container *ngIf="accountSandbox.getCustAddressList$ | async">
+
+    <div class="address-col" *ngFor="let detail of (accountSandbox.getCustAddressList$ | async)">
+
+      <h4 *ngIf="detail.addressType === 1"><span class="hd-top">{{'account.Home'|translate}}</span></h4>
+      <h4 *ngIf="detail.addressType === 0"><span class="hd-top">{{'account.Work'|translate}}</span></h4>
+      <div class="add-content">
+        <h4>
+          {{detail.address1}}
+          <div class="wrapper">
+            <div class="content">
+              <ul style="height: 70%;">
+                <a class="mouse-pointer"  (click)="addressEdit(detail)"><li>Edit</li></a>
+                <a class="mouse-pointer" (click)="deleteAddress(detail.addressId)"><li>Delete</li></a>
+              </ul>
+            </div>
+            <div class="parent"><i class="material-icons"> more_vert </i></div>
+          </div>
+        </h4>
+        <p> {{detail.address2}},{{detail.city}}, {{detail.state}} : {{detail.postcode}}</p>
+      </div>
+    </div>
+   </ng-container>
+
+  </div>
+
+</div>

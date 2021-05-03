@@ -1,0 +1,44 @@
+<app-main-carousel ></app-main-carousel>
+
+<div class="products-tabs justin">
+
+    <mat-tab-group mat-stretch-tabs>
+
+        <mat-tab label="Featured Product">
+            <app-products-carousel [products]="listSandbox.featuredList$ | async"></app-products-carousel>
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>
+
+<div class="products-tabs justin">
+
+    <mat-tab-group mat-stretch-tabs>
+
+        <mat-tab label="Today Deals">
+            <app-products-carousel [products]="listSandbox.todayDealList$ | async"></app-products-carousel>
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>
+
+<ng-container *ngFor="let widget of listSandbox.widgetProductList$ | async">
+    <div class="products-tabs justin today-deals">
+
+            <mat-tab-group mat-stretch-tabs>
+        
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span>{{widget.widgetTitle}}</span>
+                    </ng-template>
+                    <app-widgets-products [products]="widget.items"></app-widgets-products>
+                </mat-tab>
+            </mat-tab-group>
+        
+        
+        </div>
+</ng-container>
+
+<app-brands-carousel [brands]="listSandbox.manufacturer$ | async"></app-brands-carousel>

@@ -1,0 +1,224 @@
+<form novalidate [formGroup]="serviceCategory">
+
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)"> Services </a></li>
+                        <li> Add Categories</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button type="submit" class="btn btn-save" (click)="onSubmit(serviceCategory.value)"><img
+                            src="assets/img/tick-round-white.png"> Save
+                    </button>
+                    <button [routerLink]="['/services/servicesCategory']" class="btn btn-cancel"><img
+                            src="assets/img/close-white-ico.png"> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Breadcrumbs-->
+    </div>
+
+    <div class="flex addproduct-wrap">
+
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span> General
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Category Name <sup>*</sup></label>
+                        <input type="text" formControlName="serviceCategoryName" class="form-control" placeholder="Category Name" [ngClass]="{ 'is-invalid': submittedValues && f.serviceCategoryName.errors }">
+                        <div *ngIf="submittedValues && f.serviceCategoryName.errors" class="invalid-feedback">
+                            <div *ngIf="f.serviceCategoryName.errors.required">{{'Settings.User.Error.FirstNameisrequired' | translate}}
+                            </div>
+                            <div *ngIf="serviceCategory.get('serviceCategoryName').hasError('maxlength')">
+                                    Must be max 255 chracters long
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Meta Tag Title</label>
+                        <input [ngClass]="{ 'is-invalid': f.serviceCategoryTitle.errors }" type="text" formControlName="serviceCategoryTitle" class="form-control" placeholder="Meta Tag Title">
+                        <div *ngIf="f.serviceCategoryTitle.errors" class="invalid-feedback">
+                            <div *ngIf="serviceCategory.get('serviceCategoryTitle').hasError('maxlength')">
+                                    Must be max 60 chracters long
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Meta Tag Description</label>
+                        <input [ngClass]="{ 'is-invalid': f.serviceCategoryDescription.errors }" type="text" formControlName="serviceCategoryDescription" class="form-control" placeholder="Meta Tag Description">
+                        <div *ngIf="f.serviceCategoryDescription.errors" class="invalid-feedback">
+                            <div *ngIf="serviceCategory.get('serviceCategoryDescription').hasError('maxlength')">
+                                    Must be max 160 chracters long
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Meta Tag Keyword</label>
+                        <input [ngClass]="{ 'is-invalid': f.serviceCategoryKeyword.errors }" type="text" formControlName="serviceCategoryKeyword" class="form-control" placeholder="Meta Tag Keyword">
+                        <div *ngIf="f.serviceCategoryKeyword.errors" class="invalid-feedback">
+                            <div *ngIf="serviceCategory.get('serviceCategoryKeyword').hasError('maxlength')">
+                                    Must be max 255 chracters long
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <div class="image-col">
+                            <div class="img-dflt">
+                                <input type="file" name="userImg" (change)="uploadChange($event)"  accept="image/*" #filePath style="display: none">
+                                <input type="hidden" name="fileHidden" formControlName="imageInput"/> <!-- Validation Field -->
+                                <img [src]="postImageUrl" width="30%" height="30%">
+                                <p></p>
+                                <button (click)="uploadButtonClick()" type="button">{{'CMS.Banners.UploadPic'|
+                                    translate}}
+                                </button>
+                                <p style="font-size: 10px">Support (.png .jpg .jpeg) Format & below 2MB Files allowed</p>
+                            </div>
+                            <div class="upload-error validation-error" *ngIf="serviceCategory.get('imageInput').hasError('required') && submittedValues">Image is required</div>
+                            <div *ngIf="imageSizeError" class="upload-error validation-error">Image should be less than 2MB</div>
+                            <div *ngIf="imageTypeError" class="upload-error validation-error">Please upload image only(.png,.jpg,.jpeg)</div>
+                      
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--Col-->
+            </div>
+        </div>
+        <!--General-->
+
+        <div class="card ap-general ap-info">
+            <div class="ap-header">
+                <span> 2 </span> More Information
+            </div>
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Data</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="flex data-row">
+                                <div class="data-col">
+                                    <div class="form-group">
+                                        <label>Parent</label>
+                                        <select formControlName="parentId" class="custom-select col-12" id="inlineFormCustomSelect1">
+                                            <option value=''>- -Select- -</option>
+                                            <option selected *ngFor="let arr of serviceCategorySandBox.getServiceCategoriesList$ | async"
+                                                    value={{arr.serviceCategoryId}}>{{arr.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--Col-->
+                                <div class="data-col">
+
+                                    <div class="form-group">
+                                        <label>Sort Order</label>
+                                        <input formControlName="serviceCategorySortOrder" type="text" class="form-control" [ngClass]="{ 'is-invalid': submittedValues && f.serviceCategorySortOrder.errors}" placeholder="Sort Order">
+                                    </div>
+                                    <div *ngIf="submittedValues && f.serviceCategorySortOrder.errors" class="invalid-feedback">
+                                        <div *ngIf="f.serviceCategorySortOrder.errors.required">{{'Settings.User.Error.FirstNameisrequired' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="data-col">
+
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select formControlName="status" class="custom-select col-12" [ngClass]="{ 'is-invalid': submittedValues && f.status.errors }" id="inlineFormCustomSelect">
+                                            <option value=''>- -Select- -</option>
+                                            <option value="0">Disabled</option>
+                                            <option value="1">Enable</option>
+                                        </select>
+                                        <div *ngIf="submittedValues && f.status.errors" class="invalid-feedback">
+                                            <div *ngIf="f.status.errors.required">{{'Settings.User.Error.FirstNameisrequired' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+        <!--More Information-->
+
+        <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Image Manager</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="flex search-nav">
+                    <div class="search-section">
+                        <input placeholder="Search" type="text">
+                    </div>
+                    <div class="img-action-links">
+                        <ul class="flex" id="menu">
+                            <li>
+                                <a href="javascript:void(0)"> <img src="assets/img/back-ico.png"> </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"> <img src="assets/img/refresh-ico.png"> </a>
+                            </li>
+                            <li>
+                                <input id="check01" type="checkbox" name="menu" />
+                                <label for="check01"><img src="assets/img/file-open-ico.png"></label>
+                                <ul class="submenu">
+                                    <li>Create Folder</li>
+                                    <li>
+                                        <input type="text">
+                                        <button> Create</button>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"> <img src="assets/img/delete-file-ico.png"> </a>
+                            </li>
+                            <li><a href="javascript:void(0)" class="upload-lnk"> Upload </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex image-row">
+                    <div class="image-col">
+                        <div class="img-bdy"><img src="assets/img/file-img.png"></div>
+                        <p>Image Folder 1</p>
+                    </div>
+                    <!--Col-->
+                    <div class="image-col">
+                        <div class="img-bdy"><img src="assets/img/file-img.png"></div>
+                        <p>Image Folder 2</p>
+                    </div>
+                    <!--Col-->
+                    <div class="image-col">
+                        <div class="img-bdy"><img src="assets/img/product-img-bg1.png"></div>
+                        <p>img.jpg</p>
+                    </div>
+                    <!--Col-->
+                </div>
+            </div>
+        </ng-template>
+
+    </div>
+
+</form>

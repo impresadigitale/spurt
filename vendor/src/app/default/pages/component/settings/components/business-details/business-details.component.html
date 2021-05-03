@@ -1,0 +1,232 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="product-wrapper flex">
+
+    <div class="settings-lft">
+
+        <div class="sl-menu active">
+
+            <h3 [routerLink]="['/settings/list']">General Details</h3>
+
+            <div class="sl-menu-sub">
+                <a href="javascript:void(0)" class="current"  [routerLink]="['/settings/list']">Business Details</a>
+                <a href="javascript:void(0)" [routerLink]="['/settings/change-password']">Change Password</a>
+            </div>
+
+        </div>
+
+        <div class="sl-menu">
+            <h3 [routerLink]="['/settings/delivery-location']">Modules</h3>
+        </div>
+
+    </div>
+    <!--left-->
+
+    <div class="settings-right">
+
+
+        <ul class="nav nav-tabs settings-nav-tabs flex" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">User Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="company-tab" data-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="false">Company Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="document-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="company" aria-selected="false">Documents</a>
+            </li>
+        </ul>
+        <div class="tab-content bd-tab-content" id="myTabContent">
+            <div class="tab-pane fade show active user " id="user" role="tabpanel" aria-labelledby="user-tab">
+
+                <div class="company-profile">
+                    <h2>User Details</h2>
+                  <form [formGroup]="UserForm">
+                    <div class="flex ud-row">
+                  
+                        <div class="ud-lft">
+                  
+                            <div class="filter-group">
+                                <p>First Name</p>
+                                <input type="text" formControlName="firstName" [ngClass]="{'error-field' : (UserForm.controls['firstName'].hasError('required') && UserForm.controls['firstName'].touched)}"> 
+                            </div>
+                            <div class="filter-group">
+                              <p>Last Name</p>
+                              <input type="text" formControlName="lastName" [ngClass]="{'error-field' : (UserForm.controls['lastName'].hasError('required') && UserForm.controls['lastName'].touched)}">
+                          </div>
+                            <div class="filter-group">
+                                <p>Email</p>
+                                <input type="text" placeholder="" formControlName="email" [ngClass]="{'error-field' : (UserForm.controls['email'].hasError('required') && UserForm.controls['email'].touched)}">
+                            </div>
+                  
+                            <div class="filter-group">
+                                <p>Mobile Number</p>
+                                <input type="text" placeholder="" maxlength="15" formControlName="mobileNo" [ngClass]="{'error-field' : (UserForm.controls['mobileNo'].hasError('required') && UserForm.controls['mobileNo'].touched)}">
+                            </div>
+                  
+                        </div>
+                        <!--Left-->
+                  
+                        <div class="ud-rht flex">
+                  
+                            <div class="comp-logo">
+                                    <div class="user-img" *ngIf="!ifImageAvailable">
+                                      <img class="img" (click)="uploadButtonClickForUser()" src="./assets/imgs/user.jpg" onError="this.src='/assets/imgs/default_image.png';">
+                                    </div>
+                                    <div class="user-img" *ngIf="ifImageAvailable">
+                                      <img class="img" (click)="uploadButtonClickForUser()" [src]="imageUrl">
+                                  </div>
+                        
+                                <input type="file" name="userImg" (change)="uploadChange($event)" accept="image/*" #filePathForUser style="display: none">
+                                <a href="javascript:void(0)" *ngIf="(ifImageAvailable)" (click)="uploadButtonClickForUser()">Edit</a>
+                            </div>
+                  
+                        </div>
+                        <!--Left-->
+                  
+                    </div>
+                    <!--Row-->
+                  
+                        <button class="save" (click)="saveUserDetails()"><span><i  class="fas fa-spinner fa-spin fa-3x" *ngIf="commonSandbox.editProfileLoading$ | async"
+                            ></i>Save Changes</span></button>
+                  </form>
+                  </div>
+
+            </div>
+            <!--user details-->
+
+            <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
+
+                <div class="company-profile">
+                    <form [formGroup]="companyForm">
+                        <h2>Company Profile</h2>
+                
+                        <div class="flex ud-row">
+                
+                            <div class="ud-lft">
+                
+                                <div class="filter-group">
+                                    <p>Company/Business name</p>
+                                    <input type="text" formControlName="name" [ngClass]="{'error-field' : (companyForm.controls['name'].hasError('required') && companyForm.controls['name'].touched)}"
+                                        placeholder="Enter the company/business name as registered in GST/PAN">
+                                </div>
+                                <div class="filter-group">
+                                    <p>Address1</p>
+                                    <textarea rows="2" formControlName="address1" [ngClass]="{'error-field' : (companyForm.controls['address1'].hasError('required') && companyForm.controls['address1'].touched)}"></textarea>
+                                </div>
+                
+                                <div class="filter-group">
+                                    <p>Address2</p>
+                                    <textarea rows="2" formControlName="address2" [ngClass]="{'error-field' : (companyForm.controls['address2'].hasError('required') && companyForm.controls['address2'].touched)}"></textarea>
+                                </div>
+                                <div class="flex ba-row">
+                                    <div class="filter-group">
+                                        <p>City</p>
+                                        <input type="text" placeholder="" formControlName="city" [ngClass]="{'error-field' : (companyForm.controls['city'].hasError('required') && companyForm.controls['city'].touched)}">
+                                    </div>
+                                    <div class="filter-group" *ngIf="countryId !== 99">
+                                        <p>State</p>
+                                        <input type="text" placeholder="" formControlName="state" [ngClass]="{'error-field' : (companyForm.controls['state'].hasError('required') && companyForm.controls['state'].touched)}">
+                                    </div>
+                                </div>
+                
+                                <div class="flex ba-row">
+                                    <div class="filter-group">
+                                        <p>PIN Code</p>
+                                        <input id="dynamictabstrp" appOnlyNumber type="text" placeholder="" formControlName="pincode" [ngClass]="{'error-field' : (companyForm.controls['pincode'].hasError('required') && companyForm.controls['pincode'].touched)}">
+                                    </div>
+                                    <div class="filter-group">
+                                        <p>Country</p>
+                                        <div class="form-group select ">
+                                            <select formControlName="country" (change)="selectCountry($event)" [ngClass]="{'error-field' : (companyForm.controls['country'].hasError('required') && companyForm.controls['country'].touched)}">
+                                                <option *ngFor="let array of (commonSandbox.getCountryList$ | async)" [value]="array.countryId">{{array?.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="filter-group" *ngIf="countryId === 99">
+                                        <p>State</p>
+                                        <div class="form-group select ">
+                                            <select formControlName="state"  [ngClass]="{'error-field' : (companyForm.controls['state'].hasError('required') && companyForm.controls['country'].touched)}">
+                                                <option *ngFor="let array of (commonSandbox.zoneList$ | async)" [value]="array.name">{{array?.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <p>Mobile Number</p>
+                                    <input type="text" placeholder="" maxlength="15"  formControlName="mobileNo" minlength="10" [ngClass]="{'error-field' : (companyForm.controls['mobileNo'].hasError('required') && companyForm.controls['mobileNo'].touched)}">
+                                </div>
+                                <label class="error-data" *ngIf="companyForm.controls['mobileNo'].errors?.minlength">Mobile number must be 10 digits </label>
+
+                                <div class="filter-group">
+                                    <p>Email ID</p>
+                                    <input type="text" placeholder="" formControlName="email" [ngClass]="{'error-field' : (companyForm.controls['email'].hasError('required') && companyForm.controls['email'].touched)}">
+                                </div>
+                
+                                <div class="filter-group">
+                                    <p>Website</p>
+                                    <input type="text" placeholder="http://www" formControlName="website" [ngClass]="{'error-field' : (companyForm.controls['website'].hasError('required') && companyForm.controls['website'].touched)}">
+                                </div>
+                                <div class="filter-group">
+                                    <p>GST Number</p>
+                                    <input type="text" placeholder="Gst No" formControlName="gst" [ngClass]="{'error-field' : (companyForm.controls['gst'].hasError('required') && companyForm.controls['gst'].touched)}">
+                                </div>
+                            </div>
+                            <!--Left-->
+                
+                            <div class="ud-rht flex">
+                
+                                <div class="comp-logo">
+                                        <p class="comp-img-lbl">Company Logo</p>
+                                        <div class="user-img" *ngIf="!ifCompanyImageAvailable">
+                                          <img class="img" (click)="uploadButtonClickForCompany()" src="./assets/imgs/user.jpg" onError="this.src='/assets/imgs/default_image.png';">
+                                        </div>
+                                        <div class="user-img" *ngIf="ifCompanyImageAvailable">
+                                          <img class="img" (click)="uploadButtonClickForCompany()" [src]="companyImageUrl">
+                                      </div>
+                            
+                                    <input type="file" name="userImg" (change)="uploadCompanyImageChange($event)" accept="image/*" #filePathForCompany style="display: none">
+                                    <a href="javascript:void(0)" *ngIf="(ifCompanyImageAvailable)" (click)="uploadButtonClickForCompany()">Edit</a>
+                                </div>
+
+                                <!-- cover image -->
+            
+                            </div>
+
+
+                            <div class="ud-rht flex">
+                
+                                <div class="comp-logo">
+                                    <p class="comp-img-lbl">Cover Image</p>
+                                        <div class="user-img" *ngIf="!ifCoverImageAvailable">
+                                          <img class="img" (click)="uploadButtonClickForCover()" src="./assets/imgs/user.jpg" onError="this.src='/assets/imgs/default_image.png';">
+                                        </div>
+                                        <div class="user-img" *ngIf="ifCoverImageAvailable">
+                                          <img class="img" (click)="uploadButtonClickForCover()" [src]="coverImageUrl">
+                                      </div>
+                            
+                                    <input type="file" name="userImg" (change)="uploadCoverImageChange($event)" accept="image/*" #filePathForCover style="display: none">
+                                    <a href="javascript:void(0)" *ngIf="(ifCoverImageAvailable)" (click)="uploadButtonClickForCover()">Edit</a>
+                                </div>
+
+                                <!-- cover image -->
+            
+                            </div>
+                            <!--Left-->
+                
+                        </div>
+                        <!--Row-->
+                
+                            <button class="save" id="button" (click)="saveCompanyDetails()"><span><i *ngIf="commonSandbox.editProfileLoading$ | async" class="fas fa-spinner fa-spin fa-2x"></i>Save Changes</span></button>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="document-tab">
+              <app-document-update></app-document-update>
+            </div>
+            <!--company-->
+        </div>
+    </div>
+    <!--left-->
+</div>
+

@@ -1,0 +1,19 @@
+
+<div class="pagination">
+    <ul class=" pagination" *ngIf="pager.pages && pager.pages.length">
+    
+        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item-pre" (click)="chooseClick(pager.currentPage - 1)">
+          <img src="assets/imgs/page-left.svg">  <a *ngIf="pager.currentPage !== 1" id="first" >Pre<span></span></a>
+            <a *ngIf="pager.currentPage === 1" id="first">Pre</a>
+        </li>
+
+        <li *ngFor="let page of pager.pages" [ngClass]="{'active' :pager.currentPage === page}" class="page-item" (click)="setPage(page); pageChange.emit(page)">
+            <a>{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="chooseClick(pager.currentPage + 1)" class="page-item-next" >
+            <a  id="last" ><span ></span>Next</a><img src="assets/imgs/page-right.svg">
+        </li>
+     
+    </ul>
+</div>
+

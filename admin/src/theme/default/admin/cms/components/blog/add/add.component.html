@@ -1,0 +1,210 @@
+<app-blogs-layout></app-blogs-layout>
+
+<div class="row products-section products-sub-section">
+    <div class="col-12">
+        <div class="breadcrumbs-row noborder">
+            <div class="bc-col">
+                <ul>
+                    <li><a href="javascript:void(0)"> {{'CMS.Blog.CMS'| translate}} </a></li>
+                    <li>{{'CMS.Blog.NewBlog'| translate}}</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn ap-col-btn">
+                <button type="submit" (click)="onSubmit()" class="btn btn-save"><img src="assets/img/tick-round-white.png">{{'CMS.Blog.Save'|
+                    translate}}
+                </button>
+                <button (click)="blogCancel()" class="btn btn-cancel"><img src="assets/img/close-white-ico.png">{{'CMS.Blog.Cancel'|
+                    translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+</div>
+
+<div class="flex addproduct-wrap addgroup-wrap">
+    <form (ngSubmit)="onSubmit()" [formGroup]="blogForm" style="width: 100%;">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span>{{'CMS.Blog.GeneralInformation'| translate}}
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>{{'CMS.Blog.BlogTitle'| translate}}<sup>*</sup>
+                         </label>
+                        <input type="text" class="form-control" formControlName="blogTitle" placeholder="{{'CMS.Job.EnterTitle'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.blogTitle.errors }">
+                        <div *ngIf="submitted && f.blogTitle.errors" class="validation-error">
+                            <div *ngIf="f.blogTitle.errors.required">{{'CMS.BlogError.BlogTitleIsRequired'| translate}}
+                            </div>
+                            <div class="error" *ngIf="blogForm.get('blogTitle').hasError('maxlength')">
+                                    Must be max 255 chracters long
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ap-body-col" style="width: 49%">
+                    <div class="form-group">
+                        <label>{{'CMS.Blog.Categories'| translate}}<sup>*</sup> </label>
+                        <select class="custom-select col-12" formControlName="categories" id="inlineFormCustomSelect" [ngClass]="{ 'is-invalid': submitted && f.categories.errors }">
+                                <option value="">Choose categories</option>
+                                <option  *ngFor="let bannerInfo of categorySandbox.getCategoriesList$ | async; let i=index" [value]="bannerInfo.categoryId">{{bannerInfo?.name}}</option>
+                            </select>
+                        <div *ngIf="submitted && f.categories.errors" class="validation-error">
+                            <div *ngIf="f.categories.errors.required">{{'CMS.BlogError.BlogCategoryIsRequired'| translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col width100">
+                    <div class="form-group">
+                        <label>{{'CMS.Blog.Description'| translate}}<sup>*</sup></label>
+                        <ckeditor formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+                        </ckeditor>
+                        <!-- <textarea class="form-control" rows="3" formControlName="description" placeholder="{{'CMS.Job.EnterDescription'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea> -->
+                        <div *ngIf="submitted && f.description.errors" class="validation-error">
+                            <div *ngIf="f.description.errors.required">{{'CMS.BlogError.BlogContentIsRequired'| translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <div class="image-col">
+                            <div class="img-dflt">
+                                <input type="file" name="userImg" (change)="uploadChange($event)"  accept="image/*" #filePath style="display: none">
+                                <input type="hidden" name="fileHidden" formControlName="imageInput"/> <!-- Validation Field -->                                
+                                <img [src]="postImageUrl" width="100px">
+                                <p></p>
+                                <button (click)="uploadButtonClick()" type="button">{{'CMS.Banners.UploadPic'|
+                                    translate}}
+                                </button>
+                                <p style="font-size: 10px">Support (.png .jpg .jpeg) Format & below 2MB Files allowed</p>
+
+                            </div>
+                            <div class="validation-error" *ngIf="submitted && f.imageInput.errors" >
+                                <div *ngIf="f.imageInput.errors.required">Image is required</div>
+                            </div>
+                            <div *ngIf="imageSizeError" class="upload-error validation-error">Image should be less than 2MB</div>
+                            <div *ngIf="imageTypeError" class="upload-error validation-error">Please upload image only(.png,.jpg,.jpeg)</div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>{{'CMS.Blog.Status'| translate}}<sup>*</sup></label>
+                        <select class="custom-select col-12" formControlName="status" id="inlineFormCustomSelect" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                                <option value="">- -Select Active- -</option>
+                                <option value="1">{{'CMS.Blog.Yes'| translate}}</option>
+                                <option value="0">{{'CMS.Blog.No'| translate}}</option>
+                            </select>
+                        <div *ngIf="submitted && f.status.errors" class="validation-error">
+                            <div *ngIf="f.status.errors.required">{{'CMS.BlogError.BlogStatusIsRequired'| translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+            </div>
+        </div>
+
+        <!-- more information -->
+
+        <div class="card ap-general ap-info">
+            <div class="ap-header">
+                <span> 2 </span>{{'Customers.Customer.MoreInformation'| translate}}
+            </div>
+
+            <!-- Related Products -->
+         <div class="flex ap-body">
+            <ngb-tabset style="width:100%;">
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Related Blogs</ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="flex categories-row">
+                            <div class="categories-col">
+                                <h3>Available Blogs</h3>
+                                <div class="form-group search-categories">
+                                    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search available blogs" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <ul class="flex category-list mouse-arrow">
+                                    <li *ngFor="let blog of (sandbox.blogList$ | async) | filter : searchText" (click)="selectedBlogs(blog)" style="cursor: pointer">
+                                        <a> <img src="assets/img/add-green-ico.png"> </a>
+                                        {{blog.title}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!---->
+                            <div class="categories-col">
+                                <h3>Selected Blogs</h3>
+                                <div class="form-group search-categories">
+                                    <input type="text" class="form-control" placeholder="Search selected blogs"  [(ngModel)]="searchSelectedText" [ngModelOptions]="{standalone: true}">
+                                </div>
+        
+                                <ul class="flex category-list mouse-arrow">
+                                    <li *ngFor="let blog of selectedBlogArray | filter : searchSelectedText;let i=index" (click)="removeSelectedBlog(blog)" style="cursor: pointer">
+                                        <a> <img src="assets/img/minus-red-ico.png"> </a>
+                                        {{blog.title}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!---->
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+
+                <!-- SEO -->
+
+                <ngb-tab>
+                    <ng-template ngbTabTitle>SEO</ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="flex ap-body">
+                            <div class="ap-body-col" style="width: 28%">
+                                <div class="form-group">
+                                    <label>{{'CMS.Blog.MetaTitle'| translate}}
+                                                  </label>
+                                    <input type="text" class="form-control" formControlName="metaTitle" [ngClass]="{ 'is-invalid': submitted && f.metaTitle.errors }" placeholder="{{'CMS.Blog.EnterMetaTitle'| translate}}">
+                                    <div *ngIf="submitted && f.metaTitle.errors" class="validation-error">
+                                            <div class="error" *ngIf="blogForm.get('metaTitle').hasError('maxlength')">
+                                                    Must be max 60 chracters long
+                                            </div>
+                                    </div>
+                     
+                                </div>
+                            </div>
+                            <div class="ap-body-col" style="width: 70%">
+                                <div class="form-group">
+                                    <label>{{'CMS.Blog.MetaContent'| translate}}</label>
+                                    <input type="text" class="form-control" formControlName="metaContent" placeholder="{{'CMS.Blog.EnterMetaDescription'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.metaContent.errors }">
+                                    <div *ngIf="submitted && f.metaTitle.errors" class="validation-error">
+                                            <div class="error" *ngIf="blogForm.get('metaContent').hasError('maxlength')">
+                                                    Must be max 160 chracters long
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ap-body-col">
+                                <div class="form-group">
+                                    <label>{{'CMS.Blog.MetaKeyword'| translate}}</label>
+                                    <input type="text" class="form-control" formControlName="metaKeyword" placeholder="{{'CMS.Blog.EnterMetaKeyword'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.metaKeyword.errors }">
+                                    <div *ngIf="submitted && f.metaTitle.errors" class="validation-error">
+                                            <div class="error" *ngIf="blogForm.get('metaKeyword').hasError('maxlength')">
+                                                    Must be max 255 chracters long
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+              </ngb-tabset>  
+              </div>
+        </div>
+        <!--General-->
+    </form>
+</div>

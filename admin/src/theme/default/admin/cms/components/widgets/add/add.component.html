@@ -1,0 +1,242 @@
+<app-widgets-layout></app-widgets-layout>
+<div class="row products-section" style="margin:unset">
+    <div class="col-12">
+        <div class="breadcrumbs-row noborder">
+            <div class="bc-col">
+                <ul>
+                    <li><a href="javascript:void(0)"> {{'CMS.Pages.CMS'| translate}} </a></li>
+                    <li><a href="javascript:void(0)" [routerLink]="['/cms/widgets']">Widgets</a></li>
+                    <li>Add Widgets</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn ap-col-btn">
+                <button type="submit" (click)="onSubmit()" class="btn btn-save"><img
+                        src="assets/img/tick-round-white.png" (click)="onSubmit()">{{'CMS.Banners.Save'| translate}}
+                </button>
+                <button (click)="widgetCancel()" class="btn btn-cancel"><img
+                        src="assets/img/close-white-ico.png">{{'CMS.Banners.Cancel'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+</div>
+
+<div class="flex addproduct-wrap addgroup-wrap pb-wrap">
+
+    <div class="card ap-general">
+            <div class="ap-header">
+                {{'CMS.Pages.GeneralInformation'| translate}}
+            </div>
+            <div class="flex ap-body cmsap-body">
+              <form  [formGroup]="widgetsForm" style="width: 97%">
+
+                <div class="flex pb-row">
+                    <div class="ap-body-col">
+                        <div class="form-group">
+                            <label>Widget Title<sup>*</sup> </label>
+                            <input type="text" class="form-control" formControlName="title" placeholder="Widget Title"
+                            [ngClass]="{ 'is-invalid': submitted && widgetsForm.controls.title.errors }">
+                            <div class="validation-error" *ngIf=" widgetsForm.get('title').hasError('required') && submitted == true">
+                                Title is required
+                           </div>
+                           <div class="validation-error" *ngIf="widgetsForm.get('title').hasError('maxlength')">
+                               Must be max 255 chracters long
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Position<sup>*</sup> </label>
+                            <input type="text" class="form-control" formControlName="position" placeholder="Position"
+                            [ngClass]="{ 'is-invalid': submitted && widgetsForm.controls.position.errors }">
+                            <div style="color:red" *ngIf=" widgetsForm.get('position').hasError('required') && submitted == true">
+                                Position is required
+                           </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{'CMS.Pages.Active'| translate}}<sup>*</sup></label>
+                            <select class="custom-select col-12" formControlName="status" id="inlineFormCustomSelect"
+                            [ngClass]="{ 'is-invalid': submitted && widgetsForm.controls.status.errors }">
+                                <option value="">- -Select Active- -</option>
+                                <option value="1">{{'CMS.Pages.Yes'| translate}}</option>
+                                <option value="0">{{'CMS.Pages.No'| translate}}</option>
+                            </select>
+                            <div style="color:red" *ngIf=" widgetsForm.get('status').hasError('required') && submitted == true">
+                              Status is required
+                           </div>
+                        </div>
+                    </div>
+                    <!--Col-->
+                    <div class="pb-meta-col">
+                        <h3>Meta Data</h3>
+                        <div class="md-row">
+                            <div class="form-group">
+                                <label>Meta Title</label>
+                                <input type="text" class="form-control" formControlName="metaTitle" placeholder="Meta Title"
+                                [ngClass]="{ 'is-invalid': submitted && widgetsForm.controls.metaTitle.errors }">
+                                <div class="validation-error" *ngIf=" widgetsForm.get('metaTitle').hasError('required') && submitted == true">
+                                    Meta Title is required
+                                   </div>
+                                   <div class="validation-error"
+                                      *ngIf="widgetsForm.controls['metaTitle'].hasError('maxlength') && submitted">
+                                      Must be maximum 60 characters long
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Description</label>
+                                <input type="text" class="form-control" formControlName="metaDescription" placeholder="Meta Description"
+                                [ngClass]="{ 'is-invalid': submitted && widgetsForm.controls.metaDescription.errors }">
+                                <div class="validation-error" *ngIf=" widgetsForm.get('metaDescription').hasError('required') && submitted == true">
+                                    Meta Description is required
+                                </div>
+                                <div class="validation-error"
+                                    *ngIf="widgetsForm.controls['metaDescription'].hasError('maxlength') && submitted">
+                                    Must be maximum 160 characters long
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Keyword</label>
+                                <input type="text" class="form-control" formControlName="metaKeyword" placeholder="Meta Keyword" 
+                                [ngClass]="{ 'is-invalid': submitted && widgetsForm.controls.metaKeyword.errors }">
+                                <div class="validation-error" *ngIf=" widgetsForm.get('metaKeyword').hasError('required') && submitted == true">
+                                    Meta Keyword is required
+                                 </div>
+                                 <div class="validation-error"
+                                    *ngIf="widgetsForm.controls['metaKeyword'].hasError('maxlength') && submitted">
+                                    Must be maximum 255 characters long
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                </div>
+                <div class="ap-body-col width100">
+                    <div class="form-group">
+                        <label>Widget Content</label>
+                        <ckeditor formControlName="content">
+                        </ckeditor>
+
+                    </div>
+                </div>
+                <!--Col-->
+
+                
+                <div class="ap-body-col">
+                    <div class="flex link-banner">
+                        <p>Link banner to </p>
+                        <div class="lb-row flex">
+                            <div class="lb-col">
+                                <input style="cursor: pointer" type="radio" id="products" name="widgetlinkType" formControlName="widgetlinkType" value="2" (change)="linkWidgetTo($event)">
+                                <label style="cursor: pointer" for="products">Products</label>
+                            </div>
+                            <div class="lb-col">
+                                <input style="cursor: pointer" type="radio" id="category" name="widgetlinkType" value="1" formControlName="widgetlinkType" (change)="linkWidgetTo($event)">
+                                <label style="cursor: pointer" for="category">Category</label>
+                            </div>
+                        </div>
+                        <div style="color:red" *ngIf=" widgetsForm.get('widgetlinkType').hasError('required') && submitted == true">
+                            Please select one of these options.
+                         </div>
+                    </div>
+                </div>
+                <!--col-->
+
+            </form>
+                <div class="lb-sp-row flex" *ngIf="linkWidgetId === 2">
+                    <div class="lbsp-col">
+                        <div class="lb-search"> <input type="text" placeholder="Search Products" #pkey (keyup)="searchProduct(pkey.value)"> </div>
+                        <div class="lbsp-chk"
+                        style="height: 300px"
+                        infinite-scroll
+                        [infiniteScrollDistance]="2"
+                        [infiniteScrollThrottle]="50"
+                        [scrollWindow]="false"
+                        (scrolled)="onProductScrollDown()"
+                        >
+                            <div class="form-group" *ngFor="let product of sandbox.productList$ | async">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="{{product.productId}}" (change)="selectProduct($event, product)" [checked]="product.isChecked"
+                                    style="cursor:inherit"/>
+                                    <label style="cursor: pointer" class="custom-control-label mail-tooltip" for="{{product.productId}}">
+                                        {{product.name}}                       
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- col -->
+                    <div class="lbsp-col lbsp-col-rht">
+                        <p class="lbsp-items">{{(sandbox.selectedProduct$ | async)?.length}} items selected</p>
+                        <div class="lb-search"> <input type="text" #pskey placeholder="Search Selected Products" (keyup)="searchSelectedProduct(pskey.value)"> </div>
+                        <div class="lbsp-chk">
+                            <div class="form-group" *ngFor="let selected of sandbox.selectedProduct$ | async">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="{{selected.productId}}" (change)="selectProduct($event, selected)" [checked]="selected.isChecked"
+                                    style="cursor:inherit"/>
+                                    <label style="cursor: pointer" class="custom-control-label mail-tooltip" for="{{selected.productId}}">
+                                        {{selected.name}}                       
+                                    </label>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <!-- col -->
+                    <div style="color:red" *ngIf="linkWidgetId === 2 && (sandbox.selectedProduct$ | async)?.length === 0 && submitted == true">
+                        Please select atleast one of these products.
+                     </div>
+                </div>
+                <!--  -->
+
+                <div class="lb-sp-row flex" *ngIf="linkWidgetId === 1">
+                    <div class="lbsp-col">
+                        <div class="lb-search"> <input type="text" placeholder="Search Category" #ckey (keyup)="searchCategory(ckey.value)"> </div>
+                        <div class="lbsp-chk"
+                        style="height: 300px"
+                        infinite-scroll
+                        [infiniteScrollDistance]="1"
+                        [infiniteScrollThrottle]="150"
+                        [scrollWindow]="false"
+                        (scrolled)="onCategoryScrollDown()">
+                            <div class="form-group" *ngFor="let category of sandbox.categoryList$ | async">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="{{category.categoryId}}" (change)="selectCategory($event, category)" [checked]="category.isChecked"
+                                    style="cursor:inherit"/>
+                                    <label style="cursor: pointer" class="custom-control-label mail-tooltip" for="{{category.categoryId}}">
+                                        {{category.name}}                       
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- col -->
+                    <div class="lbsp-col lbsp-col-rht">
+                        <p class="lbsp-items">{{(sandbox.selectedCategoryList$ | async)?.length}} items selected</p>
+                        <div class="lb-search"> <input type="text" #cskey placeholder="Search Selected Category" (keyup)="searchSelectedCategory(cskey.value)"> </div>
+                        <div class="lbsp-chk">
+                            <div class="form-group" *ngFor="let selected of sandbox.selectedCategoryList$ | async">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="{{selected.categoryId}}" (change)="selectCategory($event, selected)" [checked]="selected.isChecked"
+                                    style="cursor:inherit"/>
+                                    <label style="cursor: pointer" class="custom-control-label mail-tooltip" for="{{selected.categoryId}}">
+                                        {{selected.levels}}                       
+                                    </label>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <!-- col -->
+                    <div style="color:red" *ngIf="(linkWidgetId === 1 && (sandbox.selectedCategoryList$ | async)?.length === 0&& submitted == true)">
+                        Please select atleast one of these categories.
+                     </div>
+                </div>
+                <!--  -->
+
+
+            </div>
+    </div>
+    <!--General-->
+
+
+</div>

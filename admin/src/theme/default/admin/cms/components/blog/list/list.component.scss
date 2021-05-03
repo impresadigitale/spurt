@@ -1,0 +1,85 @@
+
+.container {
+  display: inline-block;
+  width: 30%;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: 'Roboto', sans-serif;
+  font-weight:400;
+  color: #3F3E3E;
+  letter-spacing: 0.37px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+   border:2px solid #dddddd;
+}
+
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  background-color: #fff;
+   border:2px solid #dddddd;
+}
+
+
+.container:hover input ~ .checkmark {
+  background-color: #fff;
+
+}
+
+
+.container input:checked ~ .checkmark {
+  background-color: #ee3367;
+}
+
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+
+.container .checkmark:after {
+  left: 5px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+img, i{
+  cursor: pointer !important;
+}
+.products-sub-section {
+  margin-top: 0px !important;
+}
+
+.products-section .toggle .tgl:checked + .tgl-btn:after {
+  background-color: #f2086d  !important;
+}

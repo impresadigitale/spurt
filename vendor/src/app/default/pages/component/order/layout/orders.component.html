@@ -1,0 +1,61 @@
+<div class="product-wrapper">
+    <div class="product-left" [ngClass]="{'produt-left-close' : !sideMenuOpen}">
+            <div [ngClass]="{'data-none' : !sideMenuOpen}">
+                <ul class="flex product-count" >
+                        <li>
+                                <span *ngIf="(orderSandbox.orderCountLoaded$ | async)">
+                                    {{(orderSandbox.orderCount$ | async)?.totalOrderCount}}</span>
+                                    <span *ngIf="(orderSandbox.orderCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin" style="font-size:20px; color: #1d5ed8;"></i></span>
+                                <p>Orders</p>
+                            </li>
+                            <li>
+                                <span *ngIf="(orderSandbox.orderCountLoaded$ | async)">{{(orderSandbox.orderCount$ | async)?.todayOrderCount}}</span>
+                                <span *ngIf="(orderSandbox.orderCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin" style="font-size:20px; color: #1d5ed8;"></i></span>
+                                <p>Today</p>
+                            </li>
+                            <li>
+                                <span *ngIf="(orderSandbox.orderCountLoaded$ | async)">{{(orderSandbox.orderCount$ | async)?.paidCount}}</span>
+                                <span *ngIf="(orderSandbox.orderCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin" style="font-size:20px; color: #1d5ed8;"></i></span>
+                                <p>Paid</p>
+                            </li>
+                </ul>
+        
+            
+        
+                <div class="manage-products">
+                    <h3>Manage Orders</h3>
+                    <ul>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/list']" class="">Recent Orders</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)"  [routerLink]="['/orders/update']" (click)="openOrder()">Update Order Status</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/all-orders']"  (click)="openOrder()">All Orders</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/archive-orders']">Archive Orders</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/cancel-orders']">Cancel Requests</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/quotation-list']">Quotation Request List</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/order-invoice']">Orders Invoice List</a></li>
+                            <li routerLinkActive="active"><a href="javascript:void(0)" [routerLink]="['/orders/sales-report-list']">Sales Report</a></li>
+
+                    </ul>
+                </div>
+        
+                <div class="product-para flex">
+                    <p> 
+
+                        The Order Management module is thoughtful developed for a seamless tracking of orders. The Vendors can view the recent orders on their online store. You can update the order status, say, preparing to dispatch, ready to dispatch, dispatched and so on. You can also add a new delivery staff and update the delivery statuses to your Customer. </p>
+                    <img src="assets/imgs/bitmap.jpg">
+                </div>
+            </div>
+                <div class="action cursor" title="Expand or collapse the side navigation menu" (click)="closeSideMenu()">
+                    <i *ngIf="!sideMenuOpen" class="fa fa-bars cursor" aria-hidden="true"></i>
+                    <i *ngIf="sideMenuOpen" class="fa fa-angle-left cursor" aria-hidden="true"></i>
+                </div>
+            </div>
+
+<!--left-->
+
+<div class="product-right" [ngClass]="{'product-full' : !sideMenuOpen}">
+
+    <app-breadcrumbs></app-breadcrumbs>
+<router-outlet></router-outlet>
+</div>
+<!--left-->
+</div>

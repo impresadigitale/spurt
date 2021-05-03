@@ -1,0 +1,167 @@
+<div class="flex setting-inner-header">
+  <h3> Settings > Site Settings > Add Filters </h3>
+</div>
+<div class="settings-right-wrapper">
+  <!---->
+  <form  [formGroup]="filterForm">
+  <div class="filters-wrap">
+
+    <div class="fw-row flex">
+
+      <div class="fw-group">
+        <p>Filter Name</p>
+        <input type="text" formControlName="filterName">
+        <div *ngIf="submitted &&  filterForm.controls.filterName.errors" >
+          <div class="text-danger invalid-data"> Filter Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="fw-group">
+        <p>Category</p>
+        <ng-select 
+        [items]="categorySandbox.getCategoriesList$ | async"
+        [multiple]="true" 
+        bindLabel="levels"
+        [clearable]= "false"
+        formControlName="categoryId"
+        (change)="onChange($event)"
+        >
+        </ng-select>
+        <div *ngIf="submitted &&  filterForm.controls.categoryId.errors" >
+          <div class="text-danger invalid-data"> Category is required
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--row-->
+
+    <div class="fw-value-filters flex">
+
+      <div class="fw-var-att">
+        <div class="flex fvaratt-row">
+          <div class="fvart-rad">
+            <input type="radio" id="varient" value="varient" name="radio-group" (click)="changeType($event)" [checked] = 'categoryType === "varient"'>
+            <label for="varient">Varient</label>
+          </div>
+          <div class="fvart-rad">
+            <input type="radio" id="attribute" value="attribute" name="radio-group" (click)="changeType($event)" [checked] = 'categoryType === "attribute"'>
+            <label for="attribute">Attribute</label>
+          </div>
+        </div>
+        <!--row-->
+        <div class="fw-bx" *ngIf="categoryType === 'varient' ">
+          <input type="text" placeholder="Type your search here" class="fw-search" (keyup)="searchVarient($event)">
+          <div class="fw-att-cont">
+            <div class="form-group" *ngFor="let item of sandbox.varientList$ | async">
+              <input type="checkbox" id="{{item.id}}" (change)="changeVarient($event, item)" [checked]="item.checkData" [disabled]= "item.disableData">
+              <label for="{{item.id}}">{{item.name}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="fw-bx"  *ngIf="categoryType === 'attribute' ">
+            <input type="text" placeholder="Type your search here" class="fw-search" (keyup)="searchAttribute($event)">
+            <div class="fw-att-cont fw-attribute">
+              <div class="tabs">
+                <div class="tab" *ngFor="let item of sandbox.attributeList$ | async">
+                  <input type="checkbox" id="{{item.groupId}}">
+                  <label class="tab-label" for="{{item.groupId}}"> {{item.attributeGroupName}} </label>
+                  <div class="tab-content">
+                    <div class="form-group cursorPoint" *ngFor="let items of item.attribute">
+                      <input class="cursorPoint" type="checkbox" id="{{'attr' + items.attributeId}}" (change)="changeAttribute($event, items, item)" [checked]="items.checkData" [disabled]= "items.disableData">
+                      <label class="cursorPoint" for="{{'attr'+ items.attributeId}}">{{items.attributeName}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!--1-->
+
+      <div class="fw-values" *ngIf="categoryType === 'varient' ">
+        <h3>Values</h3>
+        <div class="fw-bx fw-val-bx">
+          <h4>Choose Variant/ Attribute</h4>
+          <div class="flex sel-cat">
+            <span *ngIf="selectedVarient.length == 0">Assign values to variant/ attribute here</span>
+            <ng-container *ngFor="let item of selectedVarient">
+              <ng-container *ngFor="let val of item.varientsValue">
+            <span class="flex" *ngIf="val.checkData">{{val.valueName}} 
+              <a href="javascript:void(0)">
+              <img class="closeImg" src="assets/img/close.svg" (click)="clearValue(val, item)" >
+             </a> </span>
+            </ng-container>
+            </ng-container>
+          </div>
+          <button (click)="addVarientFilter(selectedVarient)" *ngIf="selectedVarient.length > 0 && !editMode" >Add</button>
+          <button (click)="updateVarientFilter(selectedVarient)" *ngIf="selectedVarient.length > 0 && editMode" >Update</button>
+          <button  *ngIf="selectedVarient.length === 0 && !editMode" class="disableBtn" >Add</button>
+          <button  *ngIf="selectedVarient.length === 0 && editMode" class="disableBtn" ></button>
+        </div>
+      </div>
+      <div class="fw-values" *ngIf="categoryType === 'attribute' ">
+          <h3>Values</h3>
+          <div class="fw-bx fw-val-bx">
+            <h4>Choose Variant/ Attribute</h4>
+            <div class="flex sel-cat">
+               <mat-form-field class="example-chip-list">
+                <mat-chip-list #chipList aria-label="Fruit selection">
+                  <mat-chip
+                    *ngFor="let value of attributeValueArray"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(value)">
+                    {{value}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    placeholder="Enter Values eg red,green"
+                    #fruitInput
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+              </mat-form-field>
+            </div>
+            <button (click)="addAttributeFilter(selectedAttribute)" *ngIf="attributeValueArray.length > 0  && !editMode">Add</button>
+            <button (click)="updateAttributeFilter(selectedAttribute)" *ngIf="attributeValueArray.length > 0 && editMode">Update</button>
+            <button class="disableBtn" *ngIf="attributeValueArray.length === 0  && !editMode">Add</button>
+            <button class="disableBtn" *ngIf="attributeValueArray.length === 0  && editMode">Update</button>
+          </div>
+        </div>
+      <div class="fw-values fw-selected-filtrs">
+        <h3>Selected Filters</h3>
+        <div class="fw-bx">
+          <div class="tabs" >
+            <div class="tab" *ngFor="let item of selectedFilter">
+              <input type="checkbox" id="{{item.name}}">
+              <label class="tab-label" for="{{item.name}}"> 
+                <span class="flex" (click)="clearSelectedFilter(item)">-</span> {{item.name}} 
+                <a href="javascript:void(0)"> 
+                <i   class="fas fa-edit" (click)="editSelectedFilter(item)"></i>
+               </a>
+              </label>
+              <div class="tab-content">
+                <ng-container *ngFor="let items of item.values"> {{items.valueName + ','}}</ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="flex action-btn">
+      <button class="save" (click)="saveFilter()"> {{editFilterId ? 'Update' : 'Save'}} </button>
+      <button (click)="cancel()">Cancel</button>
+    </div>
+
+  </div>
+  </form>
+</div>
+
+
+

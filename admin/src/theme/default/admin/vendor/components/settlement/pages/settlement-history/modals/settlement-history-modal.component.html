@@ -1,0 +1,45 @@
+
+    <div class="modal-content right">
+
+      <div class="modal-body">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <img src="assets/img/close-black-ico.png">
+        </button>
+
+        <h3>Settlement</h3>
+
+        <div class="input-group">
+          <h4 style="width: 100%">Title</h4>
+          <h4 style="font-size: 18px; font-weight: 600">{{(sandbox.settlementDetails$ | async)?.title}}</h4>
+        </div>
+
+        <h4>Total Orders: <b>{{(sandbox.settlementDetails$ | async)?.noOfOrders}}</b></h4>
+        <h4>Total Settlement Value: <b>{{currency.symbol}}{{(sandbox.settlementDetails$ | async)?.totalAmount}}</b></h4>
+
+        <h5>Settlement Details</h5>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="25%" class="text-left">Order Line No</th>
+                <th width="35%" class="text-left">Name</th>
+                <th width="40%" class="text-center">Amount</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="table-responsive tbdy">
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let list of (sandbox.settlementDetails$ | async)?.items">
+              <td width="25%">{{list.orderProductPrefixId}} </td>
+              <td width="35%">{{ list.companyName }}</td>
+              <td width="30%" class="text-center">{{currency.symbol}} {{list.netAmount}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- modal-content -->

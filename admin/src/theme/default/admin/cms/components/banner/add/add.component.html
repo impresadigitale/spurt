@@ -1,0 +1,119 @@
+<app-banner-layout></app-banner-layout>
+<div class="row products-section" style="margin:unset">
+    <div class="col-12">
+        <div class="breadcrumbs-row noborder">
+            <div class="bc-col">
+                <ul>
+                    <li><a href="javascript:void(0)"> {{'CMS.Pages.CMS'| translate}} </a></li>
+                    <li><a href="javascript:void(0)" [routerLink]="['/cms/banners']"> {{'CMS.Banners.Banners'| translate}} </a></li>
+                    <li>{{'CMS.Banners.AddBanners'| translate}}</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn ap-col-btn">
+                <button type="submit" (click)="onSubmit()" class="btn btn-save"><img
+                        src="assets/img/tick-round-white.png" (click)="onSubmit()">{{'CMS.Banners.Save'| translate}}
+                </button>
+                <button (click)="bannerCancel()" class="btn btn-cancel"><img
+                        src="assets/img/close-white-ico.png">{{'CMS.Banners.Cancel'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+</div>
+
+
+<div class="flex addproduct-wrap addgroup-wrap">
+
+    <div class="card ap-general">
+        <form  [formGroup]="bannerForm">
+            <div class="ap-header">
+                {{'CMS.Pages.GeneralInformation'| translate}}
+            </div>
+            <div class="flex ap-body cmsap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>{{'CMS.Banners.BannerTitle'| translate}}<sup>*</sup> </label>
+                        <input type="text" class="form-control" [(ngModel)]="bannerTitle" formControlName="bannerTitle" placeholder="{{'CMS.BannerPlaceholder.BannerTitle'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.bannerTitle.errors }">
+                        <div *ngIf="submitted && f.bannerTitle.errors" class="validation-error">
+                            <div *ngIf="f.bannerTitle.errors.required">{{'CMS.BannerError.BannerTitleIsRequired'| translate}}</div>
+                            <div class="error" *ngIf="bannerForm.get('bannerTitle').hasError('maxlength')">
+                                    Must be max 255 chracters long
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col width100">
+                    <div class="form-group">
+                        <label>Banner Content</label>
+                        <ckeditor formControlName="bannerContent" [ngClass]="{'Validationcolor':bannerForm.get('bannerContent').hasError('required') && bannerForm.get('bannerContent').touched&&submitted==true}">
+                        </ckeditor>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input type="text" class="form-control" [(ngModel)]="bannerLink" formControlName="bannerLink" placeholder="{{'CMS.BannerPlaceholder.EnterLink'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.bannerLink.errors }">
+                        <div *ngIf="submitted && f.bannerLink.errors" class="validation-error">
+                            <div *ngIf="f.bannerLink.errors.required">{{'CMS.BannerError.LinkIsRequired'| translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" class="form-control" [(ngModel)]="position" formControlName="position" placeholder="{{'CMS.BannerPlaceholder.EnterPosition'| translate}}" [ngClass]="{ 'is-invalid': submitted && f.position.errors }">
+                        <div *ngIf="submitted && f.position.errors" class="validation-error">
+                            <div *ngIf="f.position.errors.required">{{'CMS.BannerError.PositionIsRequired'| translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>{{'CMS.Pages.Active'| translate}}<sup>*</sup></label>
+                        <select class="custom-select col-12" formControlName="active" id="inlineFormCustomSelect" [ngClass]="{ 'is-invalid': submitted && f.active.errors }">
+                            <option value="">- -Select Active- -</option>
+                            <option value="1">{{'CMS.Pages.Yes'| translate}}</option>
+                            <option value="0">{{'CMS.Pages.No'| translate}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.active.errors" class="validation-error">
+                            <div *ngIf="f.active.errors.required">{{'CMS.Error.ThisFieldIsRequired'| translate}}</div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--col-->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <div class="image-col">
+                            <div class="img-dflt">
+                                <input type="file" name="userImg" (change)="uploadChange($event)"  accept="image/*" #filePath style="display: none">
+                                <input type="hidden" name="fileHidden" formControlName="imageInput"/> <!-- Validation Field -->
+                                <img [src]="postImageUrl" width="13%" height="13%">
+                                <p></p>
+                                <button (click)="uploadButtonClick()" type="button">{{'CMS.Banners.UploadPic'| translate}}
+                                </button>
+                                <p style="font-size: 10px">Support (.png .jpg .jpeg) Format & below 2MB Files allowed</p>
+                            </div>
+                        </div>
+                        <div class="validation-error" *ngIf="submitted && f.imageInput.errors" >
+                            <div *ngIf="f.imageInput.errors.required">Image is required</div>
+                        </div>
+                        <div *ngIf="imageSizeError" class="upload-error validation-error">Image should be less than 2MB</div>
+                        <div *ngIf="imageTypeError" class="upload-error validation-error">Please upload image only(.png,.jpg,.jpeg)</div>
+                    </div>
+
+                </div>
+                <!--col-->
+            </div>
+        </form>
+    </div>
+    <!--General-->
+
+
+</div>

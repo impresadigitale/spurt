@@ -1,0 +1,138 @@
+<div class="row products-section products-sub-section">
+    <div class="col-12">
+        <div class="breadcrumbs-row">
+            <div class="bc-col">
+                <ul>
+                    <li><a href="javascript:void(0)"> {{'catalog.coupon.Catalog'| translate}} </a></li>
+                    <li> {{'catalog.coupon.coupon'| translate}}</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn">
+                <button class="btn" (click)="addCoupon()" [appHideIfUnauthorized]="'create-coupon'"><img
+                        src="assets/img/add-white-ico.png">{{'catalog.coupon.AddCoupon'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>Filters</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <div class="order-status">
+                    <p>{{'Sales.Orders.Status'| translate}}</p>
+                    <li style="list-style: none">
+                        <span style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"></span>Active
+                        <span style="display: inline-block;width: 14px;height: 16px;margin-left: 3px;margin-right: 7px;vertical-align: middle;background-color: #f14e6e; "></span>In Active
+
+                    </li>
+                </div>
+            </div>
+            <!--Lft-->
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container w3-animate-left">
+            <app-spurt-catalog-coupon-filter (progressEmit)="receiveProgress($event)">
+            </app-spurt-catalog-coupon-filter>
+        </div>
+    </div>
+    
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%" >
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                        <th scope="col">Coupon Name</th>
+                        <th scope="col" width="20%">Discount Value</th>
+                        <th scope="col" width="20%">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Date Left</th>
+                        <th scope="col">Orders</th>
+                        <th class="text-center" scope="col" width="100px" class="text-center">{{'catalog.product.Status'| translate}}
+                        </th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--response from coupon list or coupon filter list-->
+                    <tr *ngFor="let data of couponSandbox.getCouponList$ | async;let i=index">
+                        <th scope="row">
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                       <td>{{data?.couponName}}</td>
+                        <td>{{data.discount}}</td>
+                        <td>{{data.startDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{data.endDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{data.leftDays}}</td>
+                        <td>{{data.orders}}</td>
+                        <td class="text-center">
+                            <div *ngIf="data.isActive == 1">
+                                <span
+                                class="tag-active"
+                                style="width: 60px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.Active'| translate}}</span>
+
+                            </div>
+                            <div *ngIf="data.isActive == 0">
+                                <span 
+                                class="tag-inactive"
+                                style="width: 63px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.InActive'| translate}}</span>
+
+                            </div>
+                        </td>
+                        <td >
+                            <a href="javascript:void(0)" (click)="editCoupon(data)" [appHideIfUnauthorized]="'edit-coupon'"> <img src="assets/img/edit-ico.png">
+                            </a>
+                            <i [ngbPopover]="deleteContent" placement="left" #deletePop="ngbPopover" style="margin-left: 15px; " class="fas fa-trash cursor"
+                            [appHideIfUnauthorized]="'delete-coupon'">
+                            <ng-template #deleteContent>
+                                <div class="style">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title"
+                                            style="margin-left: 17%;"> {{'catalog.product.DoYouWantToDelete'|
+                                            translate}}</h6>
+                                    </div>
+
+                                    <div class="modal-footer" style="margin-right: 23%;">
+                                        <button type="button" class="btn btn-danger" (click)="deletePop.close()"
+                                                data-dismiss="modal">{{'catalog.product.No'| translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success"
+                                                (click)="deleteCoupon(data.vendorCouponId)"
+                                                data-dismiss="modal">{{'catalog.product.Yes'| translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </i>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(couponSandbox.getCouponList$ | async)?.length==0">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator #paginator [length]="couponSandbox.getCouponListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+</div>

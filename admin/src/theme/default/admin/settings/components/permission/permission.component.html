@@ -1,0 +1,31 @@
+<div class="flex main-header">
+    <h3>Permissions</h3>
+</div>
+<div class="main">
+    <button type="button" class="back-btn" (click)="cancel()">Back</button>
+    <span class="user" *ngIf="type === 'user'">USER - <b>{{detail?.name | uppercase}}</b></span>
+    <span class="user-role">ROLE - <b>{{detail?.role | uppercase}}</b></span>
+    <div class="title">
+        <span>Permission Status</span>
+        <span>
+            <label class="switch">
+                <input type="checkbox" (change)="selectAll($event.target.checked)">
+                <span class="slider toggle-slide"></span>
+            </label>Select All
+        </span>
+    </div>
+    <div class="role" *ngIf="(sandbox.permissionListLoaded$ | async) && (sandbox.permissionLoaded$ | async)">
+        <div class="role-content" *ngFor="let main of sandbox.getPermissionsList$ | async">
+            <div class="role-head">
+                <span><img src="assets/img/avatar-img1.png"> {{main?.name}}</span>
+            </div>
+            <div class="role-list">
+                <span class="roles" *ngFor="let sub of main?.permissionModule"> <label class="switch">
+                        <input type="checkbox" [value]="sub.moduleId" [(ngModel)]="sub.selected" [checked]="sub.selected">
+                        <span class="slider toggle-slide"></span>
+                    </label>{{sub?.name}}</span>
+            </div>
+        </div>
+</div>
+<button class="save" (click)="save()">Save</button>
+</div>

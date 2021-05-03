@@ -1,0 +1,18 @@
+<div *ngFor="let category of menuItems;let i=index" class="menu-item">
+    <a *ngIf="category.children && category.children.length === 0" mat-button
+        fxLayout="row" fxLayoutAlign="start center"
+        [routerLink]="['/products', category.categorySlug]"  routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"        
+        (click)="onClick(category.categoryId)" [id]="'menu-item-'+category.categoryId">
+        <span class="menu-title">{{category.name}}</span>
+    </a>
+    <a *ngIf="category.children && category.children.length > 0" mat-button 
+        fxLayout="row" fxLayoutAlign="start center"       
+        (click)="onClick(category.categoryId)" [id]="'menu-item-'+category.categoryId">
+        <span class="menu-title">{{category.name}}</span>
+        <mat-icon class="menu-expand-icon transition-2">arrow_drop_down</mat-icon>
+    </a>
+
+    <div *ngIf="category.children && category.children.length > 0" class="sub-menu" [id]="'sub-menu-'+category.categoryId">
+        <app-sidenav-menu [menuItems]="category.children" [menuParentId]="category.categoryId" [initial]="'false'"></app-sidenav-menu>
+    </div>
+</div>

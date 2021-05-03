@@ -1,0 +1,42 @@
+.swiper-container {
+    padding: 16px 2px 2px 2px;
+    .swiper-slide {
+    }
+}
+
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+    pointer-events: auto;
+}
+
+.del {
+    color: grey;
+}
+
+.new-price {
+    font-size: 22px;
+    span.old-price {
+        font-size: 14px;
+        font-weight: 400;
+        color: #999;
+    }
+}
+
+
+.transparent-card {
+    opacity: 0;
+    display: none;
+}
+
+:host ::ng-deep .mat-tab-header, .mat-tab-nav-bar {
+    border-bottom: 0;
+}
+.product-item .prices {
+    margin: unset !important;
+}
+
+.no-review{
+    font-size: 13px;
+    font-family: serif;
+    color: gray;
+}

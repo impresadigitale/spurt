@@ -1,0 +1,55 @@
+<div class="flex track-order-header">
+    <h2 class="flex">{{'account.ReviewProduct'|translate}} </h2>
+</div>
+<!-- spinner -->
+<div class="wrapper" *ngIf="sandbox.myOrderDetailsLoading$ | async">
+    <div class="overlay">
+        <div class="spinner-wrapper">
+            <app-spinner [isShow]="sandbox.myOrderDetailsLoading$ | async"></app-spinner>
+        </div>
+    </div>
+</div>
+<div *ngIf="(sandbox.myOrderDetails$ | async) && (sandbox.myOrderDetailsLoaded$ | async)" >
+
+<div class="order-list-row" *ngIf="(sandbox.myOrderDetails$ | async) as list">
+    <div class="olr-content flex">
+        <div class="olrc-lft">
+            <div class="olrcl-prd flex">
+                <div class="olrcl-prd-img"> <img [src]="imageUrl + '?path=' + list.containerName + '&name=' + list.productImage + '&width=90&height=90'"> </div>
+                <div class="olrcl-rht">
+                    <h3>{{list.productName}}</h3>
+                    <h4 *ngIf="list?.discountedAmount === null">{{(listSandbox.symbolSetting$ | async)?.symbol}} {{list.total}}</h4>
+                    <h4 *ngIf="list?.discountedAmount !== null">{{(listSandbox.symbolSetting$ | async)?.symbol}} {{list.discountedAmount}}</h4>                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-review">
+
+    <h3>{{'account.OverallRating'|translate}}</h3>
+
+    <button mat-icon-button [ngStyle]="{'color': '#ffed14'}"  *ngFor="let ratingId of ratingArr;index as i" [id]="'star_'+i" (click)="onClick(i+1)" [matTooltip]="ratingId+1" matTooltipPosition="above">
+            <mat-icon>
+              {{showIcon(i)}}
+            </mat-icon>
+    </button>
+
+
+      <div class="error" *ngIf="ratingError && submitted">{{'account.PleaseGiveRating'|translate}}</div>
+
+    <h3>{{'account.WriteYourReview'|translate}}</h3>
+
+    <textarea rows="7" #todo [(ngModel)]="review"></textarea>
+    <div class="error" *ngIf="textError && submitted">{{'account.TypeReview'|translate}}</div>
+
+
+    <div class="flex review-submit">
+        <button mat-raised-button color="primary" (click)="submit(todo.value)"> {{'account.Submit'|translate}} 
+            <i *ngIf="(sandbox.addProductReviewLoading$ | async)" class="fa fa-refresh fa-spin"></i>
+        </button>
+    </div>
+
+</div>
+</div>

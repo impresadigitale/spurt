@@ -1,0 +1,138 @@
+.card {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+    background-color: white;
+  }
+  
+  .dropdown-toggle::after {
+    display: none!important;
+  }
+  
+  .form-group {
+    margin-bottom: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  
+  .pay-mdt {
+    display: inline-block;
+    border-radius: 30px;
+    padding: 5px 10px;
+    font-size: 10px;
+    color: #484848;
+    text-transform: capitalize;
+    font-weight: 600;
+    background-color: #E5FFE5;
+  }
+  .commission {
+    background-color: #FFF4DB;
+  }
+  
+  .inactive {
+    width: 100% !important;
+  }
+  .expand-list {
+    width: calc(100% - 300px) !important;
+  }
+  .vname {
+    font-weight: 700;
+    font-size: 13px!important;
+  }
+  
+  .margin {
+    margin-top: -6px;
+    margin-bottom: 10px;
+  }
+  .product-wrap .product-table .table .custom-checkbox {
+    top: -2px;
+  }
+  
+  th{
+    color: #525252;
+  }
+  .layout-mar {
+    margin-top: 58px;
+  }
+  
+  
+  .mar {
+    margin-top: -15px
+  }
+  
+  .Artboard-1 {
+    width: 91px;
+    height: 83px;
+    background-color: #ffffff;
+  }
+  
+  
+  
+  .body {
+    background-color: white;
+  }
+  
+  ::ng-deep .delete-confirm {
+    .modal-content {
+      background-color: white !important;
+    }
+    .modal-dialog {
+      max-width: 300px !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 45% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 300px !important;
+    }
+  }
+  
+  
+  
+  .acc-table {
+  
+    .acc-tbl-close {
+      color: #b28c5c;
+      font-size: 14px;
+    }
+  
+    .table {
+      background: transparent;
+      border: solid 1px #ffecd4;
+      background-color: #fff8ef;
+    th {
+      border-top: 0px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #959595;
+    }
+    td {
+      border-top: solid 1px #ffecd4;
+      font-size: 13px;
+      font-weight: 500;
+      color: #484848;
+      vertical-align: top;
+        &.oid {
+          font-weight: bold;
+          color: #000000;
+        }
+        &.amt {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  
+  .table-responsive {
+    overflow-x: unset !important;
+  }
+  
+  :host ::ng-deep .dropdown-item.active, .dropdown-item:active {
+    color: black !important;
+    text-decoration: none !important;
+    background-color: #fff !important;
+  }
+  .lst-xpnd {
+    position: absolute;
+    right: 0px;
+  }
+
+  .products-section .toggle .tgl:checked + .tgl-btn:after {
+    background-color: #dc4d5b !important;
+}

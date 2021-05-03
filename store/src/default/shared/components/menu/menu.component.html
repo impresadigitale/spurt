@@ -1,0 +1,50 @@
+<mat-toolbar class="top-navbar mat-elevation-z2"  fxLayoutAlign="" color="primary">
+    <a (mouseover)="over()" mat-button [routerLink]="['/']" routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}" (click)="setTitle('Home')"> <img src="assets/images/home.png"> </a>
+    <a (mouseover)="over()" mat-button (click)="sendUniqueId('productFilter')" [routerLink]="['/products/', 'All']" class="colorMenu" routerLinkActive="colorMenu" [routerLinkActiveOptions]="{exact:true}" (click)="setTitle('All Products')">
+        {{'Shared.AllProducts'|translate}}
+    </a>
+    <a mat-button #button class="colorMenu" [routerLink]="['/products', category.categorySlug]" routerLinkActive="horizontal-active-link" *ngFor="let category of categories;let i=index" [routerLinkActiveOptions]="{exact:true}" [matMenuTriggerFor]="menu"
+    (mouseenter)="openResourceMenu(i, category.categoryId); recheckIfInMenu = true" (mouseleave)="closeResourceMenu(); recheckIfInMenu = false" (click)="setMainTitle(i, category)">{{category.name}}
+        <mat-icon class="caret">arrow_drop_down</mat-icon>
+    </a>
+    <mat-menu #menu="matMenu" [hasBackdrop]="false" [overlapTrigger]="false" class="mega-menu app-dropdown" panelClass="cat-menu">
+        <span (mouseenter)="recheckIfInMenu = true" 
+        (mouseleave)="closeResourceMenu(); recheckIfInMenu = false">
+        <div fxLayout="row wrap" (mouseleave)="over()"  *ngIf="((index)||(index === 0))">
+            <div fxFlex="20" fxLayout="column" class="p-1"
+                 *ngFor="let subCategory of categories[index].children" >
+                <a mat-menu-item [routerLink]="['/products', subCategory.categorySlug]" 
+                   [routerLinkActiveOptions]="{exact:true}"
+                   (click)="linkActive(categories[index], subCategory.categorySlug)"
+                   routerLinkActive="horizontal-active-link"
+                   [ngClass]="{'isActiveSub': activeSubSlug === subCategory.categorySlug}">
+                    <b>{{subCategory.name}}</b>
+                </a>
+                <mat-divider></mat-divider>
+                <div *ngIf="subCategory.children">
+                    <div *ngFor="let grandsubCategory of subCategory.children;let j=index">
+                        <a mat-menu-item [routerLink]="['/products', grandsubCategory.categorySlug]"
+                           [routerLinkActiveOptions]="{exact:true}"
+                           (click)="linkActive(categories[index], grandsubCategory.categorySlug)"
+                           routerLinkActive="horizontal-active-link"
+                           [ngClass]="{'isActiveSub': activeSubSlug === grandsubCategory.categorySlug}">
+                            {{grandsubCategory.name}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </span>
+    </mat-menu>
+    <a (mouseover)="over()" mat-button [matMenuTriggerFor]="animals" [ngClass]="{'horizontal-active-link': activeSlug === 'Service'}">Services<mat-icon class="caret">arrow_drop_down</mat-icon></a>
+    <mat-menu #animals="matMenu" [overlapTrigger]="false" class="app-dropdown service-menu" panelClass="ser-menu" >
+        <a mat-menu-item routerLink="/services" routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}">All Services</a>
+        <ng-container *ngFor="let service of listSandbox.serviceCategory$ | async">
+            <ng-container *ngIf="service && service.serviceCategoryId">
+                <a mat-menu-item [routerLink]="['/services/list/', service.serviceCategoryId, {category: service.name}]" (click)="setTitle('Service')">{{service.name}}</a>
+            </ng-container>
+        </ng-container>
+    </mat-menu>
+    <a (mouseover)="over()" mat-button routerLink="/blogs" routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}" (click)="setTitle('Blogs')">Blogs</a>
+    <a (mouseover)="over()" mat-button routerLink="/contact" routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}" (click)="setTitle('Contacts')">{{'Shared.Contact'|translate}}</a>
+
+</mat-toolbar>

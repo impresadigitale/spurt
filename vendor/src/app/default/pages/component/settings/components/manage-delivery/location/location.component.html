@@ -1,0 +1,152 @@
+
+    <h2>Delivery Location List</h2>
+    <a href="javascript:void(0)" class="add-delivery-person flex cursor" > <span (click)="addLocationPage('location-page')"><img
+        src="assets/imgs/add-plus-blue.svg">Add Delivery Location</span><span class="or-content">(or)</span><span (click)="addLocationPage('import-data')">Import Data</span></a>
+    <div class="adp-row" *ngIf="location">
+
+        <button class="close" (click)="remove('location')"><img src="assets/imgs/close.svg"> </button>
+
+        <div class="flex adp-innr-row" *ngIf="locationType === 'location-page'">
+            <div class="adp-innr-rht">
+                <form [formGroup]="locationForm">
+                    <div class="fg-row2 flex">
+                        <div class="filter-group">
+                            <p>Location Name</p>
+                            <input type="text" formControlName="name"
+                                [ngClass]="{'error-field': (locationForm.controls['name'].hasError('required') && locationForm.controls['name'].touched) && submitted}">
+                        </div>
+
+                        <div class="filter-group">
+                            <p>Pincode</p>
+                            <input appOnlyNumber type="text" formControlName="pinCode"
+                                [ngClass]="{'error-field': (locationForm.controls['pinCode'].hasError('required') && locationForm.controls['pinCode'].touched) && submitted}">
+                        </div>
+
+
+
+                        <div class="button-group loc-btn-group flex">
+                            <button class="save" (click)="addLocation()"><span><i
+                                        *ngIf="(deliverySandBox.deliveryAddLoading$ | async) || (deliverySandBox.deliveryUpdateLoading$ | async)"
+                                        class="fas fa-spinner fa-spin fa-1x"></i>
+                                    Save Changes</span></button> </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <!--rht-->
+
+        </div>
+        <div class="flex adp-innr-row" *ngIf="locationType === 'import-data'">
+            <div class="bup-file-upload">
+                <div class="flex bulk-header">
+                    <h3>Import Delivery Location</h3>
+                    <button class="ripple flex" (click)="downloadCsv()"> <img src="assets/imgs/download-white.svg"> Download
+                        CSV File </button>
+                </div>
+    
+             <div class="csv-uploads" *ngIf="!upload">
+                        <ul class="flex">
+                            <li class="flex"> <img src="assets/imgs/csv.svg"> Download CSV File </li>
+                            <li class="flex"> <img src="assets/imgs/csv.svg"> Update Location Information </li>
+                            <li class="flex"> <img src="assets/imgs/csv.svg"> Upload updated File </li>
+                        </ul>
+                        <button class="ripple cursor" (click)="uploadBtnClick()"> Upload CSV File </button>
+
+                </div> 
+
+                <div class="csv-upload flex" *ngIf="upload">
+                    <div class="browse-upload">
+                        <p>* Only .CSV files accepted</p>
+                        <div class="bu-box flex cursor">
+                            <input class="cursor" type="file" accept=".csv" (change)="onUpload($event.target.files)"
+                                >
+                            <a href="javascript:void(0)">Browse and upload Files</a>
+                        </div>
+                        <div class="flex csvname" *ngIf="fileName !== ''"> {{fileName}} </div>
+
+                    </div>
+                <div class="all-btn flex">
+                    <button class="ripple allocate" (click)="uploadSuccess()"><span><i
+                        *ngIf="deliverySandBox.uploadMainCsvLoading$ | async"
+                        class="fas fa-spinner fa-spin fa-5x"></i>Upload</span></button>
+                    <button class="ripple" (click)="reset()">Reset</button>
+                </div>
+            </div> 
+
+            </div>
+    
+        </div>
+    </div>
+    <!---->
+    <div class="dpf-row flex">
+        <p>{{(deliverySandBox.totalDeliveryCount$ | async)}} Delivery Locations found</p>
+        <input type="text" placeholder="Search Location" (keyup)="searchLocation($event.target.value)">
+    </div>
+    <!---->
+    <div class="loading" *ngIf="(deliverySandBox.deliveryLocationlistLoading$ | async)">
+        <app-loader></app-loader>
+    </div>
+    <div class="no-data"
+        *ngIf="(deliverySandBox.deliveryLocationList$ | async)?.length === 0 && (deliverySandBox.deliveryLocationlistLoaded$ | async)">
+        <span>No Delivery Locations found</span> </div>
+    <div class="table-responsive" *ngIf="(deliverySandBox.deliveryLocationlistLoaded$ | async) && (deliverySandBox.deliveryLocationList$ | async)?.length > 0">
+        <table class="table">
+            <tr>
+                <th>Delivery Location</th>
+                <th>Pincode</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let array of (deliverySandBox.deliveryLocationList$ | async)">
+                <td>{{array?.locationName}}</td>
+                <td>{{array?.zipCode}}</td>
+
+                <td >
+                    <div class="btn-group">
+                        <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-ellipsis-h"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu location-menu" role="menu">
+                            <li (click)="editLocation(array)" class="cursor"><a href="javascript:void(0)" class="flex"> <img src="assets/imgs/edit.svg"> Edit</a></li>
+                            <li  [ngbPopover]="deleteContent"
+                            placement="left"
+                            #deletePop="ngbPopover" class="cursor"><a href="javascript:void(0)" class="flex"> <img src="assets/imgs/trash.svg"> Delete</a></li>
+                  
+                        </ul>
+                    </div>
+               
+                </td>
+                <ng-template #deleteContent>
+                    <div class="style">
+                      <div class="modal-header">
+                        <h6 class="modal-title">
+                          Do you want to delete?
+                        </h6>
+                      </div>
+                  
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          data-dismiss="modal"
+                        >
+                          No
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-success"
+                          data-dismiss="modal" (click)="deleteDeliveryLocation(array?.deliveryLocationId)"
+                        >
+                          Yes
+                        </button>
+                      </div>
+                    </div>
+                  </ng-template>
+            </tr>
+        </table>
+    </div>
+    <div class="pager" style="position: absolute; bottom: 30px; right: 0;">
+        <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage" [counts]="(deliverySandBox.totalDeliveryCount$ | async)"></app-pager>
+    
+    </div>

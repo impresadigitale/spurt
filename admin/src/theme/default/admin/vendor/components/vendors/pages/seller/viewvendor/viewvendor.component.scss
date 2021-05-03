@@ -1,0 +1,70 @@
+.no-data {
+    span {
+        color: gray;
+    display: block;
+    text-align: center;
+    }
+}
+.toggle .tgl+.tgl-btn {
+    width: 90% !important;
+}
+.toggle .tgl+.tgl-btn:after {
+    left: 0px;
+    top: -3px;
+    border: 1px solid white;
+    background-color: gray
+}
+.toggle .tgl:checked+.tgl-btn:after {
+    left: 15px;
+    top: -3px;
+    background-color: #008C00;
+    border: 1px solid white;
+}
+.toggle .tgl+.tgl-btn:after,
+.toggle .tgl+.tgl-btn:before {
+    height: 20px !important;
+}
+.toggle .tgl-light+.tgl-btn {
+    background: #bdbdbd !important;
+    height: 16px !important;
+}
+.toggle .tgl+.tgl-btn {
+    width: 26% !important;
+    margin: auto;}
+
+.toggle .tgl+.tgl-btn:after {
+    left: -4px;
+    top: -3px;
+    border: 1px solid white;
+    background-color: gray
+}
+
+.toggle .tgl:checked+.tgl-btn:after {
+    left: 15px;
+    top: -3px;
+    background-color: #008C00;
+    border: 1px solid white;
+}
+
+.toggle .tgl+.tgl-btn:after,
+.toggle .tgl+.tgl-btn:before {
+    height: 20px !important;
+}
+
+.toggle .tgl-light+.tgl-btn {
+    background: #bdbdbd !important;
+    height: 16px !important;
+}
+
+.toggle .tgl-light+.tgl-btn {
+    padding: 1px !important;
+}
+.dload {
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #f5f8ff;
+    border: none;
+}
+

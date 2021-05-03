@@ -1,0 +1,19 @@
+<div class="services-row flex">
+
+    <div class="left-nav-services">
+        <h3>All Services</h3>
+        <span *ngFor="let service of listSandbox.serviceCategory$ | async">
+            <a class="main-child" href="javascript:void(0)" routerLinkActive="active" [routerLink]="['list/', service.serviceCategoryId, {category: service.name}]" >{{service.name}}</a>
+                <a class="sub-child" href="javascript:void(0)" routerLinkActive="active" [routerLink]="['list/', child.serviceCategoryId, {category: child.name}]" *ngFor="let child of service.children">{{child.name}}</a>
+        </span>
+
+    </div>
+    <!---->
+
+    <div class="services-right-wrap">
+
+        <router-outlet></router-outlet>
+
+    </div>
+
+</div>

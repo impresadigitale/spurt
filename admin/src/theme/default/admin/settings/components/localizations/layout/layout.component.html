@@ -1,0 +1,12 @@
+<div class="tab">
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/countries']" class="tablinks" [appHideIfUnauthorized]="'list-country'">Country</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/zone']" class="tablinks" [appHideIfUnauthorized]="'list-zone'">Zone</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/delivery-location']" class="tablinks">Delivery Location</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/language']" class="tablinks" [appHideIfUnauthorized]="'list-language'">Language</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/currency']" class="tablinks" [appHideIfUnauthorized]="'list-currency'">Currency</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/tax']" class="tablinks" [appHideIfUnauthorized]="'list-tax'">Tax</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/order-status']" class="tablinks" [appHideIfUnauthorized]="'list-order-status'">Order Status</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/stock-status']" class="tablinks" [appHideIfUnauthorized]="'list-stock-status'">Stock Status</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/local/emailtemp']" class="tablinks" [appHideIfUnauthorized]="'list-email-template'">Email Template</button>
+</div>
+<router-outlet></router-outlet>

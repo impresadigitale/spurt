@@ -1,0 +1,41 @@
+.validationcolor{
+
+  ::ng-deep .mat-form-field-underline, ::ng-deep .mat-form-field-ripple {
+    background-color: red !important;
+    color: red !important;
+  }
+  ::ng-deep .mat-form-field-empty.mat-form-field-label {
+    color: red !important;
+  }
+  ::ng-deep .mat-form-field-label >  .mat-form-field-required-marker {
+    color: red  !important;
+  }
+}
+::ng-deep .mat-form-field-underline, ::ng-deep .mat-form-field-ripple {
+  background-color: gray !important;
+  color: gray !important;
+}
+::ng-deep .mat-form-field-empty.mat-form-field-label {
+  color: gray !important;
+}
+::ng-deep .mat-form-field-label >  .mat-form-field-required-marker {
+  color: gray  !important;
+}
+.head-style {
+  margin-left: 25% !important;
+}
+.textAlign{
+  color: black;
+  cursor: default !important;
+}
+.text-data {
+  margin: 8px;
+  cursor: pointer !important;
+}
+.pwd-error {
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  font-size: 10px;
+}

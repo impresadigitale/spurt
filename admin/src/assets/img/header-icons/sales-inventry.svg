@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Sales Inventry</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g filter="url(#filter-1)" id="Inventry">
+            <g>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" x="2.63078125" y="11.7391406" width="5.21738281" height="1.30433594"></rect>
+                <path d="M15.2394531,9.13042969 L15.2394531,0 L4.36992188,0 L4.36992188,9.13042969 L0.0220703125,9.13042969 L0.0220703125,20 L19.5873047,20 L19.5873047,9.13042969 L15.2394531,9.13042969 Z M5.67425781,1.30433594 L13.9351172,1.30433594 L13.9351172,9.13042969 L5.67425781,9.13042969 L5.67425781,1.30433594 Z M9.15253906,18.6956641 L1.32644531,18.6956641 L1.32644531,10.4347656 L9.15253906,10.4347656 L9.15253906,18.6956641 L9.15253906,18.6956641 Z M18.2829688,18.6956641 L10.456875,18.6956641 L10.456875,10.4347656 L18.2829688,10.4347656 L18.2829688,18.6956641 L18.2829688,18.6956641 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" x="11.7612109" y="11.7391406" width="5.21738281" height="1.30433594"></rect>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" x="6.97859375" y="2.60871094" width="5.6521875" height="1.30433594"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

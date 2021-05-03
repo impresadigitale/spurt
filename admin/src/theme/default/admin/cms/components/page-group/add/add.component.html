@@ -1,0 +1,71 @@
+<app-pages-layout></app-pages-layout>
+<div class="row products-section " style="margin:unset">
+    <div class="col-12">
+        <div class="breadcrumbs-row noborder">
+            <div class="bc-col">
+                <ul >
+                    <li><a href="javascript:void(0)"> {{'CMS.Pages.CMS'| translate}} </a></li>
+                    <li><a href="javascript:void(0)" [routerLink]="['/cms/page-group']"> Page Group </a></li>
+                    <li> Add Group</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn ap-col-btn">
+                <button type="submit" class="btn btn-save" (click)="onSubmit()"><img
+                        src="assets/img/tick-round-white.png"> {{'CMS.Pages.Save'| translate}}
+                </button>
+                <button (click)="pagesCancel()" class="btn btn-cancel"><img
+                        src="assets/img/close-white-ico.png">{{'CMS.Pages.Cancel'|
+                    translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+</div>
+
+<div class="flex addproduct-wrap addgroup-wrap">
+
+    <div class="card ap-general">
+        <form (ngSubmit)="onSubmit()" [formGroup]="pageGroupForm" class="form-horizontal m-t-20">
+            <div class="ap-header">
+                {{'CMS.Pages.GeneralInformation'| translate}}
+            </div>
+            <div class="flex ap-body cmsap-body">
+
+                <div class="ap-body-col" width="49%">
+                    <div class="form-group">
+                        <label>Group Name <sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="groupName" placeholder="{{'CMS.Placeholder.PageTitle'| translate}}"
+                        [ngClass]="{'validationcolor':pageGroupForm.controls.groupName.errors && submitted==true}"/>
+                        <div class="validation-error" *ngIf=" pageGroupForm.get('groupName').hasError('required') && submitted == true">
+                            Group name is required
+                         </div>
+                         <div class="validation-error" *ngIf="pageGroupForm.get('groupName').hasError('maxlength')">
+                                Must be max 255 chracters long
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ap-body-col"  width="49%">
+                    <div class="form-group">
+                        <label>{{'CMS.Pages.Active'| translate}}<sup>*</sup></label>
+                        <select class="custom-select col-12" formControlName="status" id="inlineFormCustomSelect"
+                        [ngClass]="{'validationcolor':pageGroupForm.controls.status.errors && submitted==true}">
+                            <option value="">- -Select Active- -</option>
+                            <option value="1">{{'CMS.Pages.Yes'| translate}}</option>
+                            <option value="0">{{'CMS.Pages.No'| translate}}</option>
+                        </select>
+                        <div class="validation-error" *ngIf=" pageGroupForm.get('status').hasError('required') && submitted == true">
+                          Status is required
+                       </div>
+                    </div>
+                </div>
+            
+
+            </div>
+        </form>
+
+    </div>
+    <!--General-->
+
+</div>

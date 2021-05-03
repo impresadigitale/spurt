@@ -1,0 +1,75 @@
+<div class="blog-wrapper">
+
+    <div class="blog-detail flex" *ngIf="blogSandbox.blogDetail$ | async as blog">
+
+        <div class="bd-left">
+            <img [src]="imagePath + '?width=350&height=350&path=' + blog.imagePath + '&name=' + blog.image">
+        </div>
+        <!---->
+
+        <div class="bd-right">
+            <h2>{{blog.title}}</h2>
+            <h4>Categories : <span>{{blog.categoryName}}</span></h4>
+            <p [innerHTML]="blog.description"></p>
+          
+            <div class="bd-share">
+                <h3>{{'Blogs.Share'|translate}}</h3>
+                <ul class="flex">
+                    <li>
+                        <a [appSocialShare]="'fb'"><img style="cursor:pointer" src="assets/images/fb.png"> </a>
+                    </li>
+                    <li>
+                        <a [appSocialShare]="'email'"><img style="cursor:pointer" src="assets/images/pn.png"> </a>
+                    </li>
+                    <li>
+                        <a [appSocialShare]="'tw'"><img style="cursor:pointer" src="assets/images/tw.png"> </a>
+                    </li>
+                    <li>
+                        <a [appSocialShare]="'in'"><img style="cursor:pointer" src="assets/images/lin.png"> </a>
+                    </li>
+                    <li>
+                        <a [appSocialShare]="'rd'"><img style="cursor:pointer" src="assets/images/red.png"> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="blogs-related">
+
+        <h3>{{'Blogs.RelatedBlogs'|translate}}</h3>
+
+        <div class="flex blog-row2">
+
+            <div class="no-product-compare" *ngIf="(blogSandbox.relatedBlogList$ | async)?.length === 0 && blogSandbox.relatedBlogListLoaded$ | async">
+
+                <p><img src="assets/images/no-compare.png"></p>
+                <p>{{'Blogs.NoBlogs'|translate}}</p>
+        
+            </div>
+            <div class="blog-col-rht flex" *ngIf="(blogSandbox.relatedBlogList$ | async)?.length > 0">
+                <div class="blog-card2" *ngFor="let array of blogSandbox.relatedBlogList$ | async" (click)="goTo(array)" style="cursor:pointer">
+                    <div class="blog-img">
+                        <img [src]=" imagePath + '?path=' + array.imagePath + '&name=' + array.image + '&width=250&height=250'">
+                    </div>
+                    <div class="blog-content">
+                        <h2>{{array?.title}} </h2>
+                        <div class="flex blog-poster">
+                            <div class="bp-content">
+                                <h4>Krishnakumar</h4>
+                                <p>{{array?.createdDate | date: 'dd'}}th {{array?.createdDate | date: 'mm'}} {{array?.createdDate | date: 'yyyy'}}- 2 min read</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Content-->
+                </div>
+                <!---->
+            </div>
+
+        </div>
+        <!---->
+
+    </div>
+
+</div>

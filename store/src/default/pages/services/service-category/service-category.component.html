@@ -1,0 +1,13 @@
+
+<!--Services Partners-->
+<div class="all-services">
+    <h3>All Servies</h3>
+    <div class="flex all-services-row">
+        <div class="as-col" *ngFor="let service of listSandbox.serviceCategory$ | async" [routerLink]="['list/', service.serviceCategoryId, {category: service.name}]">
+            <img [src]="imageUrl + '?path=' + service.imagePath + '&name=' + service.image + '&width=100&height=100'" onError="this.src='/assets/images/default_image.png';">
+            <h3>{{service.name}}</h3>
+        </div>
+    </div>
+    <!--All Services Row-->
+</div>
+<!--All Services-->

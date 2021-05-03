@@ -1,0 +1,96 @@
+
+<div class="page-title">
+    <h3>Quotation Request List</h3>
+</div>
+<div class="flex search-exp">
+    <div class="search-left flex">
+        <input type="text" placeholder="Search Product Name" class="search-menu"
+            (keyup)="searchList($event.target.value)">
+    </div>
+
+</div>
+<!---->
+
+<div class="product-list-wrap">
+    <div class="loading" *ngIf="(orderSandbox.quotationListLoading$ | async)">
+        <app-loader></app-loader>
+    </div>
+    <div class="no-data"
+        *ngIf="(orderSandbox.quotationList$ | async)?.length === 0 && (orderSandbox.quotationListLoaded$ | async)">
+        <span>No cancel orders found</span> 
+    </div>
+    <div class="table-responsive "
+        *ngIf="(orderSandbox.quotationList$ | async)?.length > 0 && (orderSandbox.quotationListLoaded$ | async)">
+        <table class="table" [ngClass]="{'pay-table': (orderSandbox.downloadCsvLoading$ | async)}">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-group" title="click to export">
+                      
+                        </div>
+                    </th>
+                    <th>Product Name</th>
+                    <th class="cmsn text-center">Quantity</th>
+                    <th class="text-center">Quantity Unit</th>
+                    <th class="amt text-center">Order Total Value</th>
+                    <th class="text-center">Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let array of (orderSandbox.quotationList$ | async); let i = index;">
+                <tr>
+                    <td>
+                        <div class="form-group" title="click to export">
+                
+                        </div>
+                    </td>
+                    <td class="text-center" style="cursor: pointer; position: relative;" (click)="openCloseRow(array.quotationId)">{{array?.name}}
+                        <img class="lst-xpnd" *ngIf="rowSelected==array.quotationId" src="assets/imgs/arrow-down.svg" />
+                        <img  class="ar-dwn lst-xpnd" *ngIf="rowSelected !== array.quotationId" src="assets/imgs/next.svg" />
+
+                    </td>
+                    <td class="cmsn text-center">{{array?.quantity}}</td>
+                    <td class="text-center">{{array?.quantityUnit}}</td>
+                    <td class="amt text-center">{{array?.orderValue}}</td>
+                    <td class="text-center">{{array?.comments}}</td>
+                </tr>
+
+                <tr *ngIf="rowSelected==array.quotationId">
+                        <td colspan="7">
+                            <table class="table cust-tbl">
+                                <thead>
+                                    <tr>
+                                        <th></th>   
+                                        <th></th>                                                         
+                                        <th>Customer Name</th>
+                                        <th>Email</th>
+                                        <th>Created Date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr> 
+                                        <td></td> 
+                                        <td></td>                                                           
+                                        <td>{{array?.customerfirstName}}{{array?.customerlastName}}</td>
+                                        <td>{{array?.email}}</td>
+                                        <td>{{array?.createdDate | date: "dd MMM yyyy h:mm a"}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+            </ng-container>
+            </tbody>
+
+        </table>
+        <div class="pager" style="position: absolute; right: 0;">
+            <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage"
+              [counts]="(orderSandbox.quotationListCount$ | async)"></app-pager>
+          
+        </div>
+    </div>
+
+
+</div>

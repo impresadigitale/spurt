@@ -1,0 +1,26 @@
+<h3 class="services-title">{{currentCategory}}</h3>
+
+<div class="ms-row flex" *ngFor="let service of listSandbox.serviceList$ | async">
+    <div class="ms-col-img" [routerLink]="['/services/detail', categoryId, service.serviceId, {category: currentCategory}]"> 
+        <img *ngIf="!service.serviceImage" [src]="'./assets/images/default_image.png'">
+        <img *ngIf="service?.serviceImage &&  service?.serviceImage?.image" [src]="imageUrl + '?path=' + service?.serviceImage?.containerName + '&name=' + service?.serviceImage?.image + '&width=150&height=80'"
+        onError="this.src='/assets/images/default_image.png';"> 
+    </div>
+    <div class="ms-col-cont">
+        <h3>{{service.title}}</h3>
+        <p>{{service.price | currency}}</p>
+        <p>{{service.description | slice:0:80}}{{service.description.length > 80?'...':''}}<a href="javascript:void(0)" *ngIf="service.description.length > 80" [routerLink]="['/services/detail', categoryId, service.serviceId , {category: currentCategory}]">View More</a>            </p>
+        <div class="enq-bnt"><a href="javascript:void(0)" (click)="openEnquiryDialog(service)">Enquire Now</a></div>
+    </div>
+</div>
+<div class="no-product-compare" *ngIf="(listSandbox.serviceList$ | async)?.length === 0 && listSandbox.serviceListLoaded$ | async">
+
+    <p><img src="assets/images/no-compare.png"></p>
+    <p>No services found</p>
+
+</div>
+<div class="no-product-compare" *ngIf="listSandbox.serviceListLoading$ | async">
+
+    <app-spinner [isShow]="listSandbox.serviceListLoading$ | async"></app-spinner>
+
+</div>

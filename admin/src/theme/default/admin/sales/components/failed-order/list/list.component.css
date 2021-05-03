@@ -1,0 +1,13 @@
+
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #dc4d5b !important;
+    border: #dc4d5b !important;
+}
+
+.products-section .toggle .tgl:checked + .tgl-btn:after {
+    background-color: #dc4d5b !important;
+}
+.product-wrap .product-table .table .custom-checkbox {
+    top: 10px !important;
+  }

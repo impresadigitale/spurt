@@ -1,0 +1,30 @@
+<div class="subtoolbar customertoolbar">
+  <div class="sub-nav-menu">
+    <a
+      href="javascript:void(0)"
+      [routerLink]="['/customers/customer']"
+      [routerLinkActive]="'active'"
+    >
+      <img src="assets/img/header-icons/customer-detail.svg" />
+      {{ 'Customers.Customer.Customers' | translate }}
+    </a>
+    <a
+      href="javascript:void(0)"
+      class="disable"
+      placement="bottom"
+      ngbTooltip="{{ 'ToolTip.comingsoon' | translate }}"
+    >
+      <img src="assets/img/header-icons/customer-activity.svg" />{{
+        'Customers.RecentActivity' | translate
+      }}
+    </a>
+    <a
+      href="javascript:void(0)"
+      [routerLink]="['/customers/groups']"
+      [routerLinkActive]="'active'"
+    >
+      <img src="assets/img/header-icons/customer-group.svg" />
+      {{ 'Customers.Groups' | translate }}
+    </a>
+  </div>
+</div>

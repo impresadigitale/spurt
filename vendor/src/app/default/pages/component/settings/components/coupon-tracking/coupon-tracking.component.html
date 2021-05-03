@@ -1,0 +1,90 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="product-wrapper flex">
+
+    <div class="settings-lft">
+
+        <div class="sl-menu">
+
+            <h3 [routerLink]="['/settings/coupon']">General Details</h3>
+
+
+
+        </div>
+
+        <div class="sl-menu active">
+            <h3 [routerLink]="['/settings/delivery-location']">Modules</h3>
+            <div class="sl-menu-sub">
+                <a href="javascript:void(0)"  [routerLink]="['/settings/delivery-location']">Manage Delivery</a>
+                <a href="javascript:void(0)" class="current" [routerLink]="['/settings/coupon']">Manage Coupon</a>
+            </div>
+        </div>
+
+
+    </div>
+    <!--left-->
+
+    <div class="settings-right">
+
+        <h2 class="flex">Coupon Tracking <a href="javascript:void(0)" [routerLink]="['/settings/coupon']"> < Back </a> </h2>
+
+        <div class="flex coupon-tit">
+            {{couponList.couponCode}} <span>{{couponList.couponName}}</span>
+        </div>
+
+        <div class="flex coupon-value">
+
+            <div class="cv-lft flex">
+                <p>Coupon Value</p>
+                <h4 *ngIf="couponList.couponType == 1">{{couponList.discount}}% Percentage Discount</h4>
+                <h4 *ngIf="couponList.couponType == 2">{{couponList.discount | currency:'INR':'symbol':'3.0'}} Amount Discount</h4>
+            </div>
+
+            <div class="cv-rht flex">
+                <h5>{{couponList.startDate | date: 'dd/MM/yyyy'}}  - {{couponList.endDate | date: 'dd/MM/yyyy'}}</h5>
+                <h4>Days Left <span>{{couponList.leftDays}}</span> </h4>
+                <span *ngIf="couponList.isActive == 1" class="status">Active</span>
+                <span *ngIf="couponList.isActive == 0" class="inact-sts">In-Active</span>
+            </div>
+
+        </div>
+
+        <!-- loader -->
+        <div class="loading" *ngIf="(sandbox.couponUsageListLoading$ | async)">
+            <app-loader></app-loader>
+       </div>
+
+        <!-- no items -->
+
+        <div class="no-data"
+            *ngIf="(sandbox.couponUsageList$ | async)?.length === 0 && (sandbox.couponUsageListLoaded$ | async)">
+        <span>No Details Found</span>
+        </div>
+
+
+        <div class="table-responsive" *ngIf="(sandbox.couponUsageListLoaded$ | async) && (sandbox.couponUsageList$ | async)?.length > 0">
+            <table class="table">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Product</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Actual Price</th>
+                    <th class="text-right">Discounted Price</th>
+                </tr>
+
+                <tr *ngFor="let list of sandbox.couponUsageList$ | async">
+                    <td class="ordid">{{list.orderProductPrefixId}}</td>
+                    <td>{{list.shippingFirstName}}</td>
+                    <td>{{list.productName}}</td>
+                    <td class="text-right">{{list.quantity}}</td>
+                    <td class="text-right">{{list.amount}}</td>
+                    <td class="text-right">{{list.discountedPrice}}</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <!--left-->
+
+</div>

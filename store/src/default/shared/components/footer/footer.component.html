@@ -1,0 +1,62 @@
+<footer>
+    <div class="theme-container ftr-row">
+        <div class="ftr-top flex">
+            <div class="ftr-col" *ngFor="let list of  listSandbox.pageList$ | async">
+                <h3>{{list.groupName | uppercase}}</h3>
+                <div class="ftr-links">
+                    <ng-container *ngFor="let item of list.page">
+                        <a href="javascript:void(0)" [routerLink]="['/page-detail', item.slugName]">
+                            {{item.title}}
+                        </a>
+                    </ng-container>
+                    <ng-container *ngIf="list.groupName === 'Customer Experience'">
+                        <a href="javascript:void(0)" [routerLink]="['/track-order']">Track Order</a>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="ftr-col ftr-col-addr" *ngIf="(listSandbox.settingDetail$ | async) as contact">
+                <h3>{{'Shared.CONTACTINFORMATION'|translate}}</h3>
+                <div class="ftr-links">
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mt-2 ">
+                        <mat-icon class="mr-1">location_on</mat-icon>
+                        <span>{{contact.storeAddress}}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mt-1 ">
+                        <mat-icon class="mr-1">call</mat-icon>
+                        <span>{{contact.storeTelephone}}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mt-1 ">
+                        <mat-icon class="mr-1">mail_outline</mat-icon>
+                        <span class="email">{{contact.storeEmail}}</span>
+                    </p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="mt-1 ">
+                        <mat-icon class="mr-1">schedule</mat-icon>
+                        <span>{{'Shared.DateTime'|translate}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="ftr-col ftr-col-addr" fxFlex="100" fxFlex.gt-sm="20" ngClass.sm="mt-2" ngClass.xs="mt-2" *ngIf="(listSandbox.settingDetail$ | async) as contact">
+                <h3 class="col-title">{{'Shared.SOCIALMEDIA'|translate}}</h3>
+                <div class="ftr-links-social flex">
+                    <a href="javascript:void(0)" (click)="openLink(contact.facebook)"><img src="assets/images/others/facebook.png"></a>
+                    <a href="javascript:void(0)" (click)="openLink(contact.twitter)"><img src="assets/images/others/twitter.png"></a>
+                    <a href="javascript:void(0)" (click)="openLink(contact.google)"><img src="assets/images/others/google+.png"></a>
+                </div>
+            </div>
+            <div class="android-div">
+                <img class="android-img" src="assets/images/others/android.png" (click)="downloadApp()">
+           </div>
+            
+            <!-- col -->
+        </div>
+      
+        <!--  -->
+        <div class="ftr-btm flex">
+            <p>
+                © Copyright 2020 Piccosoft Software Labs India Pvt Ltd. All Rights Reserved.
+                <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=4tpTsrfganjZ23O45uaG3YZd7Ie6Hr6YBBHZvpPD5ZeBmPtzjQn3WN3G6rAV"></script></span>
+            </p>
+            <p>Powered by <a href="https://spurtcommerce.com" target="_blank">spurtcommerce</a>.</p>
+        </div>
+    </div>
+</footer>

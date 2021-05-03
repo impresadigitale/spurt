@@ -1,0 +1,37 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="product-wrapper flex">
+
+    <div class="settings-lft">
+
+        <div class="sl-menu">
+
+            <h3 [routerLink]="['/settings/list']">General Details</h3>
+        </div>
+        <div class="sl-menu active">
+            <h3 [routerLink]="['/settings']">Modules</h3>
+            <div class="sl-menu-sub">
+                <a href="javascript:void(0)"  class="current" [routerLink]="['/settings']">Manage Delivery</a>
+                <a href="javascript:void(0)" [routerLink]="['/settings/coupon']">Manage Coupon</a>
+            </div>
+        </div>
+    </div>
+    <!--left-->
+
+    <div class="settings-right">
+        <ul class="nav nav-tabs settings-nav-tabs flex" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" [routerLinkActive]="'active'" id="location-tab" data-toggle="tab" [routerLink]="['/settings/delivery-location']" role="tab"
+                    aria-controls="location" aria-selected="false">Delivery Location</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" [routerLinkActive]="'active'" id="person-tab" data-toggle="tab" [routerLink]="['/settings/delivery-person']" role="tab"
+                    aria-controls="person" aria-selected="true">Delivery Person</a>
+            </li>
+
+        </ul>
+        <div class="tab-content bd-tab-content" id="myTabContent">
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

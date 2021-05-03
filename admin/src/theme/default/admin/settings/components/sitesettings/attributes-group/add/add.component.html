@@ -1,0 +1,110 @@
+<form novalidate [formGroup]="groupForm">
+  <div class="row products-section var-top" style="margin:unset">
+    <div class="col-12">
+      <div class="breadcrumbs-row noborder">
+        <div class="bc-col">
+          <ul>
+            <li> <a href="javascript:void(0)"> {{'Settings.SiteSettings.SiteSettings' | translate}} </a> </li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              [routerLink]="['/settings/sitesettings/attributes-group']"
+            >
+              Attributes Group
+            </a>
+          </li>
+          <li>Add Group</li>
+        </ul>
+        </div>
+        <div class="bc-col-btn ap-col-btn">
+          <button
+            class="btn btn-save"
+            (click)="addGroup()"
+          >
+            <img src="assets/img/tick-round-white.png" />
+            {{ 'catalog.categories.Save' | translate }}
+          </button>
+          <button class="btn btn-cancel" [routerLink]="['/settings/sitesettings/attributes-group']">
+            <img src="assets/img/close-white-ico.png" />
+            {{ 'catalog.categories.Cancel' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--Breadcrumbs-->
+  </div>
+
+  <div class="flex addproduct-wrap addpoptions-wrap add-var-wrap">
+    <div class="card ap-general">
+      <div class="ap-header">
+      Add Attribute Group
+      </div>
+      <div class="flex ap-body">
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >Attribute Group Name
+              <sup>*</sup></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Group Name"
+              formControlName="groupName"
+              [ngClass]="{
+                validationcolor:
+                groupForm.get('groupName').hasError('required') &&
+                groupForm.get('groupName').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+              class="error"
+              *ngIf="
+              groupForm.get('groupName').hasError('required') &&
+              groupForm.get('groupName').touched &&
+                submittedValues == true
+              "
+            >
+              Group Name is required
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >{{ 'catalog.product.SortOrder' | translate }}<sup>*</sup></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Sort Order"
+              appOnlyNumber
+              [formControl]="sortOrder"
+              [ngClass]="{
+                validationcolor:
+                groupForm.get('sortOrder').hasError('required') &&
+                groupForm.get('sortOrder').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+              class="error"
+              *ngIf="
+              groupForm.get('sortOrder').hasError('required') &&
+              groupForm.get('sortOrder').touched &&
+                submittedValues == true
+              "
+            >
+              {{ 'catalog.Error.SortOrderRequired' | translate }}
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+      </div>
+    </div>
+    <!--General-->
+  </div>
+</form>

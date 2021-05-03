@@ -1,0 +1,28 @@
+<div class="subtoolbar salestoolbar">
+    <div class="sub-nav-menu">
+        <a href="javascript:void(0)" [appHideIfUnauthorized]="'list-order'" [routerLink]="['/sales/orders']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-order.svg"> {{'Sales.Orders.Orders'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/backorder']" [appHideIfUnauthorized]="'sales-payments'" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-back-orders.svg"> Backorders
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/failed-order']" [appHideIfUnauthorized]="'sales-payments'" [routerLinkActive]="'active'">
+            <img src="assets/img/orders-ico.png"> Failed Orders
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/payments']" [appHideIfUnauthorized]="'sales-payments'" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-payment.svg"> Payments
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/archive-payments']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-archive-payment.svg"> Archive Payments
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/inventory-products']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-inventry.svg"> Inventory
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/cancel-orders']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-cancel-request.svg"> Cancel Requests
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/quotation-requests']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/sales-quotation-request.svg"> Quotation Requests
+        </a>
+    </div>
+</div>

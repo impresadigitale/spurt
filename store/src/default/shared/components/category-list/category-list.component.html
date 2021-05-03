@@ -1,0 +1,23 @@
+<mat-expansion-panel *ngFor="let category of subCategory; let i = index" [expanded]="(isClicked[category.categoryId]) || ((listSandBox.getactiveCategoryID$|async) ==category.categoryId) || (activecategory==category.categoryId)">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h4 [ngClass]="{'horizontal-active-link':(isClicked[category.categoryId]) || ((listSandBox.getactiveCategoryID$|async) ==category.categoryId) || (activecategory==category.categoryId) || categorySlug === category.categorySlug }">
+                {{category.name}}</h4>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div *ngIf="category.children && category.children.length>0" class="sub-category">
+        <div class="category" *ngFor="let subCategories of category.children; let i = index">
+
+            <button mat-menu-item [ngClass]="{'active':isClicked[subCategories.categoryId] || categorySlug === subCategories.categorySlug}" (click)="changeCategory(subCategories.categoryId,category.categoryId, subCategories.categorySlug )">
+                <span>{{subCategories.name}}</span>
+            </button>
+            <div *ngIf="subCategories.children && subCategories.children.length>0" class="sub-category">
+                <div class="category" *ngFor="let grandCategories of subCategories.children; let i = index">
+                    <button mat-menu-item [ngClass]="{'active':isClicked[grandCategories.categoryId]}" (click)="changeCategory(grandCategories.categoryId,category.categoryId, grandCategories.categorySlug)">
+                        <span>{{grandCategories.name}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-expansion-panel>

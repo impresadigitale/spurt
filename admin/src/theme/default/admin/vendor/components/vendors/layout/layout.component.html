@@ -1,0 +1,16 @@
+<div class="vendor-sidebar">
+    <a href="javascript:void(0)" class="flex tip" ngbTooltip="vendor" placement="right" [routerLink]="['/vendors/vendor/seller']" [routerLinkActive]="'active'">
+    <img src="assets/img/header-icons/marketplace-vendor-list.svg"  />
+</a>
+<a href="javascript:void(0)" class="flex" ngbTooltip="products" placement="right" [routerLink]="['/vendors/vendor/product']" [routerLinkActive]="'active'">
+    <img src="assets/img/header-icons/marketplace-vendor-product.svg"  />
+</a>
+<a href="javascript:void(0)" class="flex" ngbTooltip="settings" placement="right"  [routerLink]="['/vendors/vendor/settings']" [routerLinkActive]="'active'">
+    <img src="assets/img/header-icons/marketplace-vendor-setting.svg" />
+</a>
+
+</div>
+<div class="vendor-wrapper">
+<app-vendor-header></app-vendor-header>
+<router-outlet></router-outlet>
+</div>

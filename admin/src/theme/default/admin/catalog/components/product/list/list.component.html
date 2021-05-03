@@ -1,0 +1,360 @@
+<div class="row products-section products-sub-section">
+  <div class="col-12 ">
+    <div class="breadcrumbs-row">
+      <div class="bc-col">
+        <ul>
+          <li>
+            <a> {{ 'catalog.categories.Catalog' | translate }} </a>
+          </li>
+          <li>{{ 'catalog.product.Products' | translate }}</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn" >
+        <button class="btn" [routerLink]="['/catalog/product/add']" [queryParams]="filterParams" [appHideIfUnauthorized]="'create-product'">
+          <img src="assets/img/add-white-ico.png" />{{
+            'catalog.product.AddProduct' | translate
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+  <div class="col-12">
+    <div class="flex filter-row">
+      <div class="filter-lft">
+        <div class="toggle">
+          <p>{{ 'catalog.product.Filters' | translate }}</p>
+          <input
+            class="tgl tgl-light"
+            id="cb1"
+            type="checkbox"
+            [checked]="true"
+            (change)="changeFilter($event)"
+          />
+          <label class="tgl-btn" for="cb1"></label>
+        </div>
+        <div class="order-status">
+          <p>{{ 'Sales.Orders.Status' | translate }}</p>
+          <li style="list-style: none">
+            <span
+              style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"
+            ></span
+            >Active
+            <span
+              style="display: inline-block;width: 14px;height: 16px;margin-left: 3px;margin-right: 7px;vertical-align: middle;background-color: #f14e6e;"
+            ></span
+            >In Active
+          </li>
+        </div>
+      </div>
+      <!--Lft-->
+      <div class="filter-nav-list"  >
+        <ul class="flex">
+      
+          <li
+            *ngIf="filterDataId.length > 0"
+            style="margin-left: 15px;"
+            [ngbPopover]="deleteContent1"
+            placement="left"
+            #deletePop="ngbPopover" [appHideIfUnauthorized]="'delete-product'"
+          >
+            <a
+              ><img src="assets/img/delete-ico.png" />{{
+                'catalog.nav.Delete' | translate
+              }}
+            </a>
+          </li>
+        
+          <li *ngIf="filterDataId.length > 0" [appHideIfUnauthorized]="'export-product'">
+            <a (click)="exportExcel()" placement="top-right">
+              <img src="assets/img/export-ico.png" />
+              {{ 'catalog.product.Export' | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!--Right-->
+    </div>
+  </div>
+</div>
+<div class="flex product-wrap example-full-width">
+  <div *ngIf="buttoncheck == true" class="filter-section">
+    <div class="w3-container w3-animate-left">
+      <!--FILTER-->
+      <app-catalog-product-filter
+        (progressEmits)="receiveProgress($event)"
+        [pageSize]="pageSize"
+      ></app-catalog-product-filter>
+    </div>
+  </div>
+  <!--LIST-->
+  <div class="product-table" [ngClass]="{ changesize: buttoncheck == true }">
+    <div class="table-responsive" >
+      <table class="table" *ngIf="(productSandbox.productList$ | async)?.length > 0 && (productSandbox.productListLoaded$ | async)">
+        <thead>
+          <tr>
+            <th scope="col" width="5%"  [appHideIfUnauthorized]="'delete-product' || 'export-product'">
+              <div class="form-group">
+                  <div class="custom-control custom-checkbox mr-sm-2">
+                      <input
+                        *ngIf="productSandbox.productList$ | async as products"
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="checkbox1"
+                        (change)="selectAll()"
+                        [(ngModel)]="selectedAll"
+                      />
+                      <label class="custom-control-label" for="checkbox1"></label>
+                    </div>
+              </div>
+            </th>
+            <th scope="col">{{ 'catalog.product.Image' | translate }}</th>
+            <th scope="col">{{ 'catalog.product.Sku' | translate }}</th>
+            <th scope="col" width="20%">
+              {{ 'catalog.product.ProductsName' | translate }}
+            </th>
+            <th scope="col">{{ 'catalog.product.Price' | translate }}</th>
+            <th scope="col" width="100px" [appHideIfUnauthorized]="'make-feature'">
+              {{ 'catalog.product.Feature' | translate }}
+            </th>
+            <th scope="col" width="100px" [appHideIfUnauthorized]="'make-today-deal'">Today Deals</th>
+            <th scope="col" [appHideIfUnauthorized]="'view-product' || 'delete-product' || 'edit-product'">{{ 'catalog.product.Action' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let product of productListArray;
+              let i = index
+            "
+          >
+            <th scope="row" [appHideIfUnauthorized]="'delete-product' || 'export-product'">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    (change)="checkIfAllSelected()"
+                    id="{{ product.productId }}"
+                    [ngModelOptions]="{ standalone: true }"
+                    [(ngModel)]="product.selected"
+                  />
+                  <label
+                    class="custom-control-label"
+                    for="{{ product.productId }}"
+                  ></label>
+                </div>
+              </div>
+            </th>
+            <td
+              style="cursor: pointer"
+              [routerLink]="['/catalog/product/edit', product.productId]" [queryParams]="filterParams"            >
+              <img
+                [src]="
+                  imageUrl +
+                  '?path=' +
+                  product.productImage.containerName +
+                  '&name=' +
+                  product.productImage.image +
+                  '&width=60&height=60'
+                "
+                onError="this.src='/assets/error-images/Load-icon-Products.png';"
+                
+              />
+              
+            </td>
+            <td
+              style="cursor: pointer"
+              [routerLink]="['/catalog/product/edit', product.productId]" [queryParams]="filterParams"            >
+              {{ product.sku }}
+              <div *ngIf="product.isActive === 1">
+                <span
+                class="tag-active"
+
+                  style="width: 60px;display: inline-block;padding: 1px 4px; "
+                  >{{ 'Settings.Role.Active' | translate }}</span
+                >
+              </div>
+              <div *ngIf="product.isActive === 0">
+                <span
+                class="tag-inactive"
+
+                  style="width: 63px;display: inline-block;padding: 1px 4px; "
+                  >{{ 'Settings.Role.InActive' | translate }}</span
+                >
+              </div>
+            </td>
+            <td
+              style="cursor: pointer"
+              [routerLink]="['/catalog/product/edit', product.productId]" [queryParams]="filterParams"            >
+              {{ product.name }}
+            </td>
+
+            <td
+              *ngIf="product.flag === 1"
+              style="cursor: pointer;"
+              [routerLink]="['/catalog/product/edit', product.productId]" [queryParams]="filterParams"            >
+              <p *ngIf="product.flag == 1">
+                <del
+                  >{{
+                    product.price
+                      | currencysymbol: (commonSandbox.settings$ | async)
+                  }}
+                </del>
+              </p>
+              <p style="color: red" *ngIf="product.flag == 1">
+                {{
+                  product.pricerefer
+                    | currencysymbol: (commonSandbox.settings$ | async)
+                }}
+              </p>
+            </td>
+            <td
+              *ngIf="product.flag === 0"
+              style="cursor: pointer;"
+              [routerLink]="['/catalog/product/edit', product.productId]" [queryParams]="filterParams"            >
+              <p *ngIf="product.pricerefer">
+                {{
+                  product.pricerefer
+                    | currencysymbol: (commonSandbox.settings$ | async)
+                }}
+              </p>
+              <p *ngIf="!product.pricerefer">
+                {{
+                  product.price
+                    | currencysymbol: (commonSandbox.settings$ | async)
+                }}
+              </p>
+            </td>
+            <td  [appHideIfUnauthorized]="'make-feature'">
+              <div class="toggle">
+                <input
+                  class="tgl tgl-light"
+                  id="{{ i }}"
+                  [(ngModel)]="product.isFeatured"
+                  (change)="onFilterChange($event, product)"
+                  type="checkbox"
+                />
+                <label class="tgl-btn" for="{{ i }}"></label>
+              </div>
+            </td>
+            <td  [appHideIfUnauthorized]="'make-today-deal'">
+              <div class="toggle">
+                <input
+                  class="tgl tgl-light"
+                  id="{{ product.name }}"
+                  [(ngModel)]="product.todaydeals"
+                  (change)="todayDealsChange($event, product)"
+                  type="checkbox"
+                />
+                <label class="tgl-btn" for="{{ product.name }}"></label>
+              </div>
+            </td>
+
+            <td >
+              <i 
+              *ngIf="product.isActive === 1" 
+                style="cursor: pointer; font-size: 15px"
+                class="fas fa-globe globe_icon"
+                (click)="product_Details(product.productSlug)" [appHideIfUnauthorized]="'view-product'"
+              ></i>
+
+              <a
+                class="globe_icon"
+                style="cursor: pointer"
+                [routerLink]="['/catalog/product/edit', product.productId]" [queryParams]="filterParams" [appHideIfUnauthorized]="'edit-product'"
+              >
+                <img src="assets/img/edit-ico.png" />
+              </a>
+
+              <i
+                [ngbPopover]="deleteContent"
+                placement="bottom"
+                #deletePop="ngbPopover"
+                style="margin-left: -2px; cursor: pointer"
+                class="fas fa-trash globe_icon" [appHideIfUnauthorized]="'delete-product'"
+              >
+                <ng-template #deleteContent>
+                  <div class="style">
+                    <div class="modal-header">
+                      <h6 class="modal-title" style="margin-left: 17%;">
+                        {{ 'catalog.product.DoYouWantToDelete' | translate }}
+                      </h6>
+                    </div>
+
+                    <div class="modal-footer" style="margin-right: 23%;">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="deletePop.close()"
+                        data-dismiss="modal"
+                      >
+                        {{ 'catalog.product.No' | translate }}
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="deleteProduct(product.productId)"
+                        data-dismiss="modal"
+                      >
+                        {{ 'catalog.product.Yes' | translate }}
+                      </button>
+                    </div>
+                  </div> 
+                </ng-template>
+              </i>
+              <a class="globe_icon" style="cursor: pointer" (click)="viewQuestion(product.productId)">
+                <img style="width: 25px; height: 20px"    
+                 src="assets/img/question.svg" />
+                </a>
+            
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="no_data"
+        *ngIf="(productSandbox.productList$ | async)?.length == 0 && (productSandbox.productListLoaded$ | async)"
+      >
+        <p>{{ 'Sales.Orders.datanotfound' | translate }}</p>
+      </div>
+    </div>
+    <mat-paginator
+      [length]="productSandbox.productCount$ | async"
+      [pageSize]="pageSize"
+      [pageIndex]="index"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[pageSize]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</div>
+<ng-template #deleteContent1>
+  <div class="style">
+    <div class="modal-header">
+      <h6 class="modal-title" style="margin-left: 17%;">
+        Do you want to delete ?
+      </h6>
+    </div>
+
+    <div class="modal-footer" style="margin-right: 23%;">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deletePop.close()"
+        data-dismiss="modal"
+      >
+        No
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="bulkDelete()"
+        data-dismiss="modal"
+      >
+        Yes
+      </button>
+    </div>
+  </div>
+</ng-template>

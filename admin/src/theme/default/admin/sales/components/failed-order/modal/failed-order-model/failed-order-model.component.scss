@@ -1,0 +1,99 @@
+
+.style_popup {
+    width:  50% !important;
+}
+
+.modal-content {
+    background-color: white !important;
+    border: none !important;
+    height: 450px !important;
+  }
+
+  .modal-footer {
+      border-top: none !important;
+  }
+
+
+  .modal-header{
+    border-bottom: none !important;
+  }
+
+  .close{
+    border: none;
+    outline: none;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .main-form {
+    margin-top: 10px;
+    padding: 10px;
+    background: #e5e5e5;
+    .section {
+        width: 100%;
+      margin: 0 auto;
+      display: flex;
+    }
+    
+    .column {
+      margin: 10px;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0;
+    }
+  
+    textarea {
+      width: 100%;
+      height: 60px;
+    }
+  }
+
+  .modal-body {
+    height: 80% !important;
+    overflow-y: auto !important;
+
+    .foot{
+      margin-top: 10px;
+      text-align: right;
+    }
+}
+
+.error {
+  color: red;
+}
+
+
+
+  //spinner
+  .spinner-button {
+    font-size: unset;
+    align-items: center;
+    justify-content: center;
+    }
+
+    mat-spinner {
+    margin-top: -2px;
+    display: inline-flex;
+    color: white;
+
+    + span {
+        padding-left: 10px;
+        padding-bottom: 5px;
+    }
+    }
+
+.error {
+    color:red;
+}
+
+.spinner-button ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke:#fff;
+}

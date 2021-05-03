@@ -1,0 +1,58 @@
+<div class="product-wrapper">
+
+    <div class="product-left" [ngClass]="{'produt-left-close' : !sideMenuOpen}">
+    <div [ngClass]="{'data-none' : !sideMenuOpen}">
+        <ul class="flex product-count" >
+            <li>
+                <span>{{(productSandbox.totalProductCount$ | async)}}</span>
+                <p>Products</p>
+            </li>
+            <li>
+                <span>{{(productSandbox.activeProductCount$ | async)}}</span>
+                <p>Active</p>
+            </li>
+            <li>
+                <span>{{(productSandbox.inActiveProductCount$ | async)}}</span>
+                <p>Inactive</p>
+            </li>
+        </ul>
+
+        <div class="flex add-btn">
+            <button class="ripple flex" [routerLink]="['/products/add']"> <img src="assets/imgs/add-blue.svg"> Add
+                Product </button>
+        </div>
+
+        <div class="manage-products">
+            <h3><span>Manage</span> Products</h3>
+            <ul>
+                <li routerLinkActive="active"><a  href="javascript:void(0)" [routerLink]="['/products/list']" class="">Product List</a></li>
+                <li routerLinkActive="active"><a class="cursor" href="javascript:void(0)" [routerLink]="['/products/new-lists']">Newly Added</a></li>
+                <li routerLinkActive="active"><a class="cursor" href="javascript:void(0)" [routerLink]="['/products/active-lists']">Active Products</a></li>
+                <li routerLinkActive="active"><a class="cursor" href="javascript:void(0)" [routerLink]="['/products/inactive-lists']">Inactive Products</a></li>
+            </ul>
+        </div>
+
+        <div class="product-para flex">
+            <p>Spurtcommerce has a seamless product management module where, Vendor has a choice of keeping the products active for sale or make it in-active when the product is out of stock. You can also update the prices of several products at a time, with bulk price update feature. Also, you can see the history of price changes for a product. If you want to get the list of products, you can import it into an excel sheet too. </p>
+            <img src="assets/imgs/bitmap.jpg">
+        </div>
+    </div>
+        <div class="action cursor" title="Expand or collapse the side navigation menu" (click)="closeSideMenu()">
+            <i *ngIf="!sideMenuOpen" class="fa fa-bars cursor" aria-hidden="true"></i>
+            <i *ngIf="sideMenuOpen" class="fa fa-angle-left cursor" aria-hidden="true"></i>
+        </div>
+    </div>
+    <!--left-->
+
+    <div class="product-right" [ngClass]="{'product-full' : !sideMenuOpen}">
+
+        <app-breadcrumbs></app-breadcrumbs>
+
+<router-outlet></router-outlet>
+
+    </div>
+    <!--left-->
+
+</div>
+
+

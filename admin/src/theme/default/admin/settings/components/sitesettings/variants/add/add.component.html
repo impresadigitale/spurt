@@ -1,0 +1,212 @@
+<form novalidate [formGroup]="variantsForm">
+  <div class="row products-section var-top" style="margin:unset">
+    <div class="col-12">
+      <div class="breadcrumbs-row noborder">
+        <div class="bc-col">
+          <ul>
+            <li>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['/settings/sitesettings/variants']"
+              >
+                Variants
+              </a>
+            </li>
+            <li> Add Variant</li>
+          </ul>
+        </div>
+        <div class="bc-col-btn ap-col-btn">
+          <button
+            class="btn btn-save"
+            (click)="addVariants(variantsForm.value)"
+          >
+            <img src="assets/img/tick-round-white.png" />
+            {{ 'catalog.categories.Save' | translate }}
+          </button>
+          <button class="btn btn-cancel" (click)="cancel()">
+            <img src="assets/img/close-white-ico.png" />
+            {{ 'catalog.categories.Cancel' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--Breadcrumbs-->
+  </div>
+
+  <div class="flex addproduct-wrap addpoptions-wrap add-var-wrap">
+    <div class="card ap-general">
+      <div class="ap-header">
+        Add Variant
+      </div>
+      <div class="flex ap-body">
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >Variant Name
+              <sup>*</sup></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Variant Name"
+              formControlName="optionName"
+              [ngClass]="{
+                validationcolor:
+                  variantsForm.get('optionName').hasError('required') &&
+                  variantsForm.get('optionName').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+              class="error"
+              *ngIf="
+                variantsForm.get('optionName').hasError('required') &&
+                variantsForm.get('optionName').touched &&
+                submittedValues == true
+              "
+            >
+              Variant name is required
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{ 'catalog.productOption.Type' | translate }}</label>
+            <select
+              class="custom-select col-12"
+              id="inlineFormCustomSelect"
+              formControlName="type"
+            >
+              <option value="">{{
+                'catalog.productOption.SelectType' | translate
+              }}</option>
+              <option *ngFor="let types of optionsArray" [value]="types">{{
+                types
+              }}</option>
+            </select>
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >{{ 'catalog.product.SortOrder' | translate }}<sup>*</sup></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Sort Order"
+              appOnlyNumber
+              [formControl]="sortOrder"
+              [ngClass]="{
+                validationcolor:
+                  variantsForm.get('sortOrder').hasError('required') &&
+                  variantsForm.get('sortOrder').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+              class="error"
+              *ngIf="
+                variantsForm.get('sortOrder').hasError('required') &&
+                variantsForm.get('sortOrder').touched &&
+                submittedValues == true
+              "
+            >
+              {{ 'catalog.Error.SortOrderRequired' | translate }}
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+
+        <div formArrayName="optionValue" class="option-table">
+          <table>
+            <tr>
+              <th>Variant Value Name</th>
+              <th>{{ 'catalog.product.SortOrder' | translate }}</th>
+              <th></th>
+            </tr>
+          </table>
+
+          <div
+            *ngFor="
+              let options of variantsForm.controls.optionValue['controls'];
+              let i = index
+            "
+            [formGroupName]="i"
+          >
+            <div>
+              <table class="table-bordered">
+                <tr>
+                  <td>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Option Value Name"
+                        [ngClass]="{
+                          validationcolor:
+                            options.controls.optionNameImage.hasError(
+                              'required'
+                            ) && submittedValues == true
+                        }"
+                        formControlName="optionNameImage"
+                      />
+                      <div
+                        class="error"
+                        *ngIf="
+                          options.controls.optionNameImage.hasError(
+                            'required'
+                          ) && submittedValues == true
+                        "
+                      >
+                        Variant Value Name is required
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Sort Order"
+                        appOnlyNumber
+                        formControlName="sortOrderImage"
+                      />
+                    </div>
+                  </td>
+                  <td class="text-center" style="width:100px">
+                    <a
+                      href="javascript:void(0)"
+                      (click)="deleteOptions(i)"
+                      *ngIf="i > 0"
+                    >
+                      <img src="assets/img/minus-red-ico-big.png" />
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <a
+            style="float: right"
+            href="javascript:void(0)"
+            (click)="addOptions()"
+          >
+            <img
+              style="margin-left: -67px;"
+              src="assets/img/add-blue-circle-big.png"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--General-->
+  </div>
+</form>

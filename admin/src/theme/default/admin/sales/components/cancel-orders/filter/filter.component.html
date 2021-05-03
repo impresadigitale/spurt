@@ -1,0 +1,12 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="salesCancelOrder" class="">
+    <div class="form-group">
+        <label for="keyboard"> Order Number </label>
+        <input type="text" class="form-control" id="keyboard" aria-describedby="emailHelp" formControlName="name"
+               placeholder="order number">
+    </div>
+
+    <div class="text-right filter-btns">
+        <a style="cursor: pointer" (click)="reset()">{{'Sales.Orders.Reset'| translate}}</a>
+        <button type="submit" class="btn">{{'Sales.Orders.ApplyFilters'| translate}}</button>
+    </div>
+</form>

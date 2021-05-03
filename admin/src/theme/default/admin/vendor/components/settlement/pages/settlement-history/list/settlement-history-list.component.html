@@ -1,0 +1,197 @@
+<div class="row products-section vendor-section">
+
+  <div class="col-12 layout-mar">
+      <div class="card">
+        <div class="product-ts-left">
+          <ul>
+            <li>
+              <p>Total Payment Amount</p>
+              <span *ngIf="(paymentSandbox.getPaymentDashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+              <h3 *ngIf="!(paymentSandbox.getPaymentDashboardCountLoading$ | async)">
+                {{(paymentSandbox.paymentDashboardCount$ | async).totalAmount | currencysymbol: (commonSandbox.settings$ | async)}}
+                <button type="button" class="btn" placement="bottom" ngbTooltip="Total amount on the platform.">
+                  <img src="assets/img/info-ico.png" />
+                </button>
+              </h3>
+            </li>
+            <li>
+              <p>Total Commission Amount</p>
+              <span *ngIf="(paymentSandbox.getPaymentDashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+              <h3 *ngIf="!(paymentSandbox.getPaymentDashboardCountLoading$ | async)">
+                {{(paymentSandbox.paymentDashboardCount$ | async).totalCommission | currencysymbol: (commonSandbox.settings$ | async)}}
+                <button type="button" class="btn" placement="bottom" ngbTooltip="Total commission on the platform.">
+                  <img src="assets/img/info-ico.png" />
+                </button>
+              </h3>
+            </li>
+            <li>
+              <p>Total Payment Count</p>
+              <span *ngIf="(paymentSandbox.getPaymentDashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+              <h3 *ngIf="!(paymentSandbox.getPaymentDashboardCountLoading$ | async)">
+                {{(paymentSandbox.paymentDashboardCount$ | async).totalPaymentCount}}
+                <button type="button" class="btn" placement="left"
+                  ngbTooltip="Total number of payment on the platform.">
+                  <img src="assets/img/info-ico.png" />
+                </button>
+              </h3>
+            </li>
+            <li>
+              <p>Total Vendors</p>
+              <span *ngIf="(paymentSandbox.getPaymentDashboardCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+              <h3 *ngIf="!(paymentSandbox.getPaymentDashboardCountLoading$ | async)">
+                {{(paymentSandbox.paymentDashboardCount$ | async).totalVendor}}
+                <button type="button" class="btn" placement="left"
+                  ngbTooltip="Total number of vendors on the platform.">
+                  <img src="assets/img/info-ico.png" />
+                </button>
+              </h3>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+
+
+
+<div class="col-12">
+  <div class="breadcrumbs-row">
+    <div class="bc-col marg">
+      <ul>
+        <li><a href="javascript:void(0)" style="color: gray"> Settlement </a></li>
+        <li>Settlement History</li>
+      </ul>
+    </div>
+    <div class="bc-col-btn addserv addvend margin">
+    </div>
+  </div>
+</div>
+<!--Breadcrumbs-->
+
+<div class="col-12">
+  <div class="flex filter-row">
+    <div class="filter-lft">
+      <div class="toggle">
+        <p>Filters</p>
+        <input
+          class="tgl tgl-light"
+          id="cb1"
+          type="checkbox"
+          [checked]="true"
+          (change)="check($event)"
+        />
+        <label class="tgl-btn" for="cb1"></label>
+      </div>
+    </div>
+    <!--Lft-->
+    <div class="filter-nav-list service-nav-list">
+
+    </div>
+    <!--Right-->
+  </div>
+</div>
+</div>
+
+<div class="flex product-wrap">
+<!-- filter -->
+<div class="filter-details" *ngIf="filterEnable">
+  <form [formGroup]="filterForm">
+    <div class="form-group">
+      <label for="firstName">Title</label>
+      <input
+        type="text" class="form-control" placeholder="Title" formControlName="keyword"/>
+    </div>
+    <div class="form-group">
+      <label for="fromDate">From Date</label>
+      <input type="text" type="date" class="form-control" formControlName="fromDate" placeholder="From Date" />
+    </div>
+    <div class="form-group">
+      <label for="toDate">To Date</label>
+      <input type="date" class="form-control" formControlName="toDate" placeholder="To Date" />
+    </div>
+    <div class="form-group">
+      <label for="firstName">Range From</label>
+      <input
+        type="text" class="form-control" appOnlyNumber placeholder="Range From" formControlName="rangeFrom"/>
+    </div>
+    <div class="form-group">
+      <label for="firstName">Range To</label>
+      <input
+        type="text" class="form-control" appOnlyNumber placeholder="Range To" formControlName="rangeTo"/>
+    </div>
+
+    <div class="text-right filter-btns">
+      <a href="javascript:void(0)" (click)="resetFilter()">Reset</a>
+      <button type="submit" class="btn" style="background-color:#42b3b3" (click)="applyFilter()">
+        Apply Filters
+      </button>
+    </div>
+  </form>
+</div>
+<!--Filter-->
+<div class="product-table" [ngClass]="{ 'expand-list': !buttonActive }">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" width="5%">
+            <div class="form-group">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" id="checkbox1" class="custom-control-input" [(ngModel)]="selectedAll" (change)="selectAll($event)"
+                [ngModelOptions]="{standalone: true}">
+              <label class="custom-control-label" for="checkbox1"></label>
+              </div>
+            </div>
+          </th>
+          <th scope="col">Title</th>
+          <th scope="col" style="text-align:center">Settlement Date</th>
+          <th scope="col" style="text-align:center">No of Orders</th>
+          <th scope="col" style="text-align:center">Total Settlement Value</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let array of sandbox.historyList$ | async">
+          <th scope="row">
+            <div class="form-group">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox"  [id]="array.productId" class="custom-control-input chk"
+                [(ngModel)]="array.selected" (change)="checkIfAllSelected()" [value]="array.productId"
+                [ngModelOptions]="{standalone: true}">
+              <label class="custom-control-label" [for]="array.productId"></label>
+              </div>
+            </div>
+          </th>
+          <td>{{array.title}}</td>
+          <td style="text-align:center">{{ array.createdDate | date: "dd MMM yyyy" }}</td>
+          <td style="text-align:center">{{ array.noOfOrders }}</td>
+          <td style="text-align:center">{{currency.symbol}}{{ array.totalAmount }}</td>
+          <td>
+              <a href="javascript:void(0)" (click)="viewSettlementDetails(array)"> <img src="assets/img/view-ico.png"> </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="no_data" *ngIf="(sandbox.historyList$ | async)?.length == 0">
+      <p>Data Not Found</p>
+    </div>
+
+
+    <div class="flex table-footer">
+      <div class="view-rec"></div>
+      <div class="view-right">
+        <mat-paginator
+          [length]="(sandbox.historyListCount$ | async)"
+          [pageSize]="pageSize"
+          [pageIndex]="index"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[pageSize]"
+          (page)="onPageChange($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Table-->
+</div>
+

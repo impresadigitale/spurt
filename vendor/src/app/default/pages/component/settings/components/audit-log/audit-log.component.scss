@@ -1,0 +1,183 @@
+.btn-group {
+    white-space: nowrap;
+}
+.btn-group .btn {
+    float: none;
+    display: inline-block;
+}
+.btn + .dropdown-toggle {
+    margin-left: -4px;
+}
+
+.product-list-wrap {
+    padding: 10px;
+    margin-top: 20px;
+    p.added-prd {
+        font-size: 13px;
+        font-weight: 500;
+        color: #787878;
+        margin-bottom: 4px;
+        padding-left: 15px;
+    }
+}
+
+.settings-nav-tabs {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    li {
+        margin-bottom: 0;
+        float: none;
+        display: inline-flex;
+        &:nth-child(1) {
+            width: 30%;
+            text-align: left;
+        }
+        &:nth-child(2) {
+            width: 30%;
+            text-align: center;
+            justify-content: center;
+        }
+        &:nth-child(3) {
+            width: 30%;
+            text-align: right;
+            justify-content: flex-end;
+        }
+        a {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 400;
+            color: #878787;
+            padding: 23px 15px;
+            &:focus,&:hover {
+                background: transparent;
+            }
+        }
+
+    }
+    .active {
+            border: 0px solid #ddd !important;
+            border-bottom: solid thin #1d5ed8 !important;
+            color: #1d5ed8 !important;
+            font-weight: 600;
+            background-color: #fff !important;
+    }
+}
+
+.bd-tab-content {
+    padding: 40px;
+    h2 {
+        font-size: 22px;
+        font-weight: bold;
+        color: #000000;
+        margin: 0 0 30px;
+    }
+    .ud-row {
+        justify-content: space-between;
+        .ud-lft {
+            width: 60%;
+
+        }
+        .ud-rht {
+            width: 120px;
+            display: inline-flex;
+            justify-content: flex-end;
+            .user-photo {
+                width: 114px;
+                h5 {
+                    font-size: 12px;
+                    font-weight: normal;
+                    color: #000000;
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+                img {
+                    &.pp {
+                        width: 114px;
+                        height: 114px;
+                        border-radius: 50%;
+                    }
+
+                }
+                p {
+                    text-align: center;
+                    position: relative;
+                    input {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        opacity: 0;
+                    }
+                    a {
+                        display: block;
+                        text-align: center;
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #5d5d5d;
+                        text-decoration: underline;
+                        padding: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+.error-field {
+    border: 1px solid red !important;
+  }
+.comp-logo {
+    a {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #5d5d5d;
+        text-decoration: underline;
+        display: block;
+        text-align: center;
+      }
+}
+button.save {
+    width: 135px;
+    height: 43px;
+    background-color: #1d5ed8;
+    line-height: 43px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    border: 0px;
+    i {
+        font-size: 16px;
+        // margin-right: 10px;
+      }
+}
+.fg-row2 {
+    justify-content: space-between;
+    .filter-group {
+        width: 48%;
+    }
+}
+
+
+/* make sidebar nav vertical */
+
+@media (min-width: 992px) {}
+
+@media screen and (max-width: 992px) and (min-width: 767px) {
+
+}
+
+@media screen and (max-width: 992px) {
+
+}
+
+@media screen and (max-width: 766px) and (min-width: 500px) {
+
+}
+
+@media screen and (max-width: 500px) {
+
+}
+

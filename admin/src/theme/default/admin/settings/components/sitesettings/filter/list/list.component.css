@@ -1,0 +1,12 @@
+.table-responsive table tr td a {
+  font-size: 13px;
+  font-weight: normal;
+  color: #de1717;
+  text-decoration: underline;
+}
+.table-responsive table tr td.action a {
+  margin: 0 5px;
+}
+.action {
+  cursor: pointer;
+}

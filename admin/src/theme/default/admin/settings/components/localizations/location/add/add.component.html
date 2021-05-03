@@ -1,0 +1,38 @@
+<div class="flex setting2-inner-header">
+    <h3 style="color:#FF006A">{{updatetitle ? 'Update Location' : 'Add Location' | translate}}</h3>
+</div>
+<div class="settings-right-wrapper addnewuser">
+
+    <div class="new-user">
+        <form (ngSubmit)="onSubmit()" [formGroup]="locationForm" class="form-horizontal m-t-20">
+            <div class="row">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Local.Location.LocationName' | translate}}<sup class="supvalidation">*</sup></label>
+                        <input type="text" formControlName="locationname" placeholder="Location Name" [ngClass]="{ 'is-invalid': submitted && f.locationname.errors }" class="form-control" />
+                        <div *ngIf="submitted && f.locationname.errors" class="invalid-feedback">
+                            <div *ngIf="f.locationname.errors.required">{{'Settings.Local.Location.Error.LocationNameisrequired' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>Pin Code<sup class="supvalidation">*</sup></label>
+                        <input type="text" formControlName="locationcode" placeholder="Pin Code" [ngClass]="{ 'is-invalid': submitted && f.locationcode.errors }" class="form-control" class="form-control">
+                        <div *ngIf="submitted && f.locationcode.errors" class="invalid-feedback">
+                            <div *ngIf="f.locationcode.errors.required">Pin Code is required</div>
+                            <div *ngIf="locationForm.controls['locationcode'].hasError('minlength')">Must be at least 4 numbers</div>
+                            <div *ngIf="locationForm.controls['locationcode'].hasError('maxlength')">Must be max 6 numbers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 90px;">
+                    <div class="flex user-btn">
+                        <button type="submit" class="btn btn-add">{{'Settings.Local.Save' | translate}}</button>
+                        <button (click)="cancel()" class="btn btn-cancel"> {{'Settings.Local.Location.Cancel' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

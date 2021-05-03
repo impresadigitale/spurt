@@ -1,0 +1,40 @@
+
+
+    <h2 mat-dialog-title> {{'account.CancelOrder'|translate}}
+      <button class="clos-btn" [mat-dialog-close]="true" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+
+      </button>
+  </h2>
+ <mat-dialog-content class="mat-typography">
+   <form [formGroup]="cancelOrderForm">
+    <div class='some-page-wrapper'>
+        <div class='row'>
+          <div class='column'>
+            <div class='left-column'>
+              <label>{{'account.Reason'|translate}}</label>
+              <select formControlName="reason">
+                <option selected disabled hidden value="">Select reason</option>
+                <option *ngFor="let list of sandbox.cancelOrderReasonList$ | async" [value]="list.id">{{list.reason}}</option>
+              </select>
+              <div class="error" *ngIf="cancelOrderForm.controls['reason'].hasError('required') && submitted">Please select reason</div>              
+            </div>
+          </div>
+          <div class='column'>
+            <div class='right-column'>
+                <label class="remark">{{'account.Discription'|translate}}</label>
+                <textarea name="remark" formControlName="description"></textarea>
+                <div class="error remark" *ngIf="cancelOrderForm.controls['description'].hasError('required') && submitted">Please enter description</div>              
+              </div>
+          </div>
+        </div>
+      </div>
+      </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="foot button-container"> 
+  <button type="button" class="btn spinner-button" mat-raised-button (click)="submit()" [disabled]="(sandbox.cancelOrderLoading$ | async)">
+      <mat-spinner diameter="25" color="primary" *ngIf="sandbox.cancelOrderLoading$ | async">
+        </mat-spinner> <span>{{'account.Submit'|translate}}</span>
+  </button>
+  <button type="button" [mat-dialog-close]="true" mat-raised-button class="btn">{{'account.Cancel'|translate}}</button>
+</mat-dialog-actions>

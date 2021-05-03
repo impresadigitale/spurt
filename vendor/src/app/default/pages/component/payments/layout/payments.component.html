@@ -1,0 +1,49 @@
+<div class="product-wrapper">
+    <div class="product-left" [ngClass]="{'produt-left-close' : !sideMenuOpen}">
+            <div [ngClass]="{'data-none' : !sideMenuOpen}">
+                <ul class="flex product-count" >
+                    <li>
+                        <span *ngIf="(paymentSandbox.totalPaymentCountLoaded$ | async)">
+                            {{(paymentSandbox.totalPaymentCount$ | async)?.salesCount}}</span>
+                            <span *ngIf="(paymentSandbox.totalPaymentCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin" style="font-size:20px; color: #1d5ed8;"></i></span>
+                        <p>Sales</p>
+                    </li>
+                    <li>
+                        <span *ngIf="(paymentSandbox.totalPaymentCountLoaded$ | async)">{{(paymentSandbox.totalPaymentCount$ | async)?.buyersCount}}</span>
+                        <span *ngIf="(paymentSandbox.totalPaymentCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin" style="font-size:20px; color: #1d5ed8;"></i></span>
+                        <p>Buyers</p>
+                    </li>
+                    <li>
+                        <span *ngIf="(paymentSandbox.totalPaymentCountLoaded$ | async)">{{(paymentSandbox.totalPaymentCount$ | async)?.revenue}}</span>
+                        <span *ngIf="(paymentSandbox.totalPaymentCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin" style="font-size:20px; color: #1d5ed8;"></i></span>
+                        <p>Revenue</p>
+                    </li>
+                </ul>
+        
+                <div class="manage-products">
+                    <h3>Manage Payments</h3>
+                    <ul>
+                        <li routerLinkActive="active"><a href="javascript:void(0)"  [routerLink]="['/payments/list']">Payments</a></li>
+                        <li routerLinkActive="active"><a href="javascript:void(0)"  [routerLink]="['/payments/earnings']">Earnings</a></li>
+                        <li routerLinkActive="active"><a href="javascript:void(0)"  [routerLink]="['/payments/archive']">Archive Payments</a></li>
+                    </ul>
+                </div>
+            
+                <div class="product-para flex">
+                    <p>The sales module in Spurtcommerce is quite straight forward, where the Vendor can view the recent sales that happened on their online store and also track the total earnings from the sale of products.</p>
+                </div>
+            </div>
+                <div class="action cursor" title="Expand or collapse the side navigation menu" (click)="closeSideMenu()">
+                    <i *ngIf="!sideMenuOpen" class="fa fa-bars cursor" aria-hidden="true"></i>
+                    <i *ngIf="sideMenuOpen" class="fa fa-angle-left cursor" aria-hidden="true"></i>
+                </div>
+            </div>
+
+<!--left-->
+
+<div class="product-right" [ngClass]="{'product-full' : !sideMenuOpen}">
+
+<router-outlet></router-outlet>
+</div>
+<!--left-->
+</div>

@@ -1,0 +1,16 @@
+          <button type="button" class="close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="modal-title">
+              <h4> Do You Want To Delete?
+              </h4>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-danger" (click)="close()">
+                  No
+              </button>
+              <button type="button" class="btn btn-success" (click)="deleteContent()"
+                  >
+                  Yes
+              </button>
+          </div>

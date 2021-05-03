@@ -1,0 +1,363 @@
+.btn-group {
+    white-space: nowrap;
+}
+
+.btn-group .btn {
+    float: none;
+    display: inline-block;
+}
+
+.btn+.dropdown-toggle {
+    margin-left: -4px;
+}
+
+.dropdown {
+    width: 40px;
+}
+
+::ng-deep .dataTable {
+    clear: unset !important;
+}
+
+::ng-deep .dataTables_wrapper {
+    clear: unset !important;
+}
+
+::ng-deep .dataTables_info {
+    clear: unset !important;
+}
+
+.pagination {
+    justify-content: flex-end;
+    padding-right: 20px;
+
+    li {
+        .prev {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: #a2a2a2;
+            margin: 5px;
+        }
+
+        .next {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: #000000;
+            margin: 5px;
+        }
+
+        span {
+            color: #d8d8d8;
+            margin: 8px;
+
+        }
+
+        .pages {
+            border-radius: 2px;
+            background-color: white;
+            margin: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            padding: 6px 10px;
+            color: #8c8c8c;
+            border-radius: 2px;
+            border: solid 1px #d5d5d5;
+        }
+
+    }
+
+    .active {
+        .pages {
+            border-radius: 2px;
+            background-color: #1bc316;
+            margin: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            padding: 6px 10px;
+            color: white;
+        }
+    }
+}
+.loading {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+}
+.product-list-wrap {
+    padding: 10px;
+    margin-top: 15px;
+
+    p.added-prd {
+        font-size: 13px;
+        font-weight: 500;
+        color: #787878;
+        margin-bottom: 15px;
+        padding-left: 15px;
+    }
+}
+.fading {
+    opacity: 1 !important;
+    transition: opacity 0.1s ease-in;
+}
+.hide-btn{
+    visibility: hidden;
+      opacity: 0;
+    
+      transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+}
+.show {
+    visibility: visible !important;
+    opacity: 1 !important;
+    
+    transition-delay: 0s;
+}
+.table-responsive {
+    overflow-y: visible !important;
+    overflow-x: visible;
+    background: white;
+    min-height: 300px;
+    // opacity: 0;
+    table {
+        margin-bottom: 5rem !important;
+
+        tr {
+            th {
+                font-size: 13px;
+                font-weight: 500;
+                color: #a4a4a4;
+                padding: 10px;
+                vertical-align: middle;
+            }
+
+            td {
+                font-size: 14px;
+                font-weight: 500;
+                color: #201f1f;
+                vertical-align: middle;
+
+                h4 {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #171616;
+                    margin: 0 0 5px;
+                }
+
+                p {
+                    font-size: 12px;
+                    font-weight: 400;
+                    color: #1d5ed8;
+                    margin: 0 0 5px;
+                }
+
+                &.price {
+                    font-size: 15px;
+                    font-weight: 500;
+                    color: #1d5ed8;
+
+                }
+
+                &.product-img {
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: contain;
+                    img {
+                        max-width: 100%;
+                        width: 40px !important;
+                        height: 40px !important;
+                    }
+                }
+                .fa-ellipsis-h {
+                    color: rgba(0, 0, 0, 0.38);
+                }
+            }
+
+            .btn-group {
+                button {
+                    background: transparent;
+                    border: 0px;
+
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }
+
+                .dropdown-menu {
+                    left: -135px;
+                    padding: 15px;
+
+                    li {
+                        padding: 5px 0;
+
+                        a {
+                            justify-content: flex-start;
+
+                            img {
+                                margin-right: 5px;
+                            }
+                        }
+
+                        &.act {
+                            a {
+                                padding-left: 40px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .form-group {
+        margin-left: 20px;
+
+        label {
+            padding-left: 20px;
+            color: white;
+
+            &:before {
+                border-radius: 0px;
+                padding: 6.5px;
+                border: 2px solid rgba(0, 0, 0, 0.54);
+            }
+        }
+
+        input:checked+label:after {
+            top: -10px;
+            left: 7px;
+        }
+
+        input:checked+label:before {
+            border: 2px solid #1d5ed8;
+            background: #1d5ed8;
+        }
+    }
+}
+// delete popover css
+.modal-title {
+    font-family: 'Poppins', sans-serif !important;
+}
+::ng-deep .modal-footer {
+    display: flex;
+    justify-content: center;
+    button {
+        font-size: 14px;
+    }
+}
+::ng-deep .modal-title {
+    font-size: 14px;
+}
+.popover-body {
+    padding: 0px !important;
+}
+.active-switch {
+    .switch {
+        position: relative;
+        display: inline-block;
+        border-radius: 11px;
+        border: solid 1px #c0c0c0;
+        width: 38px;
+        height: 12px;
+        background: white;
+      }
+      
+      .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #fff;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        left: -2px;
+        bottom: -5px;
+        transition: .2s;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #d81919;
+      }
+      
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);  
+        background-color: #20ae3c;
+      }
+}
+
+@media (min-width: 992px) {}
+
+@media screen and (max-width: 992px) and (min-width: 767px) {}
+
+@media screen and (max-width: 992px) {}
+
+@media screen and (max-width: 766px) and (min-width: 500px) {}
+
+@media screen and (max-width: 500px) {}
+
+.search-menu::-webkit-input-placeholder {
+    /* Edge */
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #c6c6c6;
+}
+
+.search-menu:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #c6c6c6;
+}
+
+.search-menu::placeholder {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #c6c6c6;
+}

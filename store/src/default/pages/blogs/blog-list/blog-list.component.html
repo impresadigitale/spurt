@@ -1,0 +1,45 @@
+<div class="blog-wrapper">
+
+    <div class="blog-tit flex">
+        <h2>{{'Blogs.BlogList'|translate}}</h2>
+    </div>
+
+    <div class="flex blog-row" *ngIf="!(blogsSandbox.blogDetailLoading$ |async)">
+
+        <div class="blog-card flex" [routerLink]="['/blogs/blog-detail/', blog.blogSlug]" *ngFor="let blog of blogsSandbox.blogList$ | async">
+            <div class="blog-content">
+                <h4>{{blog.title}}</h4>
+                <h2 [innerHTML]="blog.description | slice:0:150"></h2>
+                <span *ngIf="blog.description.length > 150">...</span>
+                <div class="flex blog-poster">
+                    <img [src]=" imagePath + '?path=' + blog.createdByImagePath + '&name=' + blog.createdByImage + '&width=250&height=250'">
+                    <div class="bp-content">
+                        <h4>{{blog.createdByName}}</h4>
+                        <p>{{blog.createdDate | date : 'dd MMM yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--Content-->
+            <div class="blog-img">
+              <img [src]=" imagePath + '?path=' + blog.imagePath + '&name=' + blog.image + '&width=250&height=250'">
+            </div>
+        </div>
+        <!--Card-->
+    </div>
+    <!--Row-->
+
+    <div class="no-product-compare" *ngIf="(blogsSandbox.blogList$ | async)?.length === 0 && blogsSandbox.blogListLoaded$ | async">
+
+        <p><img src="assets/images/no-compare.png"></p>
+        <p>{{'Blogs.NoBlogs'|translate}}</p>
+
+    </div>
+    <div class="no-product-compare" *ngIf="blogsSandbox.blogListLoading$ | async">
+
+        <app-spinner [isShow]="blogsSandbox.blogListLoading$ | async"></app-spinner>
+
+    </div>
+
+
+
+</div>

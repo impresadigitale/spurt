@@ -1,0 +1,308 @@
+
+<div class="row products-section" style="margin:unset">
+  <div class="col-12">
+    <div class="breadcrumbs-row noborder">
+      <div class="bc-col">
+        <ul>
+          <li>
+            <a href="javascript:void(0)" [routerLink]="['/customers/customer']"
+              >{{ 'Customers.Customer.Customers' | translate }}
+            </a>
+          </li>
+          <li>{{ 'Customers.Customer.AddCustomer' | translate }}</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn ap-col-btn">
+        <button class="btn btn-save" (click)="onSubmit()">
+          <img src="assets/img/tick-round-white.png" />
+          {{ 'Customers.Customer.Save' | translate }}
+        </button>
+        <button (click)="cancel()" class="btn btn-cancel">
+          <img src="assets/img/close-white-ico.png" />
+          {{ 'Customers.Customer.Cancel' | translate }}
+        </button>
+      </div> 
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+</div>
+
+
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="customerForm"
+  novalidate
+  class="form-horizontal m-t-20"
+>
+  <div class="flex addproduct-wrap">
+    <div class="card ap-general">
+      <div class="ap-header">
+        <span> 1 </span>{{ 'Customers.Customer.CustomerDetails' | translate }}
+      </div>
+
+      <div class="flex ap-body">
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >{{ 'Customers.Customer.CustomerGroup' | translate
+              }}<sup>*</sup></label
+            >
+            <select 
+              class="custom-select col-12"
+              [ngClass]="{ 'is-invalid': submitted && f.customerGroup.errors }"
+              formControlName="customerGroup"
+            >
+              <option [ngValue]="undefined" selected 
+                >- -Select Customer Group- -</option
+              >
+              <option  (click) = "customersGroupList()"  
+              [value] = "customersGrouplist.groupId"
+                *ngFor="
+              let customersGrouplist of sandbox.getCustomersGroupList$ | async
+            ">{{customersGrouplist.name}}</option>
+            </select>
+            <div
+              *ngIf="submitted && f.customerGroup.errors"
+              class="validation-error"
+            >
+              <div *ngIf="f.customerGroup.errors.required">
+                {{ 'Customers.Error.CustomerGroupIsRequired' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >{{ 'Sales.Orders.CustomerName' | translate }} <sup>*</sup>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="customerName"
+              [ngClass]="{ 'is-invalid': submitted && f.customerName.errors }"
+              placeholder="{{'Customers.CustomerPlaceholder.CustomerName' | translate}}"/>
+            <div
+              *ngIf="submitted && f.customerName.errors"
+              class="validation-error">
+              <div *ngIf="f.customerName.errors.required">
+                {{ 'Customers.Error.CustomerNameIsRequired' | translate }}</div>
+              <div *ngIf="customerForm.controls['customerName'].hasError('minlength')">Must be atleast 3 characters long</div>
+              <div *ngIf="customerForm.controls['customerName'].hasError('maxlength')">Must be max 32 characters long</div>
+              <div *ngIf="customerForm.controls['customerName'].hasError('pattern')">Must be string</div>
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{ 'Customers.Customer.Email' | translate }} <sup>*</sup></label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="{{'Customers.CustomerPlaceholder.Email' | translate}}"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+            <div *ngIf="submitted && f.email.errors" class="validation-error">
+              <div *ngIf="f.email.errors.required">{{ 'Customers.Error.EmailIsRequired' | translate }}</div>
+              <div *ngIf="f.email.errors">{{'Customers.Error.EmailMustBeAValidEmailAddress' | translate}}</div>
+              <div *ngIf="customerForm.controls['email'].hasError('maxlength')">Must be max 96 characters long</div>
+            </div>
+          </div> 
+        </div>
+ 
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{ 'Customers.Customer.Telephone' | translate }}<sup>*</sup></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="telephone"
+              appOnlyNumber
+              placeholder="{{'Customers.CustomerPlaceholder.Telephone' | translate}}"
+              [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }"/>
+            <div
+              *ngIf="submitted && f.telephone.errors"
+              class="validation-error">
+              <div *ngIf="f.telephone.errors.required">{{ 'Customers.Error.TelephoneIsRequired' | translate }}</div>
+              <div *ngIf="customerForm.controls['telephone'].hasError('maxlength')">Must be max 15 numbers</div>
+              <div *ngIf="customerForm.controls['telephone'].hasError('minlength')">Must be at least 4 numbers</div>
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+      </div>
+    </div>
+    <!--General-->
+
+    <div class="card ap-general ap-info">
+      <div class="ap-header">
+        <span> 2 </span>{{ 'Customers.Customer.MoreInformation' | translate }}
+      </div>
+      <div class="flex ap-body">
+        <ngb-tabset style="width:100%;">
+          <ngb-tab>
+            <ng-template ngbTabTitle>{{
+              'Customers.Customer.General' | translate
+            }}</ng-template>
+            <ng-template ngbTabContent>
+
+              <div class="flex data-row">
+                <div class="data-col">
+                  <div class="form-group">
+                    <label>{{ 'Customers.Customer.Password' | translate}}<sup *ngIf="!editCustomerId">*</sup></label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      #pwd
+                      [ngClass]="{
+                        'is-invalid': submitted && f.password.errors
+                      }"
+                      formControlName="password"
+                      placeholder="{{
+                        'Customers.CustomerPlaceholder.Password' | translate
+                      }}"
+                      (keyup)="enterPassword(pwd.value)"
+                    />
+                    <div class="validation-error" *ngIf="submitted && customerForm.controls['password'].hasError('required')">
+                      Password is required
+                    </div>
+                    <div class="validation-error" *ngIf="customerForm.controls['password'].hasError('minlength')">
+                      Must be at least 8 characters
+                    </div>
+                    <div class="validation-error" *ngIf="customerForm.controls['password'].hasError('hasNumber')">
+                      Must have at least 1 number or Symbol
+                    </div>
+                    <div class="validation-error" *ngIf="customerForm.controls['password'].hasError('hasCapitalCase')">
+                      Must contain at least 1 in Capital Case
+                    </div>
+                    <div class="validation-error" *ngIf="customerForm.controls['password'].hasError('hasSmallCase')">
+                      Must contain at least 1 in Small Case
+                    </div>
+                    <div class="validation-error" *ngIf="customerForm.controls['password'].hasError('maxlength')">
+                      Must be max 50 characters
+                    </div>
+                  </div>
+                  <!---->
+                </div>
+                <!--Col-->
+                <div class="data-col">
+                  <div class="form-group">
+                    <label
+                      >{{ 'Customers.Customer.ConfirmPassword' | translate
+                      }}<sup *ngIf="!editCustomerId">*</sup></label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      maxlength="50"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.confirmpassword.errors
+                      }"
+                      formControlName="confirmpassword"
+                      placeholder="{{
+                        'Customers.Customer.ConfirmPassword' | translate
+                      }}"
+                    />
+                    <div
+                      *ngIf="submitted && f.confirmpassword.errors"
+                      class="validation-error"
+                    >
+                      <div *ngIf="f.confirmpassword.errors.mismatchedPasswords">
+                        {{
+                          'Customers.Error.ConfirmpasswordIsMismatch'
+                            | translate
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                </div>
+                <!--Col-->
+        
+                <!--Col-->
+                <div class="data-col">
+                  <div class="form-group">
+                    <label
+                      >{{ 'Customers.Customer.Status' | translate
+                      }}<sup>*</sup></label
+                    >
+                    <select
+                      class="custom-select col-12"
+                      [ngClass]="{ 'is-invalid': submitted && f.status.errors }"
+                      formControlName="status"
+                    >
+                      <option value="" selected>- -Select Status- -</option>
+                      <option value="1">Enabled</option>
+                      <option value="0">Disabled</option>
+                    </select>
+                    <div
+                      *ngIf="submitted && f.status.errors"
+                      class="validation-error"
+                    >
+                      <div *ngIf="f.status.errors.required">
+                        {{ 'Customers.Error.StatusIsRequired' | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--Col-->
+                <!-- <div class="data-col">
+
+                  <div class="form-grou" style="margin-left: 11px">
+                    <label>{{ 'Customers.Customer.MailStatus' | translate}}<sup>*</sup></label>
+                    <div class="change-size" style="width: 27%">
+                      <mat-checkbox
+                        formControlName="mailStatus"
+                        (change)="changeMailStatus($event)">
+                      </mat-checkbox>
+
+                    </div>
+                    <div
+                      *ngIf="submitted && f.mailStatus.errors"
+                      class="validation-error">
+                      <div *ngIf="f.mailStatus.errors.required">
+                        {{ 'Customers.Error.MailstatusIsRequired' | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!--Col-->
+                <div class="data-col">
+                  <div class="form-group" style="margin-top:37px">
+                    <label>{{ 'Customers.Customer.MailStatus' | translate}}<sup>*</sup></label>
+                  <div class="custom-control custom-checkbox ">
+                      <input
+                      type="checkbox"
+                      class="custom-control-input "
+                      id="checkbox2"
+                      formControlName="mailStatus"
+                      style="cursor:inherit"/>
+                      <label
+                      class="custom-control-label mail-tooltip"
+                      for="checkbox2">
+                      <button
+                          type="button"
+                          class="btn"
+                          placement="right"
+                          style="padding: unset"
+                          ngbTooltip="">
+                      </button>
+                      </label>
+                  </div>
+                  <div style="display: unset;" class="validation-error" *ngIf="submitted && f.mailStatus.errors">
+                    {{ 'Customers.Error.MailstatusIsRequired' | translate }}
+                  </div>
+                  </div>
+              </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,48 @@
+<h2 class="text-muted text-center">{{'authentication.SignIn.'|translate}}</h2>
+<form [formGroup]="loginForm" novalidate>
+    <mat-form-field class="w-100 mt-2" [ngClass]="{'validationcolor':
+    (loginForm.controls.email.hasError('required') && submitted)}">
+        <input matInput placeholder="{{'authentication.Email'|translate}}" formControlName="email" required>
+        <mat-error class="validation-error" *ngIf="loginForm.controls['email'].hasError('required') && submitted">{{'Error.EmailIsRequired'|translate}}</mat-error>
+        <mat-error class="validation-error" *ngIf="loginForm.controls['email'].hasError('invalidEmail')">{{'Error.InvalidEmailAddress'|translate}}</mat-error>
+        <mat-error class="validation-error" *ngIf="loginForm.controls['email'].hasError('maxlength') && submitted">{{'Error.EmailMaximumLength'|translate}}</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mt-1" [ngClass]="{'validationcolor':
+    (loginForm.controls.password.hasError('required') && submitted)}">
+        <input matInput placeholder="{{'authentication.Password'|translate}}" formControlName="password" type="password" required>
+        <mat-error class="validation-error" *ngIf="loginForm.controls['password'].hasError('required') && submitted">
+            {{'Error.PasswordisRequired'|translate}}
+        </mat-error>
+
+    </mat-form-field>
+    <div class="text-center mt-2">
+        <button mat-fab color="primary" class="mat-elevation-z6" (click)="onLoginFormSubmit(loginForm.value)">
+                <i *ngIf="(authSandbox.loginLoading$ | async)" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+
+            <mat-icon *ngIf="!(authSandbox.loginLoading$ | async)">exit_to_app</mat-icon>
+        </button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2">
+        <h5 class="text-muted auth forgot" routerLink="/auth/forgot">
+            {{'authentication.ForgottenAccount'|translate}}</h5>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2">
+        <div class="divider w-100"></div>
+        <h3 class="text-muted auth">{{'authentication.SignInWithOneClick'|translate}}</h3>
+        <div class="divider w-100"></div>
+    </div>
+
+    <div class="text-center py-2">
+        <svg class="social-icon" viewBox="0 0 24 24" (click)="socialSignIn('facebook')" matTooltip="{{'authentication.Facebook'|translate}}">
+            <path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z"/>
+        </svg>
+        <svg class="social-icon" viewBox="0 0 24 24" matTooltip="{{'authentication.Google'|translate}}" (click)="socialSignIn('gmail')">
+            <path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M19.5,12H18V10.5H17V12H15.5V13H17V14.5H18V13H19.5V12M9.65,11.36V12.9H12.22C12.09,13.54 11.45,14.83 9.65,14.83C8.11,14.83 6.89,13.54 6.89,12C6.89,10.46 8.11,9.17 9.65,9.17C10.55,9.17 11.13,9.56 11.45,9.88L12.67,8.72C11.9,7.95 10.87,7.5 9.65,7.5C7.14,7.5 5.15,9.5 5.15,12C5.15,14.5 7.14,16.5 9.65,16.5C12.22,16.5 13.96,14.7 13.96,12.13C13.96,11.81 13.96,11.61 13.89,11.36H9.65Z"/>
+        </svg>
+    </div>
+
+</form>

@@ -1,0 +1,124 @@
+<form novalidate [formGroup]="attributeForm">
+  <div class="flex setting2-inner-header var-top" style="margin:unset">
+    <div class="col-12">
+      <div class="breadcrumbs-row noborder">
+        <div class="bc-col">
+          <ul>
+              <li> <a href="javascript:void(0)"> {{'Settings.SiteSettings.SiteSettings' | translate}} </a> </li>
+            <li>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['/settings/sitesettings/attributes']"
+              >
+                Attributes
+              </a>
+            </li>
+            <li>Add Attribute</li>
+          </ul>
+        </div>
+        <div class="bc-col-btn ap-col-btn">
+          <button
+            class="btn btn-save"
+            (click)="addAttribute()"
+          >
+            <img src="assets/img/tick-round-white.png" />
+            {{ 'catalog.categories.Save' | translate }}
+          </button>
+          <button class="btn btn-cancel" [routerLink]="['/settings/sitesettings/attributes']">
+            <img src="assets/img/close-white-ico.png" />
+            {{ 'catalog.categories.Cancel' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex addproduct-wrap addpoptions-wrap add-var-wrap">
+    <div class="card ap-general">
+      <div class="ap-header">
+      Add Attribute
+      </div>
+      <div class="flex ap-body">
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >Attribute Name
+              <sup>*</sup></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Attribute Name"
+              formControlName="attributeName"
+              [ngClass]="{
+                validationcolor:
+                attributeForm.get('attributeName').hasError('required') &&
+                  attributeForm.get('attributeName').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+              class="error"
+              *ngIf="
+              attributeForm.get('attributeName').hasError('required') &&
+              attributeForm.get('attributeName').touched &&
+                submittedValues == true
+              "
+            >
+              Attribute name is required
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Group</label>
+            <select style="height: 33px"
+              class="custom-select col-12"
+              id="inlineFormCustomSelect"
+              formControlName="groupId"
+            >
+              <option value="">--Select Group--</option>
+              <option *ngFor="let group of sandbox.groupList$ | async" [value]="group.groupId">{{
+                group.attributeGroupName
+              }}</option>
+            </select>
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >{{ 'catalog.product.SortOrder' | translate }}<sup>*</sup></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Sort Order"
+              appOnlyNumber
+              [formControl]="sortOrder"
+              [ngClass]="{
+                validationcolor:
+                attributeForm.get('sortOrder').hasError('required') &&
+                attributeForm.get('sortOrder').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+              class="error"
+              *ngIf="
+              attributeForm.get('sortOrder').hasError('required') &&
+              attributeForm.get('sortOrder').touched &&
+                submittedValues == true
+              "
+            >
+              {{ 'catalog.Error.SortOrderRequired' | translate }}
+            </div>
+          </div>
+        </div>
+        <!--Col-->
+      </div>
+    </div>
+    <!--General-->
+  </div>
+</form>
