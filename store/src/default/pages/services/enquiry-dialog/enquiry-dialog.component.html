@@ -1,0 +1,35 @@
+<div mat-dialog-content>
+    <div class="sd-header flex">
+        <div class="sdh-l">
+            <h3>Enquiry Now</h3>
+            <p>{{service.title}}</p>
+        </div>
+        <div class="close-btn-outer">
+            <button mat-mini-fab color="warn" (click)="close()"><mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+    <div class="sdh-content">
+        <form [formGroup]="enquiryForm" novalidate>
+            <input type="text" [ngClass]="{'invalid': enquiryForm.controls['name'].hasError('required') && submitted}" placeholder="Enter your name" formControlName="name">
+            <mat-error *ngIf="enquiryForm.controls['name'].hasError('required') && submitted">
+                Name is required
+            </mat-error>
+            <input type="text" [ngClass]="{'invalid': !enquiryForm.controls['email'].valid && submitted}" placeholder="Enter your email" formControlName="email">
+            <mat-error *ngIf="enquiryForm.controls['email'].hasError('required') && submitted">
+                Email is required
+            </mat-error>
+            <mat-error *ngIf="enquiryForm.controls['email'].hasError('invalidEmail') && submitted">
+                Invalid Email
+            </mat-error>
+            <input type="text" [ngClass]="{'invalid': enquiryForm.controls['mobile'].hasError('required') && submitted}" placeholder="Enter your Phone Number" formControlName="mobile">
+            <mat-error *ngIf="enquiryForm.controls['mobile'].hasError('required') && submitted">
+                Phone Number is required
+            </mat-error>
+            <textarea rows="3" placeholder="Enter your message" formControlName="comments"></textarea>
+            <a href="javascript:void(0)" (click)="submitEnquiry()">
+                <i *ngIf="(listSandbox.enquiryLoading$ | async)" class="fa fa-spinner fa-spin" style="font-size:24px"></i> Submit
+
+            </a>
+        </form>
+    </div>
+</div>

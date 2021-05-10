@@ -1,0 +1,8 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="p-2 text-center">
+    <button mat-fab color="primary"><mat-icon>check</mat-icon></button>
+    <h2 class="py-2">{{'checkout.Congratulation!'|translate}} {{orderId}} {{'checkout.placed' | translate}}</h2>
+    <p style="color: gray">You are being automatically redirected to the home page</p>
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+    <a [routerLink]="['/']" mat-raised-button color="primary">{{'checkout.ReturnToShop'|translate}}</a>
+</div>

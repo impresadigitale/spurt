@@ -1,0 +1,47 @@
+<div class="order-list-wrap" style="padding: 0px 10px;">
+        <div class="table-responsive">
+            <span class="order-title">Recent Orders</span>
+            <div>
+                <span class="order-table-title">Today</span>
+                <span class="no-data" *ngIf="(dashboardSandbox.todayOrderList$ | async)?.length === 0">No orders today</span>
+                <table class="table">
+                    <tr *ngFor="let array of (dashboardSandbox.todayOrderList$ | async)">
+                        <td class="order-no cursor" (click)="goToOrders(array?.vendorOrderId)">{{array?.orderProductPrefixId}}</td>
+                        <td>
+                            <div class="logo" [ngClass]="{'paid': array.orderStatusName === 'paid', 'placed': array.orderStatusName === 'order-placed'}">{{((array?.customerFirstName).charAt(0)) | uppercase}}</div>
+                        </td>
+                        <td class="order-detail">{{array?.customerFirstName}}</td>
+                        <td class="order-detail"><img src="assets/imgs/location.svg">{{array?.shippingCity}}, {{array?.shippingCountry}}</td>
+                        <td><span class="status" [ngClass]="{'paid': array.orderStatusName === 'paid', 'placed': array.orderStatusName === 'order-placed'}">{{array?.orderStatusName | uppercase}}</span></td>
+                        <td *ngIf="array?.discountedAmount === null" class="order-detail">{{array?.currencySymbolLeft}} {{array?.total | currency:currencyCode:''}} {{array?.currencySymbolRight}}</td>
+                        <td *ngIf="array?.discountedAmount !== null" class="order-detail">{{array?.currencySymbolLeft}} {{array?.discountedAmount | currency:currencyCode:''}} {{array?.currencySymbolRight}}</td>
+
+                    </tr>
+                </table>
+                <div class="flex-btn"  *ngIf="(dashboardSandbox.todayOrderList$ | async)?.length > 0">
+                        <button class="view-btn" (click)="viewAll()">View All</button>
+                </div>                </div>
+            <div>
+                <span class="order-table-title">Yesterday</span>
+                <span class="no-data" *ngIf="(dashboardSandbox.previousOrderList$ | async)?.length === 0">No orders yesterday</span>
+                <table class="table">
+                    <tr *ngFor="let array of (dashboardSandbox.previousOrderList$ | async)">
+                        <td class="order-no cursor" (click)="goToOrders(array?.vendorOrderId)">{{array?.orderProductPrefixId}}</td>
+                        <td>
+                            <div class="logo" [ngClass]="{'paid': array.orderStatusName === 'paid', 'placed': array.orderStatusName === 'order-placed'}">{{((array?.customerFirstName).charAt(0)) | uppercase}}</div>
+                        </td>
+                        <td class="order-detail">{{array?.customerFirstName}}</td>
+                        <td class="order-detail"><img src="assets/imgs/location.svg">{{array?.shippingCity}}, {{array?.shippingCountry}}</td>
+                        <td><span class="status" [ngClass]="{'paid': array.orderStatusName === 'paid', 'placed': array.orderStatusName === 'order-placed'}">{{array?.orderStatusName | uppercase}}</span></td>
+                        <td *ngIf="array?.discountedAmount !== null" class="order-detail">{{array?.currencySymbolLeft}} {{array?.discountedAmount | currency:currencyCode:''}} {{array?.currencySymbolRight}}</td>
+                        <td *ngIf="array?.discountedAmount === null" class="order-detail">{{array?.currencySymbolLeft}} {{array?.total | currency:currencyCode:''}} {{array?.currencySymbolRight}}</td>
+
+                    </tr>
+                </table>
+                <div class="flex-btn" *ngIf="(dashboardSandbox.previousOrderList$ | async)?.length > 0">
+                        <button class="view-btn" (click)="viewAll()">View All</button>
+                </div>
+            </div>
+
+        </div>
+    </div>

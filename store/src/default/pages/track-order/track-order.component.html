@@ -1,0 +1,46 @@
+<div class="wrapper" *ngIf="listSandbox.trackOrderLoading$ | async">
+    <div class="overlay">
+        <div class="spinner-wrapper">
+            <app-spinner [isShow]="listSandbox.trackOrderLoading$ | async"></app-spinner>
+        </div>
+    </div>
+</div>
+{{aaa}} 
+<mat-card fxLayout="row wrap" *ngIf="!trackHistory" fxLayoutAlign="space-around">
+    <h3 class="w-100 text-center text-muted py-2">{{'trackOrder.trackOrder'|translate}}</h3>
+<form [formGroup]="trackForm" (ngSubmit)="onTrackFormSubmit(trackForm.value)" fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field class="w-100" [ngClass]="{'validationcolor':((trackForm.controls.orderPrefixId.errors?.required)&&(submitted))}">
+            <input matInput placeholder="{{'trackOrder.EnterTrackingID'|translate}}" formControlName="orderPrefixId" required>
+            <mat-error *ngIf="trackForm.controls['orderPrefixId'].errors?.required && submitted">{{'Tracking ID Is Required'|translate}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="w-100 py-2 text-center">
+        <button mat-raised-button color="primary" type="submit" >{{'trackOrder.Submit'|translate}}</button>
+    </div>
+</form>
+
+</mat-card>
+
+<mat-card fxLayout="row wrap" *ngIf="trackHistory" fxLayoutAlign="space-around">
+    
+    <div class="order-history"  >
+        <span class="track-id">{{'trackOrder.trackingId'|translate}} : <span class="id">{{trackId}}</span></span>
+        <h3 class="title w-100 text-center text-muted py-2">{{'trackOrder.trackingStatus'|translate}}</h3>
+
+      <div class="st-row"  *ngFor="let track of (listSandbox.trackOrderDetail$ | async)">
+          <div class="str-full flex  " [ngClass]= "{'active': track.createdDate !== '' }"  >
+              <div class="strf-lft flex">
+                 <span>{{track.createdDate | date: 'dd-MM-yyyy '}}</span>
+                 <span>{{track.createdDate | date: "hh:mm a"  }}</span>
+              </div>
+              <!--lft-->
+              <div class="strf-rht">
+                  <span class="allocate"></span>
+                  <h3>{{track.name}}</h3>
+              </div>
+              <!--rht-->
+          </div>
+      </div>
+    </div>
+</mat-card>

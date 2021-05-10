@@ -1,0 +1,110 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600');
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+.modelRef .modal-content {
+  width: 50%;
+  margin-top: 45%;
+  margin-left: 24%;
+}
+html, body {
+  height: auto;
+}
+.cursor {
+  cursor: pointer !important;
+}
+.tooltip {
+  width: auto !important;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize!important;
+  font-family: Roboto !important;
+}
+::ng-deep .tooltip {
+  width: auto !important;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize!important;
+  font-family: Roboto !important;
+}
+
+.tag-active {
+  text-align: center;
+  background-color: #eefbf4;
+  color:  #56b768;
+  border-radius: 50px;
+  font-weight: 500;
+}
+.cke_bottom {
+  display: none !important;
+}
+.tag-inactive {
+  text-align: center;
+  background-color: #fdf0f3;
+  color:  #f14e6e;
+  border-radius: 50px;
+  font-weight: 500;
+}
+body {
+  margin: 0;
+  font-family: Roboto !important;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  margin-left: -123px !important;
+
+}
+
+.mat-menu-panel {
+  margin-left: 130px !important;
+}
+
+.mat-paginator-range-actions {
+  margin-right: 88px !important;
+}
+
+.modal-content {
+  background-color: transparent !important;
+  border: none !important;
+}
+.dd-highlight-item{
+  background-color: lightsteelblue;
+  color: black;
+}
+.dd-items-container{
+  background-color: #fff;
+  position: absolute;
+  font-size: 12px;
+  overflow: auto;
+  height: 153px;
+  width: 95%;
+  z-index: 9;
+  top: 27px;
+}
+
+.auto {
+  margin-left: -78px;
+}
+
+app-vendor-orders-detail {
+  width: calc(100% - 300px);
+}
+.hide-permission {
+  visibility: hidden;
+}
+.imgManager .modal-dialog {
+  max-width: 70% !important;
+}
+
+// Validation Error
+
+.validation-error {
+  color: red;
+  font-size: 12px;
+}
+.validationcolor {
+  border-color: red !important;
+}

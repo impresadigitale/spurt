@@ -1,0 +1,26 @@
+
+<mat-list class="reviews"  *ngIf="ratingsList?.length > 0">
+<mat-list-item class="h-100 py-1" *ngFor="let productRatings of ratingsList" [ngClass]="{'wth-out-avatar' : !productRatings.avatar}">
+    <ng-container *ngIf="productRatings.avatar">
+      <img matListAvatar [src]="imagePath + '?path=' + productRatings.avatarPath + '&name=' + productRatings.avatar" alt="image" class="review-author"
+          onError="this.src='assets/images/avatars/avatar-1.png'">
+    </ng-container>
+    <ng-container *ngIf="!productRatings.avatar">
+      <span class="avatar-name flex">
+          {{getShortName(productRatings.firstName + ' ' + productRatings.lastName)}}
+      </span>
+    </ng-container>
+    <p matLine fxLayoutAlign="start center" class="r-tit">
+        <span class="fw-500">{{productRatings.firstName}} {{productRatings.lastName}}</span>
+    </p>
+    <p matLine class="dte"><small>{{productRatings.createdDate | date: "dd MMMM, yyyy"}} at {{productRatings.createdDate | date: "hh:mm a"}}</small></p>
+    <p matLine class="dte">
+      <app-mat-star-rating [rating]="productRatings.rating"></app-mat-star-rating>
+
+    </p>
+    <p matLine class="text desc">{{productRatings.review}}.</p>
+</mat-list-item>
+</mat-list>
+<div class="no-review" *ngIf="ratingsList?.length === 0">
+    <p class="no-review">{{'products.NoReviewFound'|translate}}</p>
+</div>

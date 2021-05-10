@@ -1,0 +1,140 @@
+<main class="cards">
+
+    <div class="top-btn">
+            <h3 class="title">Total Sales Report</h3>
+            <button class="btn" [routerLink]="['/vendors/reports/list']">Cancel</button>
+    </div>
+
+    <form [formGroup]="totalReportFilterForm">
+
+    <div class="flex filter">
+        <mat-radio-group formControlName="dateRange">
+            <mat-radio-button value="1" style="margin:3px">This Month</mat-radio-button>
+            <mat-radio-button value="2" style="margin:3px">3 Months</mat-radio-button>
+            <mat-radio-button value="3" style="margin:3px">6 Months</mat-radio-button>
+        </mat-radio-group>
+     
+
+        <div class="form-group" style="position: relative">
+            <label class="hd" style="position: absolute; top:-9px">From Date</label>
+            <mat-form-field (click)="picker1.open()" style="width:100%" appearance="none">
+                <input style="border: 1px solid #ddd9d9;" class="form-control"
+                    formControlName="fromDate" type="text" matInput [min]="todayDate"
+                    [matDatepicker]="picker1" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="picker1">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group" style="position: relative">
+                <label class="hd" style="position: absolute; top:-9px">To Date</label>
+            <mat-form-field (click)="picker2.open()" style="width:100%" appearance="none">
+                <input style="border: 1px solid #ddd9d9;" class="form-control"
+                    formControlName="toDate" type="text" matInput [min]="todayDate"
+                    [matDatepicker]="picker2" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="picker2">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+
+          <div class="form-group">
+            <label class="hd" for="fromDate">Range From</label>
+            <input type="text" class="form-control" formControlName="rangeFrom" appOnlyNumber placeholder="Range From" style="margin-bottom: 21px" />
+        </div>
+
+          <div class="form-group">
+            <label class="hd" for="fromDate">Range To</label>
+            <input type="text" class="form-control" formControlName="rangeTo" appOnlyNumber placeholder="Range From" style="margin-bottom: 21px"/>
+        </div>
+        <button type="submit" class="btn" (click)="generateReport()">
+            Generate Report
+        </button>
+    </div>
+    </form>
+
+    <div class="flex export-btn" *ngIf="(sandbox.totalSalesReportLoaded$ | async) && (sandbox.totalSalesReport$ | async).length > 0">
+        <button (click)="exportSalesReport()">Export to Excel/CSV</button>
+    </div>
+
+    <div class="vr-wrap">
+
+        <div class="table-responsive">
+            <table class="table"  *ngIf="(sandbox.totalSalesReportLoaded$ | async) && (sandbox.totalSalesReport$ | async).length > 0">
+        
+                            <tr class="tbl-hdr">
+                                <th>#</th>
+                                <th>Order-Line-No #</th>
+                                <th>Order-Line-No-Date</th>
+                                <th>Sub-Invoice #</th>
+                                <th>Item #</th>
+                                <th>Description</th>    
+                                <th class="text-right brd-left brd-right">Quantity</th>
+                                <th class="text-right brd-right">Base Value</th>
+                                <th class="text-right brd-right">Tax</th>
+                                <th class="text-right brd-right">Total Value</th>
+                                <th>Order Status <span>(at Line Level)</span></th>
+                            </tr>
+                            <ng-container *ngFor="let reports of sandbox.totalSalesReport$ | async; let i = index">
+
+                            <tr *ngFor="let list of reports.orderProduct; let j = index">
+                                <td>{{j+1}}</td>
+                                <td>{{list.orderProductPrefixId}}</td>
+                                <td>{{list.createdDate | date: "dd/MM/yyyy"}}</td>
+                                <td>{{list.invoiceNo}}</td>
+                                <td>{{list.skuName}}</td>
+                                <td>{{list.productName}}</td>
+                                <td class="text-right brd-left brd-right">{{list.quantity}}</td>
+                                <td class="text-right brd-right">{{currency.symbol}}{{list.basePrice}}</td>
+                                <td class="text-right brd-right">{{currency.symbol}}{{list.taxAmount}}<p style="font-size: 9px">{{list.taxTypeValue}}</p></td>
+                                <td class="text-right brd-right">{{currency.symbol}}{{list.total}}</td>
+                                <td>{{list.orderStatusName}}</td>
+                            </tr>
+                            <tr class="total">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">Sub Total</td>
+                                    <td class="text-right brd-left brd-right brd-btm">{{reports?.quantityTotal}}</td>
+                                    <td class="text-right brd-right brd-btm">{{currency.symbol}}{{reports?.baseTotal}}</td>
+                                    <td class="text-right brd-right brd-btm">{{currency.symbol}}{{reports.taxTotal}}</td>
+                                    <td class="text-right brd-right brd-btm">{{currency.symbol}}{{reports?.subTotal}}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" class="nobrd"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" class="nobrd"></td>
+                                </tr>
+                                <tr class="total" *ngIf="((sandbox.totalSalesReport$ | async).length - 1) === i">
+                                    <td class="nobrd"></td>
+                                    <td class="nobrd"></td>
+                                    <td class="nobrd"></td>
+                                    <td class="nobrd"></td>
+                                    <td class="nobrd"></td>
+                                    <td class="text-right">Grand Total</td>
+                                    <td class="text-right brd-left brd-right brd-btm">{{quantityTotal}}</td>
+                                    <td class="text-right brd-right brd-btm">{{currency.symbol}}{{baseTotal}}</td>
+                                    <td class="text-right brd-right brd-btm">{{currency.symbol}}{{taxTotal}}</td>
+                                    <td class="text-right brd-right brd-btm">{{currency.symbol}}{{subTotal}}</td>
+                                    <td class="nobrd"></td>
+                                </tr>
+                            <tr>
+                                <td colspan="11" class="nobrd"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" class="nobrd"></td>
+                            </tr>
+                        </ng-container>
+            </table>
+            <div class="no_data" *ngIf="(sandbox.totalSalesReport$ | async)?.length == 0 && (sandbox.totalSalesReportLoaded$ | async)">
+                <p>Data Not Found</p>
+            </div>
+        </div>
+    </div>
+</main>

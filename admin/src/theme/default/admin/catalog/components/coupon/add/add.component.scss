@@ -1,0 +1,39 @@
+/* LOGIN VALIDATION*/
+.validationcolor {
+  border-color: red;
+  .ng-select-container {
+    border-color: red !important;
+  }
+
+}
+
+.error {
+  color: red;
+}
+.disabled {
+  visibility: hidden;
+}
+.dark-modal .modal-content {
+  background-color: #009efb;
+  color: white;
+}
+
+.dark-modal .close {
+  color: white;
+}
+
+.light-blue-backdrop {
+  background-color: #5cb3fd;
+}
+
+.image-manager .modal-dialog {
+  max-width: 70%;
+}
+.addCoupon-wrap {
+  .ap-body-col {
+    width: 45% !important;
+  }
+}
+:host ::ng-deep .tooltip-inner {
+  max-width: 100% !important;
+}

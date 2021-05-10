@@ -1,0 +1,332 @@
+<div class="row products-section vendor-section">
+
+    <div class="col-12 layout-mar">
+        <div class="card">
+          <div class="product-ts-left">
+            <ul class="vp-count">
+              <li>
+                <p>Total Product</p>
+                <span *ngIf="(productSandbox.vendorProductCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                <h3>
+                  {{ (productSandbox.vendorProductCount$ | async).totalProduct}}
+                  <button
+                    type="button"
+                    class="btn"
+                    placement="bottom"
+                    ngbTooltip="Total number of products listed on the platform. "
+                  >
+                    <img src="assets/img/info-ico.png" />
+                  </button>
+                </h3>
+              </li>
+              <li>
+                <p>Active Product</p>
+                <span *ngIf="(productSandbox.vendorProductCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                <h3>
+                  {{ (productSandbox.vendorProductCount$ | async).activeProduct }}
+                  <button
+                    type="button"
+                    class="btn"
+                    placement="bottom"
+                    ngbTooltip="Number of active products listed on the platform."
+                  >
+                    <img src="assets/img/info-ico.png" />
+                  </button>
+                </h3>
+              </li>
+              <li>
+                <p>In Active Product</p>
+                <span *ngIf="(productSandbox.vendorProductCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                <h3>
+                  {{ (productSandbox.vendorProductCount$ | async).inActiveProduct }}
+                  <button
+                    type="button"
+                    class="btn"
+                    placement="left"
+                    ngbTooltip="Number of in-active products listed on the platform."
+                  >
+                    <img src="assets/img/info-ico.png" />
+                  </button>
+                </h3>
+              </li>
+            </ul>
+          </div>
+        
+        </div>
+      </div>
+    
+
+
+
+  <div class="col-12">
+    <div class="breadcrumbs-row">
+      <div class="bc-col marg">
+        <ul>
+          <li><a href="javascript:void(0)" style="color: gray"> Vendors </a></li>
+          <li>Products</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn addserv addvend margin">
+        <button class="btn" style="background-color:#42b3b3" [routerLink]="['/vendors/vendor/product/add']" [appHideIfUnauthorized]="'create-market-place-product'">
+          <img src="assets/img/add-white-ico.png" /> Add Product
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+
+  <div class="col-12">
+    <div class="flex filter-row" (progressEmit)="receiveProgress($event)" >
+      <div class="filter-lft">
+        <div class="toggle">
+          <p>Filters</p>
+          <input
+            class="tgl tgl-light"
+            id="cb1"
+            type="checkbox"
+            [checked]="true"
+            (change)="check($event)"
+          />
+          <label class="tgl-btn" for="cb1"></label>
+        </div>
+      </div>
+      <!--Lft-->
+      <div class="filter-nav-list service-nav-list">
+        <ul class="flex"  *ngIf = "bulkFunction === true">
+          <li [appHideIfUnauthorized]="'delete-market-place-product'">
+            <a href="javascript:void(0)" 
+            #deletePop="ngbPopover"
+            [ngbPopover]="deleteContent"
+           >
+              <img
+                src="assets/img/delete-ico.png"
+              />
+              Delete
+            </a>
+
+
+            <ng-template #deleteContent>
+                <div class="style">
+                  <div class="modal-header">
+                    <h6 class="modal-title" style="margin-left: 17%;">
+                      Do you Want To Delete?
+                    </h6>
+                  </div>
+
+                  <div class="modal-footer" style="margin-right: 23%;">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="deletePop.close()"
+                      data-dismiss="modal"
+                    >
+                      No
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      (click) = "bulkDeletes()"
+                      data-dismiss="modal"
+                    >
+                      Yes
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+          </li>
+          <li [appHideIfUnauthorized]="'export-market-place-product'">
+            <a href="javascript:void(0)" (click)="exportExcel()">
+              <img src="assets/img/Export.png" /> Export
+            </a>
+          </li>
+
+          <li [appHideIfUnauthorized]="'export-all-market-place-product'">
+            <a href="javascript:void(0)" (click)="exportAllExcel()">
+              <img src="assets/img/Export.png" />All Export
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!--Right-->
+    </div>
+  </div>
+</div>
+
+<div class="flex product-wrap">
+  <div class="filter-details" *ngIf="filterEnable">
+    <form [formGroup]="filterForm">
+      <div class="form-group">
+        <label for="keyword">Keyword</label>
+        <input
+          type="text"
+          class="form-control"
+          id="keyword"
+          placeholder="Keyword"
+          formControlName="keyword"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select
+          class="custom-select col-12"
+          id="status"
+          formControlName="status"
+        >
+          <option value= "" selected>- -Select Status- -</option>
+          <option value="1">Active</option>
+          <option value="0">In-Active</option>
+        </select>
+      </div>
+      <div class="text-right filter-btns">
+        <a href="javascript:void(0)" (click)="resetFilter()">Reset</a>
+        <button type="submit" class="btn" style="background-color:#42b3b3" (click)="applyFilter()">
+          Apply Filters
+        </button>
+      </div>
+    </form>
+  </div>
+  <!--Filter-->
+  <div class="product-table" [ngClass]="{ 'expand-list': !buttonActive }">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" width="5%" [appHideIfUnauthorized]="'export-market-place-product' || 'delete-market-place-product'">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                  <input type="checkbox" id="checkbox1" class="custom-control-input" [(ngModel)]="selectedAll" (change)="selectAll($event)"
+                  [ngModelOptions]="{standalone: true}">
+                <label class="custom-control-label" for="checkbox1"></label>
+                </div>
+              </div>
+            </th>
+            <th scope="col">Image</th>
+            <th scope="col" style="text-align:center">Products Name</th>
+            <th scope="col" style="text-align:center">Vendor Name</th>
+            <th scope="col">Price</th>
+            <th scope="col" [appHideIfUnauthorized]="'edit-market-place-product' || 'delete-market-place-product' || 'approve-market-place-product'">Action</th>
+            <th scope="col" width="100px">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let array of productArray">
+            <th scope="row" [appHideIfUnauthorized]="'export-market-place-product' || 'delete-market-place-product'">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                  <input type="checkbox"  [id]="array.productId" class="custom-control-input chk"
+                  [(ngModel)]="array.selected" (change)="checkIfAllSelected()" [value]="array.productId"
+                  [ngModelOptions]="{standalone: true}">
+                <label class="custom-control-label" [for]="array.productId"></label>
+                </div>
+              </div>
+            </th>
+            <td>
+              <img
+                [src]="
+                  ImageUrl +
+                  '?path=' +
+                  array.productImage?.containerName +
+                  '&name=' +
+                  array.productImage?.image +
+                  '&width=100&height=100'
+                "
+                onError="this.src='./assets/error-images/Load-icon-Products.png';"
+                class="product-img"
+              />
+            </td>
+            <td style="text-align:center">{{ array.name }}</td>
+            <td style="text-align:center">{{ array.vendorName }}</td>
+
+            <td *ngIf="array.flag == 1" style="width: 10%">
+              <p *ngIf="array.flag == 1">
+                <del
+                  > {{currency.symbol}} {{array.productprice}}
+                </del>
+              </p>
+              <p style="color: red" *ngIf="array.flag == 1">
+                {{currency.symbol}} {{array.pricerefer}}
+              </p>
+            </td>
+
+            <td *ngIf="!array.flag" style="cursor: pointer;" style=" width: 10%">
+            <p>
+              {{currency.symbol}} {{array.productprice}}
+            </p>
+          </td>
+            <td [appHideIfUnauthorized]="'edit-market-place-product' || 'delete-market-place-product' || 'approve-market-place-product'">
+              <div class="dropdown" ngbDropdown>
+            
+                <i class="fa fa-ellipsis-v cursor" style="padding:15px" id="dropdownMenuButton_{{ array.productId }}" ngbDropdownToggle>
+                </i>
+                <div ngbDropdownMenu [attr.aria-labelledby]="'dropdownMenuButton_' + array.productId" style="padding: 10px;">
+                  <a [appHideIfUnauthorized]="'edit-market-place-product'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="update(array)" >Edit <img src="assets/img/edit-ico.png" style="position:relative; left:45px"/>
+                  </a>
+                  <a [appHideIfUnauthorized]="'delete-market-place-product'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteProduct(array.productId, 'product')"
+                  >Delete  <img src="assets/img/delete-file-ico.png" style="position:relative; left:20px"/></a>
+                  <a class="dropdown-item" [appHideIfUnauthorized]="'approve-market-place-product'" ngbDropdownItem href="javascript:void(0)"   *ngIf = "array.approvalFlag === 0" (click)="approvalFlag(array)">
+                    <span *ngIf = "array.approvalFlag === 0">Approve</span> 
+            
+                          <img
+                            src="assets/img/approval-null.png"
+                            *ngIf="array.approvalFlag === 0"
+                            style="    position: relative;
+                            left: 15px;"
+                          />
+                        
+                      </a>
+                </div>
+              </div>
+            
+            
+            
+            <!-- Modal -->
+            
+            </td>
+            <td>
+              <div class="toggle" (click)="checkStatus(array)">
+                <input
+                  class="tgl tgl-light"
+                  [id]="array.vendorProductId"
+                  type="checkbox"
+                  [(ngModel)]="array.isActive"
+                  (change)="statusChange($event, array)"
+                  [disabled]="array.approvalFlag === 0"
+                />
+                <label class="tgl-btn" [for]="array.vendorProductId"></label>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+      <div
+      class="no_data"
+      *ngIf="(productSandbox.productList$ | async)?.length == 0"
+    >
+      <p>Data Not Found</p>
+    </div>
+
+
+      <div class="flex table-footer">
+        <div class="view-rec"></div>
+        <div class="view-right">
+          <mat-paginator
+            #paginator
+            [length]="(productSandbox.productListCount$ | async)"
+            [pageSize]="pageSize"
+            [pageIndex]="index"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[pageSize]"
+            (page)="onPageChange($event)"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Table-->
+</div>
+
+<router-outlet></router-outlet>
+ 

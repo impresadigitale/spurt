@@ -1,0 +1,15 @@
+.image-list {
+    width: 46px;
+    height: 39px;
+}
+
+.toggle .tgl+.tgl-btn {
+    width: 90% !important;
+}
+.toggle .tgl:checked + .tgl-btn:after {
+    background-color: #3585ed !important;
+}
+  
+.product-wrap .product-table .table .custom-checkbox {
+    top: 10px !important;
+}

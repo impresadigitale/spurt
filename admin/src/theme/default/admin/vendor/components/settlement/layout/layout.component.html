@@ -1,0 +1,12 @@
+<div class="vendor-sidebar">
+    <a href="javascript:void(0)" class="flex" ngbTooltip="settlement orders" placement="right" [routerLink]="['/vendors/settlement/settlement-order']" [routerLinkActive]="'active'">
+        <img src="assets/img/settle-list.svg"  />
+    </a>
+    <a href="javascript:void(0)" class="flex" ngbTooltip="settlement histroy" placement="right"  [routerLink]="['/vendors/settlement/settlement-history']" [routerLinkActive]="'active'">
+        <img src="assets/img/settle-history.svg" />
+    </a>
+</div>
+<div class="vendor-wrapper">
+    <app-vendor-header></app-vendor-header>
+    <router-outlet></router-outlet>
+</div>

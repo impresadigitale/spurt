@@ -1,0 +1,27 @@
+
+<div class="loading" *ngIf="(orderSandbox.updateAllOrderListBasedOnStatusLoading$ | async)">
+  <app-loader></app-loader>
+</div>
+<div class="example-container" *ngFor="let array of (orderSandbox.allOrderListBasedOnStatus$ | async)">
+  <h2 class="title">{{array.name}}   {{array.orderCount}}</h2>
+  <div cdkDropList [id]="array.orderStatusId" [cdkDropListData]="array.vendorOrders"
+  [cdkDropListConnectedTo]="connectedTo" class="example-list" (cdkDropListDropped)="drop($event)" >
+  <div class="example-box" *ngFor="let item of array.vendorOrders" cdkDrag (cdkDragEnded)="dragEnd($event, item)">
+    <div class="olpc-top flex">
+      <h2 (click)="goToOrders(item?.vendorOrderId)">{{item.orderProductPrefixId}}</h2>
+      <p>{{item.createdDate | date: 'EEEE'}}</p>
+  </div>
+  <div class="olpc-row flex">
+    <div class="olpc-img op-img flex">{{((item?.firstName).charAt(0)) | uppercase}}</div>
+    <div class="olpc-rht">
+    <h3 *ngIf="item?.discountedAmount !== null" class="flex"> {{item.firstName}} <span> {{item?.currencySymbolLeft}}{{item.discountedAmount | currency:currencyCode:'' }}{{item?.currencySymbolRight}}</span> </h3>
+    <h3 *ngIf="item?.discountedAmount === null" class="flex"> {{item.firstName}} <span> {{item?.currencySymbolLeft}}{{item.total | currency:currencyCode:'' }}{{item?.currencySymbolRight}}</span> </h3>
+        <p class="flex"><img src="assets/imgs/location.svg"> <span>{{item.shippingAddress1}}</span> </p>
+    </div>
+</div>
+  </div>
+  </div>
+  <div *ngIf="updateAllOrderListBasedOnStatusLoading$">
+
+  </div>
+</div>

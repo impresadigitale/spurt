@@ -1,0 +1,87 @@
+<div class="col-12">
+    <div class="breadcrumbs-row">
+        <div class="bc-col">
+            <ul>
+                <li> <a href="javascript:void(0)"> Services </a> </li>
+                <li> Leads </li>
+            </ul>
+        </div>
+        <div class="bc-col-btn addserv">
+
+        </div>
+    </div>
+</div>
+<!--Breadcrumbs-->
+<div class="col-12">
+    <div class="flex filter-row">
+        <div class="filter-lft">
+            <div class="toggle">
+                <p>Filters</p>
+                <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                <label class="tgl-btn" for="cb1"></label>
+            </div>
+        </div>
+        <!--Lft-->
+        <div class="filter-nav-list service-nav-list">
+            <ul class="flex">
+                
+                <li>
+                    <a href="javascript:void(0)"> <img src="assets/img/list-ico.png"> </a>
+                </li>
+            </ul>
+        </div>
+        <!--Right-->
+    </div>
+</div>
+
+
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container w3-animate-left">
+            <app-services-leads-filter [pageSize]="pagesize" (progressEmits)=receiveProgress($event)></app-services-leads-filter>
+        </div>
+    </div>
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%" [appHideIfUnauthorized]="'delete-service-enquiry'">
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let enquiry of enquirySandbox.enquiryList$ | async">
+                        <th scope="row">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    
+                                </div>
+                            </div>
+                        </th>
+                        <td>{{enquiry.name}}</td>
+                        <td>{{enquiry.email}}</td>
+                        <td>{{enquiry.mobile}}</td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(enquirySandbox.enquiryList$ | async)?.length==0">
+                <p>Data Not Found</p>
+            </div>
+            <mat-paginator #paginator [length]="enquirySandbox.enquiryCount$ | async" [pageSize]="pagesize" [pageIndex]="index" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+
+</div>

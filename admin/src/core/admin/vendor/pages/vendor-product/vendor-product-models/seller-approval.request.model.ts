@@ -1,0 +1,21 @@
+/*
+ * SpurtCommerce
+ * version 2.2
+ * http://www.spurtcommerce.com
+ *
+ * Copyright (c) 2021 PICCOSOFT
+ * Author piccosoft <support@spurtcommerce.com>
+ * Licensed under the MIT license.
+ */
+
+export class ApprovalRequest {
+
+
+    public productId: number;
+    public approvalFlag: number;
+
+     constructor(approvalRequest: any) {
+         this.productId = approvalRequest.productId || '';
+         this.approvalFlag = approvalRequest.approvalFlag || '';
+     }
+ }

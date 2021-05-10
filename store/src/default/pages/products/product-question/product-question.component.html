@@ -1,0 +1,62 @@
+
+
+ <div class="spinner-wrapper">
+        <app-spinner [isShow]="(sandbox.productDetailLoading$ | async)"></app-spinner>
+</div>
+
+ <div fxLayout="row wrap" class="wrap" *ngIf="(sandbox.productDetails$ | async) as details">
+        <div fxFlex="100" fxFlex.gt-md="25" fxFlex.md="35" class="swiper-left">
+                <ng-container *ngIf="details?.productImage">
+                        <ng-container class="qnawl-img" *ngFor="let image of details.productImage">
+                            <img  [src]="imageUrl + '?path=' + image.containerName + '&name=' + image.image + '&width=340&height=340'"
+                            onError="this.src='assets/images/default_image.png'">
+                        </ng-container>
+                </ng-container>
+                    <img *ngIf="!details?.productImage" src="assets/images/default_image.png">
+          <h2>{{details.name}}</h2>
+          <div class="py-0">
+          </div>
+          <h3>{{currencySymbol.symbol}}{{details.price}}</h3>
+        </div>
+        <!---->
+        <div fxFlex="100" class="py-2 product-right" fxFlex.gt-md="75" fxFlex.md="65" ngClass.gt-sm="px-3 m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
+      
+          <div class="prd-detail-cnt">
+            <div class="full-desc lh">
+              <h3 class="flex">
+                Customer questions & answers
+                <button (click)="postQuestion(details)" style="cursor:pointer">Post your question</button>
+              </h3>
+              <div class="cqa-search">
+                <input type="text" placeholder="Have a question? Find answer " #ques (keyup)="searchQuestion($event)">
+              </div>
+              <div class="spinner-wrapper">
+                    <app-spinner [isShow]="(sandbox.questionListLoading$ | async)"></app-spinner>
+             </div>
+              <div class="qa-row"  *ngFor='let list of sandbox.questionList$ | async'>
+                <div class="flex qa-que">
+                  <span>Question :</span>
+                  <p>{{list.question}}?</p>
+             </div>
+                <div class="flex qa-que" *ngIf="list?.answerList">
+                  <span>Answer :</span>
+                  <p class="wt">{{list.answerList.answer}}.</p>
+                  <span *ngIf="(sandbox.productDetails$ | async)?.buyed == 1" style="width:120px" class="text-pop" (click)="postAnswer(list)">{{'products.PostYourAnswer'|translate}}</span>
+                  <a *ngIf="list.answerCount > 1" href="javascript:void(0)" class="read-others" data-toggle="modal" data-target="#exampleModal" (click)="viewAnswer(list)">{{'products.ReadOtherAnswer'|translate}}</a>
+                </div>
+                <div class="flex qa-pro-rep" *ngIf="list?.answerList">
+                  <h5>{{list.postedBy.firstName}}  <span>on {{list.answerList?.createdDate | date: "dd MMM,yyyy"}}</span></h5>
+                  <div class="flex qa-rep">
+                    <p><a href="javascript:Void(0)"><mat-icon style="cursor: pointer;" [style.color]= "list.answerList?.likeType === 1 ? 'blue' : 'gray'" (click)="likeOrDislike($event, list)">thumb_up</mat-icon> </a>{{list.answerList ? list.answerList.likes: 0}} </p>
+                    <p><a href="javascript:Void(0)"><mat-icon style="cursor: pointer;" [style.color]= "list.answerList?.likeType === 2 ? 'blue' : 'gray'"  (click)="likeOrDislike($event, list)">thumb_down</mat-icon> </a>{{list.answerList ? list.answerList.dislikes: 0}} </p>
+                    <a href="javascript:Void(0)" class="repot" (click)="reportAbuse(list)">Report Abuse</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      

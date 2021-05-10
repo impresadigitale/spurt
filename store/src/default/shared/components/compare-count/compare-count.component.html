@@ -1,0 +1,5 @@
+<a mat-button (click)="compareProducts()">
+    <img src="assets/images/Compare-icon-black.svg">
+    <span *ngIf="compareSandbox.compareCount$ | async" class="cart-items-count">{{(compareSandbox.compareCount$ | async).length ? (compareSandbox.compareCount$ | async).length : '0'}}</span>
+
+</a>

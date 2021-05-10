@@ -1,0 +1,49 @@
+<div class="login-wrapper flex">
+
+
+    <div class="login-content flex">
+
+        <div class="login-box flex">
+
+            <div class="login-box-inr">
+
+                <form [formGroup]="loginForm">
+                    <div class="lb-top flex">
+                        <h3><img src="assets/imgs/login-logo.png"></h3>
+                        <p>Enter your <span>Vendor</span> Login Credentials here</p>
+                    </div>
+
+                    <div class="form-input">
+                        <input type="text" placeholder="User Name" formControlName="loginId">
+                        <p>Your Registered Email address</p>
+                        <div *ngIf="(loginForm.controls['loginId'].hasError('required') && loginForm.controls['loginId'].touched)" class="error-data">User Name is required</div>
+                        <div *ngIf="(loginForm.controls['loginId'].hasError('invalidEmail') && loginForm.controls['loginId'].touched)" class="error-data">Invalid user name</div>
+                    </div>
+
+                    <div class="form-input">
+                        <input type="password" placeholder="Password" formControlName="password">
+                        <p>Your account password</p>
+                        <div *ngIf="(loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched)" class="error-data">Password is required</div>
+                    </div>
+
+                    <div class="fgt-btn flex">
+                        <a href="javascript:void(0)" class="ripple cursor" [routerLink]="['/auth/recover-password']"> Forgot Password ? </a>
+                    </div>
+
+                    <button type="submit" class="ripple log-btn" (click)="onLoginFormSubmit(loginForm.value)">
+                       <span>   <i *ngIf="authSandbox.loginLoading$ | async" class="fas fa-spinner fa-spin fa-5x"></i>
+                        Log in</span> </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="login-right flex">
+            <img src="assets/imgs/login-image.png">
+        </div>
+
+    </div>
+
+</div>

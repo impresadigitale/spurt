@@ -1,0 +1,46 @@
+<div class="flex setting2-inner-header">
+    <h3>{{'Settings.Local.Location.LocationList' | translate}}</h3>
+    <button (click)=" AddeNewLocation()" class="btn"><img
+            src="assets/img/add-white-ico.png">{{'Settings.Local.Location.AddNewLocation' | translate}}</button>
+</div>
+<div class="settings-right-wrapper">
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Delivery Location</th>
+                    <th scope="col">Pin Code</th>
+                    <th scope="col">{{'Settings.Local.Location.Action' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let locationlist of locationSandbox.locationList$ | async; let i=index">
+                    <td>{{locationlist.locationName}}</td>
+                    <td>{{locationlist.zipCode}}</td>
+                    <td><i (click)="editlocation(locationlist)" class="fas fa-edit" style="cursor:pointer"></i> <i [ngbPopover]="deleteContent" placement="bottom" #deletePop="ngbPopover" style="margin-left: 15px;cursor:pointer" class="fas fa-trash"></i>
+                        <ng-template #deleteContent>
+                            <div class="style">
+                                <div class="modal-header">
+                                    <h6 class="modal-title" style="margin-left: 17%;"> Do you want to delete ?</h6>
+
+                                </div>
+
+                                <div class="modal-footer" style="margin-right: 23%;">
+                                    <button type="button" class="btn btn-danger" (click)="deletePop.close();" data-dismiss="modal">No
+                                </button>
+                                    <button type="button" class="btn btn-success" (click)="deleteLocation(locationlist.deliveryLocationId, deletePop)" data-dismiss="modal">Yes
+                                </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+    <mat-paginator [length]="locationSandbox.locationPagination$ | async" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+    </mat-paginator>
+</div>

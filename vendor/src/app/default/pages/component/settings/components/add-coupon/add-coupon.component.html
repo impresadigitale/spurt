@@ -1,0 +1,263 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="product-wrapper flex">
+
+    <div class="settings-lft">
+
+        <div class="sl-menu">
+
+            <h3 [routerLink]="['/settings/list']">General Details</h3>
+
+        </div>
+
+        <div class="sl-menu active">
+            <h3 [routerLink]="['/settings/delivery-location']">Modules</h3>
+            <div class="sl-menu-sub">
+                <a href="javascript:void(0)"  [routerLink]="['/settings/delivery-location']">Manage Delivery</a>
+                <a href="javascript:void(0)" class="current" [routerLink]="['/settings/coupon']">Manage Coupon</a>
+            </div>
+        </div>
+
+    </div>
+    <!--left-->
+
+    <div class="settings-right" >
+
+        <h2 class="flex">Add Coupon <a href="javascript:void(0)" [routerLink]="['/settings/coupon']"> < Back </a> </h2>
+        <div class="loading" *ngIf="(sandbox.couponDetailsLoading$ | async) || vendorCouponId">
+            <app-loader></app-loader>
+        </div>
+        <div class="anc-wrap" *ngIf="(sandbox.couponDetailsLoaded$ | async) || !vendorCouponId">
+            <form [formGroup]="couponForm">
+
+            <div class="anc-top-box">
+
+                <div class="filter-group">
+                    <p class="flex er-not">Coupon Code <span class="flex" placement="top" ngbTooltip="Enter a Code for the Coupon. For example, 'christmas25'.">?</span></p>
+                    <input type="text" class="cc-text inp-txt" formControlName="couponCode">
+                    <div *ngIf="(couponForm.controls['couponCode'].hasError('required') && submitted)" class="error-data">Coupon Code is required</div>
+                </div>
+
+                <div class="filter-group">
+                    <p class="flex er-not">Description <span class="flex" placement="top" ngbTooltip="Enter a description for the coupon. ">?</span></p>
+                    <input type="text" formControlName="description" class="inp-txt">
+                    <div *ngIf="(couponForm.controls['description'].hasError('required') && submitted)" class="error-data">Description is required</div>
+
+                </div>
+
+                <div class="toggle-group">
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" formControlName="status">
+                    <label class="tgl-btn" for="cb1"></label>
+                    <span>Active</span>
+                </div>
+
+            </div>
+             <!-- loader -->
+
+
+            <ngb-tabset #tab="ngbTabset">
+                <ngb-tab id="tab-1" title="General">
+                  <ng-template ngbTabContent>
+                        <div class="general-acv" formGroupName="general">
+
+                                <div class="filter-group">
+                                    <p class="flex er-not">Coupon Type <span placement="top" ngbTooltip="Select whether you want to give a percentage off or an amount reduction." class="flex">?</span></p>
+                                    <div class="select">
+                                        <select formControlName="couponType">
+                                            <option value="1">Percentage Discount</option>
+                                            <option value="2">Amount Discount</option>
+                                        </select> 
+                                    </div>
+                                    <div *ngIf="(couponForm.controls['general'].controls['couponType'].hasError('required') && submitted)" class="error-data">Coupon Type is required</div>
+                                </div>
+        
+                                <div class="filter-group">
+                                    <p class="flex er-not">Coupon Value <span placement="top" ngbTooltip="Enter a value for the coupon, either percentage or amount." class="flex">?</span></p>
+                                    <input type="text" formControlName="couponValue" appOnlyNumber class="inp-txt">
+                                    <p class="not">(Discount percentage , Coupon Amount)</p>
+
+                                    <div *ngIf="(couponForm.controls['general'].controls['couponValue'].hasError('required') && submitted)" class="error-data">Coupon Value is required</div>
+
+                                </div>
+        
+                                <div class="free-shipping">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="html" formControlName="freeShipping">
+                                        <label for="html">
+                                            <h4>Free Shipping</h4>
+                                            <p class="flex">Check Shipping setting <span placement="top" ngbTooltip="Check this box if you also want to offer a free shipping." class="flex">?</span> </p>
+                                        </label>
+                                    </div>
+                                </div>
+        
+                                <div class="filter-group-cvb">
+                                    <p class="flex er-not">Coupon Valid Between <span placement="top" ngbTooltip="Select a date to specify the validity period for the coupon." class="flex">?</span></p>
+                                </div>
+        
+                                <div class="ac-col2 flex">
+                                    <div class="filter-group">
+                                        <p>Start Date</p>
+                                        <input class="form-control  placeholder-fix date-input" autocomplete="off" name="from" id="from-date" ngbDatepicker [minDate]="todayDate"
+                                        #from="ngbDatepicker"  formControlName="couponStartDate" (dateSelect)="selectDate($event)">
+                                      <div class="input-group-append from">
+                                        <button class="btn btn-outline-secondary no-shadow border-clr calendar-btn"
+                                          (click)="from.toggle()" type="button">
+                                          <img src="assets/imgs/calender-ico.png"> </button>
+                                      </div>
+                                        <div *ngIf="(couponForm.controls['general'].controls['couponStartDate'].hasError('required') && submitted)" class="error-data">Start Date is required</div>
+                                    </div>
+                                    <div class="filter-group">
+                                        <p>End Date</p>
+                                        <input class="form-control  placeholder-fix date-input" autocomplete="off" name="to" id="to-date" ngbDatepicker [minDate]="minDate"
+                                        #to="ngbDatepicker"  formControlName="couponEndDate">
+                                      <div class="input-group-append from">
+                                        <button class="btn btn-outline-secondary no-shadow border-clr calendar-btn"
+                                          (click)="to.toggle()" type="button">
+                                          <img src="assets/imgs/calender-ico.png"> </button>
+                                      </div>
+                                        <div *ngIf="(couponForm.controls['general'].controls['couponEndDate'].hasError('required') && submitted)" class="error-data">End Date is required</div>
+
+                                    </div>
+                                </div>
+        
+                            </div>
+                   
+                  </ng-template>
+                </ngb-tab>
+
+                <ngb-tab id="tab-2" title="Set Usage">
+                        <ng-template ngbTabContent>
+                                <div class="general-acv set-usage-acv" formGroupName="usage">
+
+                                        <div class="filter-group">
+                                            <p class="flex er-not">Minimum Purchase Amount <span placement="top" ngbTooltip="Specify a minimum purchase amount on which the coupon can be applied." class="flex">?</span></p>
+
+                                            <input type="text" formControlName="minAmount" appOnlyNumber>
+                                            <div *ngIf="(couponForm.controls['usage']['controls']['minAmount'].hasError('required') && submitted)" class="error-data">Minimum purchase amount is required</div>
+
+                                        </div>
+                
+                                        <div class="filter-group">
+                                            <p class="flex er-not">Maximum Purchase Amount <span placement="top" ngbTooltip="Specify a maximum purchase amount on which the coupon can be applied." class="flex">?</span></p>
+
+                                            <input type="text" formControlName="maxAmount" appOnlyNumber>
+                                            <div *ngIf="(couponForm.controls['usage']['controls']['maxAmount'].hasError('required') && submitted)" class="error-data">Maximum purchase amount is required</div>
+                                        </div>
+                                        <div class="filter-group">
+                                            <p class="flex er-not">Email Restrictions <span placement="top" ngbTooltip="Separate the Email Ids, with commas to offer coupon to specific Customers." class="flex">?</span></p>
+                                            <div class="er-input">
+                                                <input type="text" (keyup.enter)="emailSelect($event)" formControlName="emailRestrict">
+                                            </div>
+                                            <div class="er-list flex">
+                                             <mat-chip-list #chipList>
+                                                 <mat-chip *ngFor="let email of emailSelected" [selectable]="selectable"
+                                                    [removable]="removable" (removed)="removeEmail(email)">
+                                                    {{email}}
+                                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                            </div>
+                                        </div>
+            
+                                    </div>
+                         
+                        </ng-template>
+                      </ngb-tab>
+
+                      <!-- products -->
+                      <ngb-tab id="tab-3" title="Products">
+                            <ng-template ngbTabContent>
+                                    <div class="products-acv general-acv ">
+
+                                            <div class="select-group">
+                                                <label class="dropdown">
+                                                    <p class="flex er-not">Products applicable for this coupon <span placement="top" ngbTooltip="Select the list of products on which this coupon can be applied." class="flex">?</span></p>
+
+                                            <ng-select
+                                                    [items]="(sandbox.productList$ | async)"
+                                                    [multiple]="true"
+                                                    bindLabel="name" 
+                                                    placeholder="Select Products"     
+                                                    [selectableGroup]="true"
+                                                    [closeOnSelect]="false"
+                                                    [(ngModel)]="selectedProduct" [ngModelOptions]="{standalone: true}">
+                                                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/>{{item.name}}
+                                                    </ng-template>
+                                            </ng-select>
+                                            <div *ngIf="selectedProduct?.length === 0 && submitted" class="error-data">Select atleast one product</div>
+                    
+                                                </label>
+                                            </div>
+                                            <div class="selected-products flex">
+                                                <mat-chip-list #chipList>
+                                                 <mat-chip *ngFor="let list of selectedProduct" [selectable]="selectable">
+                                                     {{list.name}}
+                                                 </mat-chip>
+                                                 </mat-chip-list>
+                                            </div>
+                                        </div>     
+                             
+                            </ng-template>
+                          </ngb-tab>
+
+                          <!-- usage limit -->
+                          <ngb-tab id="tab-4" title="Usage Limit">
+                                <ng-template ngbTabContent>
+                                   
+                                <div class="general-acv set-usage-acv" formGroupName="usageLimit">
+
+                                        <div class="filter-group">
+                                            <p class="flex er-not">Usage limit for the coupon<span placement="top" ngbTooltip="Specify, up to how many customers can use this coupon." class="flex">?</span></p>
+
+                                            <input type="text" formControlName="limit" appOnlyNumber>
+                                            <div *ngIf="(couponForm.controls['usageLimit']['controls']['limit'].hasError('required') && submitted)" class="error-data">Limit of the coupon is required</div>
+                                        </div>
+                
+                                        <div class="filter-group">
+                                            <p class="flex er-not">No of times the user can use this discount<span placement="top" ngbTooltip="Specify, up to how many times a customer can use this coupon. " class="flex">?</span></p>
+                                            <input type="text" formControlName="count" appOnlyNumber>
+                                            <div *ngIf="(couponForm.controls['usageLimit']['controls']['count'].hasError('required') && submitted)" class="error-data">Discount Limit is required</div>
+                                        </div>
+                
+                                        <div class="free-shipping">
+                                            <div class="form-group">
+                                                <input type="checkbox" id="html" formControlName="allQualifyItem" (click)="checkAllQualifyItem($event)">
+                                                <label for="html">
+                                                    <p class="flex er-not">Coupon Code Applies to all qualifying Items in the cart<span placement="top" ngbTooltip="Check this box if the customer can use the same coupon code for all the items in the cart." class="flex">?</span></p>
+                                                </label>
+                                            </div>
+                                        </div>
+                
+                                        <div class="filter-group" [ngClass]="{'disabled' : couponForm.controls['usageLimit'].controls['allQualifyItem'].value === true}">
+                                            <p class="flex er-not">Specify the number of cart Items the coupon code can be applied<span placement="top" ngbTooltip="Enter the number for, up to how many items in the cart the coupon can be applied." class="flex">?</span></p>
+
+                                            <input type="text" formControlName="cartItems"  appOnlyNumber>
+                                            <div *ngIf="couponForm.controls['usageLimit']['controls']['cartItems'].hasError('min') && !couponForm.controls['usageLimit']['controls']['cartItems'].untouched"
+                                            class="error-data"> Cart items should be minimum 1</div>
+                                          </div>
+                                          <div *ngIf="(couponForm.controls['usageLimit']['controls']['cartItems'].hasError('required') && submitted)" class="error-data">Cart item count is required</div>
+                
+                                    </div>     
+                                 
+                                </ng-template>
+                              </ngb-tab>
+            </ngb-tabset>
+
+                <div class="flex save-reset-btn">
+
+                    <button type="submit" class="ripple" (click)="submit()"> Save 
+                        <i *ngIf="(sandbox.createCouponLoading$ | async) || (sandbox.updateCouponLoading$ | async)" class="fa fa-refresh fa-spin"></i>
+                    </button>
+                    <button type="reset" class="ripple reset" (click)="reset()"> Reset </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <!--left-->
+
+</div>
+
+

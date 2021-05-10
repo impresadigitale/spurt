@@ -1,0 +1,192 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="product-wrapper flex">
+
+    <div class="settings-lft">
+
+        <div class="sl-menu">
+
+            <h3 [routerLink]="['/settings/list']">General Details</h3>
+
+
+
+        </div>
+
+        <div class="sl-menu active">
+            <h3 [routerLink]="['/settings/delivery-location']">Modules</h3>
+            <div class="sl-menu-sub">
+                <a href="javascript:void(0)"  [routerLink]="['/settings/delivery-location']">Manage Delivery</a>
+                <a href="javascript:void(0)" class="current" [routerLink]="['/settings/coupon']">Manage Coupon</a>
+            </div>
+        </div>
+
+    </div>
+    <!--left-->
+
+    <div class="settings-right">
+
+        <h2 class="flex">Coupon List <a href="javascript:void(0)"  [routerLink]="['/settings/add-coupon']"> <img src="assets/imgs/add-plus-blue.svg"> Add Coupon </a> </h2>
+
+        <div class="dpf-row flex" *ngIf="(sandbox.couponListCount$ | async) as count">
+            <p>{{count}} Coupon’s  found</p>
+            <input type="text" placeholder="Search Coupon Name" (keyup)="search($event)">
+        </div>
+        <!---->
+
+        <!-- loader -->
+        <div class="loading" *ngIf="(sandbox.couponListLoading$ | async)">
+                <app-loader></app-loader>
+        </div>
+
+        <!-- no items -->
+
+        <div class="no-data"
+            *ngIf="(sandbox.couponList$ | async)?.length === 0 && (sandbox.couponListLoaded$ | async)">
+           <span>No Coupons Found</span>
+         </div>
+
+        <div class="table-responsive" *ngIf="(sandbox.couponListLoaded$ | async) && (sandbox.couponList$ | async)?.length > 0">
+            <table class="table">
+                <tr>
+                    <th>Coupon Name</th>
+                    <th class="text-right">Discount Value</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th class="text-center">Date Left</th>
+                    <th class="text-center">Orders</th>
+                    <th class="text-center">Status</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let list of sandbox.couponList$ | async" >
+                    <td style="cursor: pointer" (click)="goToTrackDetails(list)">
+                        <h4>{{list.couponName}}</h4>
+                        <p>{{list.couponCode}}</p>
+                    </td>
+                    <td class="text-right" *ngIf="list.couponType === 1">{{list.discount}}%</td>
+                    <td class="text-right" *ngIf="list.couponType === 2">{{currencySymbol?.symbolLeft}} {{list.discount}} {{currencySymbol?.symbolRight}}</td>
+                    <td>{{list.startDate | date: 'dd/MM/yyyy'}}</td>
+                    <td> {{list.endDate | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{list.leftDays}}</td>
+                    <td class="text-center"><span class="orders flex">{{list.orders}}</span></td>
+                    <td class="text-center">
+                        <span class="status active" *ngIf="list.isActive === 1">Active</span>
+                        <span class="status inactive" *ngIf="list.isActive === 0">In-Active</span>
+                    </td>
+                    <td>
+                        <img class="cursor" title="edit coupon" src="assets/imgs/edit-dark.svg" (click)="goToEdit(list.vendorCouponId);">
+                        <img class="cursor" style="width: 17px; margin-left: 10px" [ngbPopover]="deleteContent" placement="left" #deletePop="ngbPopover" title="delete coupon" src="assets/imgs/trash-dark.svg">
+                    </td>
+                      <ng-template #deleteContent>
+                        <div class="style">
+                          <div class="modal-header">
+                            <h6 class="modal-title">
+                              Do you want to delete?
+                            </h6>
+                          </div>
+            
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                              No
+                            </button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal"
+                              (click)="deleteCoupon(list.vendorCouponId);">
+                              Yes
+                            </button>
+                          </div>
+                        </div>
+                      </ng-template>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+    </div>
+    <!--left-->
+
+</div>
+
+<!-- pagination -->
+<div class="pager" style="position: absolute; bottom: 30px; right: 0;">
+    <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage"
+      [counts]="(sandbox.couponListCount$ | async)"></app-pager>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <h4>New Year</h4>
+                                <p>buy2020</p>
+                            </td>
+                            <td class="text-right">
+                                <h5>Discount Value</h5>
+                                20%
+                            </td>
+                            <td>
+                                <h5>Start Date</h5>
+                                25/12/2019
+                            </td>
+                            <td>
+                                <h5>End Date</h5>
+                                15/01/2020
+                            </td>
+                            <td>
+                                <h5>Date Left</h5>
+                                6
+                            </td>
+                            <td class="text-center">
+                                <h5>Status</h5>
+                                <span class="status active">Active</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!---->
+
+                <div class="table-responsive order-table">
+                    <table class="table">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Product</th>
+                            <th class="text-right">1</th>
+                            <th class="text-right">Actual Price</th>
+                            <th class="text-right">Discounted Price</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>12/12/2019</h4>
+                                #4567892
+                            </td>
+                            <td>Mahnaz Farzain</td>
+                            <td>Women's Casual Shoes</td>
+                            <td class="text-right">1</td>
+                            <td class="text-right">100</td>
+                            <td class="text-right">80</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

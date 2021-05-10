@@ -1,0 +1,58 @@
+<div class="row products-section card vendor-section vsetting-section">
+  <div class="col-12 layout">
+    <div class="breadcrumbs-row">
+      <div class="bc-col">
+        <ul style="margin-left: -164px">
+          <li><a href="javascript:void(0)" style="color: gray"> Vendors </a></li>
+          <li>Set Commission</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+</div>
+
+<div class="flex vendorsettings-wrap">
+  <div class="vs-list">
+    <div class="vsl-top">
+      <h3>Vendor List</h3>
+      <input type="text" placeholder="Search Vendor" (keyup)="searchVendor($event)" />
+    </div>
+    <div class="vsl-vendor">
+      <div
+        class="vslv-row  flex"
+        (click)="goToDetail(array?.vendorId)" [ngClass]="{'active' : activeOrderId === array?.vendorId}"
+        *ngFor="let array of settingSandbox.getSettingList$ | async"
+      >
+        <img
+          [src]="
+            ImageUrl +
+            '?path=' +
+            array.avatarPath +
+            '&name=' +
+            array.avatar +
+            '&width=100&height=100'
+          "
+          onError="this.src='/assets/error-images/Load-icon-Products.png';"
+          class="vendor-img"
+        />
+        <div class="vslv-col">
+          <h3>{{ array.firstName }}</h3>
+          <p>Company Name: {{ array.companyName }}</p>
+        </div>
+      </div>
+    </div>
+    <div
+    class="no_data"
+    *ngIf="(settingSandbox.getSettingList$ | async)?.length == 0"
+  >
+    <p>Data Not Found</p>
+  </div>
+  </div>
+  <!--Left-->
+
+  <div class="vl-details">
+    <router-outlet></router-outlet>
+  </div>
+  <!--Right-->
+</div>

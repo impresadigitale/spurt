@@ -1,0 +1,5 @@
+<div class="breadcrumbs">
+    <ul class="flex">
+        <li *ngFor="let page of pageInfo;let i = index"><span *ngIf="i>0">/</span><a class="no-cursor" href="javascript:void(0)">{{page.title}}</a></li>
+    </ul>
+</div>

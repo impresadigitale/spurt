@@ -1,0 +1,39 @@
+.swiper-container {
+    padding: 16px 2px 2px 2px;
+    .swiper-slide {
+        // text-align: center;
+        // margin-right: 10px !important;
+    }
+}
+
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+    pointer-events: auto;
+}
+
+
+.del {
+    color: grey;
+}
+
+.new-price {
+    font-size: 22px;
+    span.old-price {
+        font-size: 14px;
+        font-weight: 400;
+        color: #999;
+    }
+}
+
+.transparent-card {
+    opacity: 0;
+    display: none;
+}
+
+.swiper-slide {
+    width: 223.2px !important;
+    margin-right: 16px !important;
+}
+.product-item .prices {
+    margin: unset !important;
+}

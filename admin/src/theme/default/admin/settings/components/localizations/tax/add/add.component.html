@@ -1,0 +1,55 @@
+<div class="flex setting2-inner-header">
+    <h3><span style="color:#FF006A">{{taxId ? 'Update Tax' : 'Add Tax'}}</span></h3>
+</div>
+<div class="settings-right-wrapper addnewuser">
+
+    <div class="new-user">
+        <form (ngSubmit)="onSubmit()" [formGroup]="taxForm" class="form-horizontal m-t-20">
+            <div class="row">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">{{'Settings.Local.Tax.TaxName' | translate}}<sup>*</sup></label>
+                        <input type="text" placeholder="Title" class="form-control" formControlName="title" [ngClass]="{'validationcolor':taxForm.get('title').hasError('required') && taxForm.get('title').touched && submitted}">
+                        <div class="error" *ngIf="taxForm.get('title').hasError('required') && taxForm.get('title').touched && submitted">
+                            {{'Settings.Local.Tax.Error.Taxname' | translate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">{{'Settings.Local.Tax.Value' | translate}}<sup>*</sup></label>
+                        <input type="text" (keypress)="numberOnly($event)" placeholder="Number" class="form-control" formControlName="value" [ngClass]="{'validationcolor':!taxForm.get('value').valid && !taxForm.get('value').untouched && submitted}">
+                        <div class="error"></div>
+                        <div class="error" *ngIf="taxForm.get('value').hasError('required') && taxForm.get('value').touched && submitted">
+                            {{'Settings.Local.Tax.Error.valueisMustinnumber' | translate}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">{{'Settings.Local.Tax.Status' | translate}}
+                            <sup>*</sup></label>
+                        <select class="form-control custom-select" formControlName="status" data-placeholder="Choose Role" placeholder="status" [ngClass]="{'validationcolor':!taxForm.get('status').valid && !taxForm.get('status').untouched && submitted}">
+                            <option value=''>- -Select Status- -</option>
+                            <option value="1">{{'Settings.Local.Tax.Enabled' | translate}}</option>
+                            <option value="0">{{'Settings.Local.Tax.Disabled' | translate}}</option>
+                        </select>
+                        <div class="error" *ngIf="taxForm.get('status').hasError('required') && taxForm.get('status').touched && submitted">
+                            {{'Settings.Local.Tax.Error.statusisrequired' | translate}}
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="flex user-btn">
+                        <button type="submit" class="btn btn-add">{{'Settings.Local.Save' | translate}}</button>
+
+                        <button (click)="cancel()" class="btn btn-cancel"> {{'Settings.Local.Country.Cancel' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+.chk-shp {
+    border-radius: 2px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 20px;
+    p {
+        font-size: 15px;
+        font-weight: 500;
+        color: #000000;
+        margin: 0 0 7px;
+        width: 100%;
+        display: flex;
+    }
+    .csd {
+        justify-content: flex-start;
+        align-items: center;
+        .csd-inp {
+            position: relative;
+            margin-right: 20px;
+            input {
+                width: 297px;
+                height: 45px;
+                border: solid 1px #d7d7d7;
+                line-height: 45px;
+                padding: 0 13px;
+                font-size: 15px;
+                font-weight: 500;
+                color: #000000;
+                box-sizing: border-box;
+            }
+            button {
+                position: absolute;
+                right: 10px;
+                top: 15px;
+                background: transparent;
+                border: 0;
+                background: transparent;
+                font-size: 14px;
+                font-weight: 500;
+                color: #1976d2;
+            }
+        }
+        .csd-avl {
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #000;
+            img {
+                margin-right: 12px;
+            }
+        }
+    }
+    .aop {
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        p {
+            font-size: 14px;
+            font-weight: normal;
+            color: #000000;
+            width: 100px;
+            margin: 0;
+            sup {
+                color: #ff0000;
+            }
+        }
+        .avl-opt {
+            width: 140px;
+            display: block;
+            margin-bottom: 0;
+            .mat-form-field {
+                width: 100%;
+                .mat-form-field-underline {
+                    height: 0!important;
+                }
+            }
+        }
+        .aopsc-rt {
+            width: calc(100% - 100px);
+            .mat-radio-button {
+                margin-bottom: 20px;
+            }
+        }
+        &.aop-sc {
+            padding-bottom: 10px;
+            border-bottom: solid thin #d4d4d4;
+            .mat-radio-button {
+                margin-right: 20px;
+                .mat-radio-label-content {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #000000;
+                }
+            }
+        }
+        &.aop-sc-lst {
+            margin-bottom: 0px;
+        }
+    }
+}

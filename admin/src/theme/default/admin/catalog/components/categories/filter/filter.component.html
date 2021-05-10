@@ -1,0 +1,20 @@
+<form [formGroup]="filterForm">
+    <div class="form-group">
+        <label for="keyword">Keyword</label>
+        <input type="text" formControlName="keyword" class="form-control" id="Keyword" aria-describedby="emailHelp"
+               placeholder="Enter Category Name">
+    </div>
+    <div class="form-group get">
+        <label>{{'catalog.categories.SortOrder'| translate}}</label>
+        <select class="custom-select col-12" id="" formControlName="sortOrder">
+            <option value=''>--Select--</option>
+            <option value="1">Ascending</option>
+            <option value="2">Descending</option>
+        </select>
+
+    </div>
+    <div class="text-right filter-btns">
+        <a style="cursor: pointer" (click)="reset()">{{'catalog.product.Reset'| translate}}</a>
+        <button type="submit" (click)="filter()" class="btn">{{'catalog.product.ApplyFilters'| translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,150 @@
+<div class="vs-order-detail">
+  
+    <div class="vs-top-head flex vl-details">
+
+      <div class="vst-col1">
+        <h3>{{(orderSandbox.getOrderDetail$ | async)?.orderPrefixId}} <span>{{(orderSandbox.getOrderDetail$ | async)?.createdDate | date:'dd-MMM-yyyy:h:mm a'}}</span></h3>
+        <div class="vst-col1-rw"> <span>Name</span> {{(orderSandbox.getOrderDetail$ | async)?.shippingFirstname}} {{orderDetail?.shippingLastname}} </div>
+        <div class="vst-col1-rw"> <span>Email</span> {{(orderSandbox.getOrderDetail$ | async)?.email}} </div>
+        <div class="vst-col1-rw"> <span>Mobile</span> {{(orderSandbox.getOrderDetail$ | async)?.telephone}} </div>
+      </div>
+      <!--col1-->
+      <div class="vst-col2">
+        <h4>Address</h4>
+        <p>{{(orderSandbox.getOrderDetail$ | async)?.shippingCompany}}</p>
+        <p>{{(orderSandbox.getOrderDetail$ | async)?.shippingAddress1}}</p>
+        <p>{{(orderSandbox.getOrderDetail$ | async)?.shippingAddress2}}</p>
+        <p>{{(orderSandbox.getOrderDetail$ | async)?.shippingCity}}</p>
+        <p>{{(orderSandbox.getOrderDetail$ | async)?.shippingZone}}</p>
+        <p>{{(orderSandbox.getOrderDetail$ | async)?.shippingPostcode}}</p>
+      </div>
+      <div class="vst-col2" *ngIf="(orderSandbox.getOrderDetail$ | async)?.paymentStatus === 0">
+        <button class="flex change-pay" (click)="changePayment()"> Update Payment </button>
+      </div>
+
+      <div class="vst-col2" *ngIf="(orderSandbox.getOrderDetail$ | async)?.paymentStatus === 1">
+        <p class="paid-sts">Paid</p>
+        </div>
+      <!--Col2-->
+      <div class="vst-col3 text-left">
+        <h2 style="padding-left: 10px">Total {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolLeft}}{{(orderSandbox.getOrderDetail$ | async)?.total}} {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolRight}}</h2>
+    </div>
+      <!--Col3-->
+      <div class="vst-col4 flex dropdown d-inline-block" ngbDropdown>
+
+        <button class="btn btn-outline-primary flex" id="dropdownBasic1" ngbDropdownToggle> <img src="assets/img/Invoicee.png"> Invoice </button>
+
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <ng-container *ngFor="let list of orderSandbox.vendorListForOrderDetails$ | async">
+          <button class="drp-btn" ngbDropdownItem (click)="downloadInvoice(list)">{{list.companyName}}</button>
+        </ng-container>
+
+        </div>
+      </div>
+      
+    
+      <!--Col4-->
+
+    </div>
+    <!--Head-->
+
+    <div class="flex vs-detail">
+
+      <div class="vsd-left">
+
+        <div class="vsd-card" *ngFor="let array of (orderSandbox.getOrderDetail$ | async)?.productList" (click)="viewDetail(array)" [ngClass]="{'active' : array.vendorOrderId === productDetails.vendorOrderId}">
+          <h3 class="flex"> {{array?.companyName}} {{array?.orderProductPrefixId}} <span [style.background-color]="array.subOrderStatusColorCode">{{array?.subOrderStatusName}}</span> </h3>
+          <div class="table-responsive">
+            <table class="table table-borderless" *ngFor="let subArray of array?.vendorProductList">
+              <tr>
+                <th></th>
+                <th></th>
+                <th class="text-center">Quantity</th>
+                <th class="text-right">Price</th>
+              </tr>
+              <tr>
+                <td width="60px"> <img style="max-width: 100%;
+                  max-height: 100%;"
+                  [src]="
+                    ImageUrl +
+                    '?path=' +
+                    subArray.containerName +
+                    '&name=' +
+                    subArray.image +
+                    '&width=100&height=100'
+                  "
+                  onError="this.src='/assets/error-images/Load-icon-Products.png';"
+                  class="vendor-img"
+                /> </td>
+                <td width="50%">
+                  <h4>{{subArray?.name}}</h4>
+                  <p>{{subArray?.skuName}}</p>
+                  <p>{{subArray?.varientName}}</p>               
+                 </td>
+                <td class="quantity">{{subArray?.quantity}}</td>
+              <td class="price">{{(orderSandbox.getOrderDetail$ | async)?.currencySymbolLeft}} {{subArray?.total}} {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolRight}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="price">Tax</td>
+                <td *ngIf="subArray?.taxType === 2" class="price">{{subArray?.taxValue}}%</td>
+                <td *ngIf="subArray?.taxType !== 2" class="price">{{(orderSandbox.getOrderDetail$ | async)?.currencySymbolLeft}} {{subArray?.taxValue}} {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolRight}}</td>
+
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="price">Coupon Discount</td>
+                <td class="price">{{(orderSandbox.getOrderDetail$ | async)?.currencySymbolLeft}} {{(subArray?.discountAmount)}} {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolRight}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="price">Total</td>
+                <td *ngIf="subArray?.discountedAmount !== null" class="price">{{(orderSandbox.getOrderDetail$ | async)?.currencySymbolLeft}} {{(subArray?.discountedAmount)}} {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolRight}}</td>
+                <td *ngIf="subArray?.discountedAmount === null" class="price">{{(orderSandbox.getOrderDetail$ | async)?.currencySymbolLeft}} {{(subArray?.total)}} {{(orderSandbox.getOrderDetail$ | async)?.currencySymbolRight}}</td>
+
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <!--left-->
+
+      <div class="vsd-right" *ngIf="productDetails">
+
+        <div class="vsd-address">
+          <h4>{{productDetails.companyName}}</h4>
+          <p>{{productDetails.companyAddress1}},</p>
+          <p>{{productDetails.companyAddress2}}</p>
+        </div>
+
+        <div class="st-row" >
+          <h5><span>Order Status</span></h5>
+          <div class="str-full flex" *ngFor="let array of (orderSandbox.getOrdersLogList$ | async)">
+            <div class="strf-lft flex">
+              <p>{{array?.createdDate | date:'dd-MMM-yyy'}}</p>
+              <p>{{array?.createdDate | date:'hh:mm a'}}</p>
+            </div>
+            <!--lft-->
+            <div class="strf-rht" [ngClass]="{'disabled': array?.createdDate === ''}">
+              <span class="allocate"></span>
+              <h3>{{array?.name}} </h3>
+            </div>
+            <!--rht-->
+          </div>
+          <!--full-->
+      
+          <!--full-->
+
+        </div>
+
+      </div>
+      <!--right-->
+
+    </div>
+    <!--vs-detail-->
+
+</div>

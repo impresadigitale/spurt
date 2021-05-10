@@ -1,0 +1,207 @@
+<app-sales-count></app-sales-count>
+<div class="row products-section vendor-section">
+
+  <div class="col-12">
+    <div class="breadcrumbs-row">
+      <div class="bc-col mar">
+        <ul>
+          <li class="cusror"><a href="javascript:void(0)" style="color: gray"> Sales </a></li>
+          <li class="cusror">Inventory</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn addserv addvend margin">
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+
+  <div class="col-12">
+    <div class="flex filter-row">
+      <div class="filter-lft">
+        <div class="toggle">
+          <p>Filters</p>
+          <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="check($event)" />
+          <label class="tgl-btn" for="cb1"></label>
+        </div>
+       
+      </div>
+      <!--Lft-->
+      <div class="filter-nav-list service-nav-list">
+     
+      </div>
+      <!--Right-->
+    </div>
+  </div>
+</div>
+
+<!-- filter -->
+<div class="flex product-wrap">
+  <div class="filter-details" *ngIf="filterEnable">
+   
+<form [formGroup]="filterForm">
+
+  <div class="form-group">
+      <label for="keyword">{{'catalog.product.ProductName'| translate}}</label>
+      <input type="text" formControlName="keyword" class="form-control" id="Keyword" aria-describedby="emailHelp"
+             placeholder="{{'catalog.product.EnterSearchProductName'| translate}}">
+  </div>
+  <div class="form-group">
+      <label for="sku">{{'catalog.product.Sku'| translate}}</label>
+      <input type="text" formControlName="sku" class="form-control" id="sku"
+             placeholder="{{'catalog.product.SkuNumber'| translate}}">
+  </div>
+  <div class="form-group">
+      <label>Price</label>
+      
+      <div class="radio">
+          <label class="prod_filter">
+              <input type="radio" name="price" value="1" formControlName="price">
+              {{'catalog.product.Min-price'| translate}}
+          </label>
+          <label class="prod_filter">
+              <input type="radio" name="price" value="2" formControlName="price">
+              {{'catalog.product.Max-price'| translate}}
+          </label>
+      </div>
+  </div>
+  <div class="form-group">
+      <label>Status</label>
+      <select class="custom-select col-12" id="inlineFormCustomSelect" formControlName="status">
+          <option value="" selected>- -Select Status- -</option>
+          <option value="1">Active</option>
+          <option value="0">In-Active</option>
+      </select>
+  </div>
+  <div class="text-right filter-btns">
+      <a (click)="resetFilter()" style="cursor: pointer">{{'catalog.product.Reset'| translate}}</a>
+
+      <button type="submit" class="btn" style="background-color:#dc4d5b"
+              (click)="applyFilter()">{{'catalog.product.ApplyFilters'| translate}}
+      </button>
+  </div>
+</form>
+  </div>
+  <!--Filter-->
+  <div class="product-table " [ngClass]="{ 'expand-list': !buttonActive }">
+    <div class="table-responsive">
+      <table class="table" id="myTable">
+        <thead>
+          <tr>
+            <th scope="col" width="5%">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                  <input
+                    *ngIf="sandbox.inventoryProductList$ | async as inventory"
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="checkbox1"
+                    (change)="selectAll($event, inventory)"
+                  />
+                  <label class="custom-control-label" for="checkbox1"></label>
+                </div>
+              </div>
+            </th>
+            <th scope="col">Product Name</th>
+            <th scope="col" style="text-align:center">SKU</th>
+            <th scope="col" style="text-align:center">Selling Price + Shipping</th>
+            <th scope="col" style="text-align:center" width="100px">Tier Price</th>
+            <th scope="col" width="100px" style="text-align: center">Last Updated</th>
+
+          </tr>
+        </thead>
+        <tbody class="panel">
+          <ng-container *ngFor="let inventory of sandbox.inventoryProductList$ | async;let i = index">
+            <tr>
+              <th scope="row">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="{{ inventory.productId }}" value="check" [checked]="isChecked[inventory.productId]" (click)="selectChkBox($event, inventory.productId)"/>
+                  <label class="custom-control-label" for="{{ inventory.productId }}"></label>
+                  </div>
+                </div>
+              </th>
+              <td (click)="inventory.isCollapsed = !inventory.isCollapsed;" style="cursor: pointer; position: relative;">{{inventory.name}}
+                <a href="javascript:void(0)" class="lst-xpnd"
+                [attr.aria-expanded]="!inventory.isCollapsed" [attr.aria-controls]="'demo-' + (i + 1)">
+                <img [src]="inventory.isCollapsed ? 'assets/img/arrow-right-ico.png' : 'assets/img/arrow-drop.png'"/>
+                </a>
+              </td>
+              <td style="text-align:center;">{{inventory.sku}}</td>
+              <td width="160px">{{currency.symbol}}{{inventory.price}}</td>
+              <td style="text-align:center;" *ngIf="inventory.hasTirePrice === 0">No</td>
+              <td style="text-align:center;" *ngIf="inventory.hasTirePrice === 1">Yes</td>
+              <td style="text-align:center;">{{inventory.modifiedDate | date: 'dd MMMM yyyy'}} </td>
+            </tr>
+
+            <tr id="demo-{{i + 1}}" class="acc-table" [ngbCollapse]="inventory.isCollapsed">
+              <td colspan="9" class="hiddenRow" [@smoothCollapse]="inventory.isCollapsed?'initial':'final'">
+               
+                <table class="table">
+                  <tr>
+                    <th class="text-right" colspan="7"><a href="javascript:void(0)" (click)="inventory.isCollapsed = !inventory.isCollapsed" class="acc-tbl-close">x</a></th>
+                  </tr>
+                  <tr>
+                    <th class="text-right" colspan="7">
+                        <span class="form-lft" style="padding-left: 80px; margin-right: 25px">Manage Stock</span>
+                        <label class="switch">
+                            <input type="checkbox" id="togBtn" [checked]="stockStatus[inventory.productId] === 1" [(ngModel)]="stockStatus[inventory.productId]" (change)="changeManageStock(inventory, $event)"><div class="slider round"><span class="on">ON</span><span class="off">OFF</span></div>
+                        </label>
+                    </th>
+                  </tr>
+                  <tr>
+                        <th>SKU</th>
+                        <th>Out of Stock Threshold<img placement="top" ngbTooltip="At which stock number point, the Admin has to get an intimation as it is out of stock. Example - 1." style="margin-left: 5px;" src="assets/img/info-ico.png"/></th>
+                        <th>Notify when quantity is below<img placement="top" ngbTooltip="At which stock number point, the Admin should start getting an alert that the product is running out of stock. Example, 1 or 5 or 10." style="margin-left: 5px;" src="assets/img/info-ico.png"/></th>
+                        <th>Min Quantity allowed in cart<img placement="top" ngbTooltip="Minimum quantity that needs to be added to the cart for check out and placing order." style="margin-left: 5px;" src="assets/img/info-ico.png"/></th>
+                        <th>Max Quantity allowed in cart<img placement="left" ngbTooltip="Maximum quantity that needs to be added to the cart for check out and placing the order." style="margin-left: 5px;" src="assets/img/info-ico.png"/></th>
+                        <th>Enable back orders<img placement="left" ngbTooltip="Enable back orders for the ones for which the Customer has requested to get notified, when in stock." style="margin-left: 5px;" src="assets/img/info-ico.png"/></th>
+                  </tr>
+                  <ng-container *ngIf="inventory?.skuValue?.length > 0">
+                    <tr *ngFor="let item of inventory.skuValue">
+                            <td class="mng-stoc">
+                              <input type="text" readonly [(ngModel)]="item.skuName">
+                            </td>
+                            <td class="mng-stoc">
+                              <input type="text" [(ngModel)]="item.outOfStockThreshold">
+                            </td>
+                            <td class="mng-stoc">
+                              <input type="text" [(ngModel)]="item.notifyMinQuantity">
+                            </td>
+                            <td class="mng-stoc">
+                              <input type="text" [(ngModel)]="item.minQuantityAllowedCart">
+                            </td>
+                            <td class="mng-stoc">
+                              <input type="text" [(ngModel)]="item.maxQuantityAllowedCart">
+                            </td>
+                            <td class="mng-stoc">
+                              <select [(ngModel)]="item.enableBackOrders">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                              </select>                    
+                            </td>
+                  </tr>
+              </ng-container>
+                  <tr>
+                    <td class="mng-stoc text-right" colspan="7">
+                        <button (click)="updateStock(inventory)">update</button>
+                    </td>
+                  </tr>
+                </table>
+
+          
+
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="no_data" *ngIf="(sandbox.inventoryProductList$ | async)?.length == 0 && (sandbox.inventoryProductListLoaded$ | async)">
+        <p>Data Not Found</p>
+      </div>
+      <mat-paginator [length]="sandbox.inventoryProductListCount$ | async" [pageSize]="pageSize" [pageIndex]="index"
+        [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="pageChange($event)">
+      </mat-paginator>
+    </div>
+  </div>
+  <!--Table-->
+</div>

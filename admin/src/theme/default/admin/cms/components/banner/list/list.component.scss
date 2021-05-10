@@ -1,0 +1,8 @@
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #f2086d !important;
+  border: #f2086d !important;
+}
+
+.product-wrap .product-table .table .custom-checkbox {
+  top: 5px !important;
+}

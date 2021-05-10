@@ -1,0 +1,19 @@
+<div class="settings-section">
+    <div class="settings-header">
+        <h3>{{'Settings.nav.settings'| translate}}</h3>
+    </div>
+</div>
+
+<div class="settings-sidebar">
+    <ul class="flex">
+        <li><a href="javascript:void(0)" [routerLink]="['/settings/role']" [routerLinkActive]="'active'" >{{'Settings.nav.Role'| translate}}  </a></li>
+        <li><a href="javascript:void(0)" [routerLink]="['/settings/user']" [routerLinkActive]="'active'"> {{'Settings.nav.User'| translate}} </a></li>
+        <li><a href="javascript:void(0)" [routerLink]="['/settings/generalsetting']" [routerLinkActive]="'active'" >{{'Settings.nav.GeneralSettings'| translate}}</a></li>
+        <li><a href="javascript:void(0)" [routerLink]="['/settings/personalize']" [routerLinkActive]="'active'">{{'Settings.nav.Personalize'| translate}}</a></li>
+        <li><a href="javascript:void(0)" [routerLink]="['/settings/sitesettings']" [routerLinkActive]="'active'" >{{'Settings.nav.siteSettings'| translate}}</a></li>
+        <li><a href="javascript:void(0)" [routerLink]="['/settings/local']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'list-email-template' || 'list-country' || 'list-zone' || 'list-language' || 'list-currency' || 'list-tax' || 'list-order-status' || 'list-stock-status'">{{'Settings.nav.Localizations'| translate}}</a></li>
+      
+    </ul>
+</div>
+
+<router-outlet></router-outlet>

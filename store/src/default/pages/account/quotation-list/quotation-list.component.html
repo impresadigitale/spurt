@@ -1,0 +1,33 @@
+<div class="mat-table orders-table">
+    <div class="wrapper" *ngIf="accountSandbox.quotationListLoading$ | async">
+        <div class="overlay">
+            <div class="spinner-wrapper">
+                <app-spinner [isShow]="accountSandbox.quotationListLoading$ | async"></app-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="mat-header-row">
+        <div class="mat-header-cell">{{'account.Products'|translate}}</div>
+        <div class="mat-header-cell">{{'account.CreatedDate'|translate}}</div>
+        <div class="mat-header-cell">{{'account.Quantity'|translate}}</div>
+        <div class="mat-header-cell">{{'account.QuantityUnit'|translate}}</div>
+        <div class="mat-header-cell">{{'account.OrderTotalValue'|translate}}</div>
+    </div>
+    <div class="no-data" *ngIf="(accountSandbox.quotationList$ | async).length === 0 && accountSandbox.quotationListLoaded$ | async">
+        <p>{{'account.NoRequestFound'|translate}}</p>
+    </div>
+    <ng-container *ngIf="(accountSandbox.quotationList$ | async).length > 0 && accountSandbox.quotationListLoaded$ | async">
+        <div *ngFor="let list of accountSandbox.quotationList$ | async; let i = index" class="mat-row">
+            <div class="mat-cell">{{list.name}}</div>
+            <div class="mat-cell">{{list.createdDate | date: 'dd/MM/yyyy'}}</div>
+            <div class="mat-cell">{{list.quantity}}</div>
+            <div class="mat-cell">{{list.quantityUnit}}</div>
+            <div class="mat-cell">{{list.orderValue}}</div>
+    
+        </div>
+    </ng-container>
+    <mat-card class="p-0 text-center">
+        <mat-paginator [length]="accountSandbox.quotationListCount$|async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[10,15,20]" (page)="onPageChange($event)">
+        </mat-paginator>
+    </mat-card>
+</div>

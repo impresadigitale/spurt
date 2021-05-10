@@ -1,0 +1,20 @@
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color:#ed571f !important;
+  border:#ed571f  !important;
+}
+.disable {
+  pointer-events: none;
+}
+
+.product-wrap .product-table .table .globe_icon {
+  padding: 5px 3px !important;
+}
+
+.products-section .toggle .tgl:checked + .tgl-btn:after {
+  background-color: #ed571f !important;
+}
+
+.product-wrap .product-table .table .custom-checkbox {
+  top: 10px !important;
+}

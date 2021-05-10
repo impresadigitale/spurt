@@ -1,0 +1,19 @@
+<div class="subtoolbar cmstoolbar">
+    <div class="sub-nav-menu">
+        <a href="javascript:void(0)" [routerLink]="['/cms/pages']" [appHideIfUnauthorized]="'cms-pages'" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cms-files.svg"> {{'CMS.Pages.Pages'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/cms/page-group']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cms-files.svg"> Page Group
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/cms/banners']" [appHideIfUnauthorized]="'cms-banners'" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cms-banner.svg"> {{'CMS.Banners.Banners'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/cms/blogs']" [appHideIfUnauthorized]="'cms-blogs'" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cms-blog.svg"> Blogs
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/cms/widgets']" [routerLinkActive]="'active'">
+            <img src="assets/img/banner-ico.png"> Widgets
+        </a>
+    </div>
+</div>

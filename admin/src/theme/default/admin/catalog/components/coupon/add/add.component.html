@@ -1,0 +1,436 @@
+<!--REACTIVE FORM-->
+<form novalidate (ngSubmits)="onSubmits(user.value)" [formGroup]="user">
+  <div class="row products-section" style="margin:unset">
+    <div class="col-12">
+      <div class="breadcrumbs-row noborder">
+        <div class="bc-col">
+          <ul>
+            <li>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['/catalog/coupon']"
+                >{{ 'catalog.coupon.coupon' | translate }}
+              </a>
+            </li>
+            <li>{{ 'catalog.coupon.AddCoupon' | translate }}</li>
+          </ul>
+        </div>
+        <div class="bc-col-btn ap-col-btn">
+          <button class="btn btn-save" (click)="onSubmits(user.value)">
+            <img src="assets/img/tick-round-white.png" />
+            {{ 'catalog.coupon.Save' | translate }}
+          </button>
+          <button class="btn btn-cancel" [routerLink]="['/catalog/coupon']">
+            <img src="assets/img/close-white-ico.png" />{{
+              'catalog.coupon.Cancel' | translate
+            }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--Breadcrumbs-->
+  </div>
+
+  <div class="flex addproduct-wrap">
+    <div class="card ap-general">
+      <div class="ap-header">
+        <span>1</span> General
+      </div>
+      <div class="flex ap-body">
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{ 'catalog.coupon.couponCode' | translate }}
+              <sup>*</sup> <img placement="top" body="container" ngbTooltip="Enter a Code for the Coupon. For example, 'christmas25'." style="margin-left: 5px;" src="assets/img/info-ico.png"/></label> 
+
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'catalog.coupon.couponCode' | translate }}"
+              formControlName="couponCode"
+              [ngClass]="{
+                validationcolor:
+                  user.get('couponCode').errors &&
+                  submittedValues == true}"/> 
+            <div class="validation-error" *ngIf=" user.get('couponCode').hasError('required') &&
+                user.get('couponCode').touched &&
+                submittedValues == true">
+                 Coupon Code is required
+            </div>
+            <div class="validation-error" *ngIf="user.get('couponCode').hasError('maxlength')">
+                Must be max 32 chracters long
+            </div>
+
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{ 'catalog.coupon.couponDescription' | translate }} 
+              <img placement="top" ngbTooltip="Enter a description for the coupon." style="margin-left: 5px;" src="assets/img/info-ico.png"/></label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'catalog.coupon.couponDescription' | translate }}"
+              formControlName="couponDescription"
+              [ngClass]="{
+                validationcolor:
+                  user.get('couponDescription').errors &&
+                  submittedValues == true}"/>
+            <div class="validation-error"
+            *ngIf="
+              user.get('couponDescription').hasError('required') &&
+              user.get('couponDescription').touched &&
+              submittedValues == true">
+              Coupon Description is required
+          </div>
+          <div class="validation-error" *ngIf="user.get('couponDescription').hasError('maxlength')">
+              Must be max 255 chracters long
+          </div>
+
+          </div>
+        </div>
+        <!--Col-->
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label
+              >{{ 'catalog.coupon.type' | translate }}
+              <img placement="top" ngbTooltip="Select whether you want to give a percentage off or an amount reduction." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <select
+              class="custom-select col-12"
+              id="inlineFormCustomSelect"
+              formControlName="couponType"
+              [ngClass]="{
+                validationcolor:
+                  user.get('couponType').hasError('required') &&
+                  user.get('couponType').touched &&
+                  submittedValues == true}">
+              <option value="" disabled>{{'catalog.coupon.selectType' | translate}}</option>
+              <option value="1">Percentage Discount</option>
+              <option value="2">Amount Discount</option>
+            </select>
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('couponType').hasError('required') &&
+              user.get('couponType').touched &&
+              submittedValues == true">
+          Coupon Type is required
+          </div>
+
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{ 'catalog.coupon.CouponValue' | translate }}
+              <img placement="top" ngbTooltip="Enter a value for the coupon, either percentage or amount." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Coupon Value"
+              appOnlyNumber
+              formControlName="couponValue"
+              [ngClass]="{
+                validationcolor:
+                  user.get('couponValue').hasError('required') &&
+                  user.get('couponValue').touched &&
+                  submittedValues == true}"/>
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('couponValue').hasError('required') &&
+              user.get('couponValue').touched &&
+              submittedValues == true">
+              Coupon Value is required
+          </div>
+          </div>
+        </div>
+        <!--Col-->
+
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Start Date
+            <img placement="top" ngbTooltip="Select a date to specify the validity period for the coupon." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+          </label>
+            <mat-form-field (click)="picker2.open()">
+              <input readonly class="input-group"
+                  formControlName="startDate" type="text" matInput [min]="todayDate"
+                  [matDatepicker]="picker2" autocomplete="off" (dateChange)="changeFromDate($event)">
+              <mat-datepicker-toggle matSuffix [for]="picker2">
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <div
+          class="validation-error"
+          *ngIf="
+            user.get('startDate').hasError('required') &&
+            user.get('startDate').touched &&
+            submittedValues == true">
+            Start Date is required
+        </div>
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>End Date
+            <img placement="top" ngbTooltip="Select a date to specify the validity period for the coupon." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+          </label>
+            <mat-form-field (click)="picker1.open()">
+              <input readonly class="input-group"
+                  formControlName="endDate" type="text" matInput
+                  [matDatepicker]="picker1" autocomplete="off" [min]="minDate">
+              <mat-datepicker-toggle matSuffix [for]="picker1">
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <div
+          class="validation-error"
+          *ngIf="
+            user.get('endDate').hasError('required') &&
+            user.get('endDate').touched &&
+            submittedValues == true">
+            End Date is required
+        </div>
+          </div>
+        </div>
+         <!--Col-->
+      </div>
+    </div>
+    <div class="card ap-general ap-info">
+      <div class="ap-header">
+        <span>2</span> More Information
+      </div>
+      <div class="flex ap-body addCoupon-wrap" style="padding-left: 64px;">
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Minimum Purchase Amount
+              <img placement="top" ngbTooltip="Specify a minimum purchase amount on which the coupon can be applied." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Minimum Purchase Amount"
+              formControlName="minimumAmount"
+              appOnlyNumber
+              [ngClass]="{
+                validationcolor:
+                  user.get('minimumAmount').hasError('required') &&
+                  user.get('minimumAmount').touched &&
+                  submittedValues == true}"/>
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('minimumAmount').hasError('required') &&
+              user.get('minimumAmount').touched &&
+              submittedValues == true">
+              Minimum Purchase Amount is required
+          </div>
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Maximum Purchase Amount
+              <img placement="top" ngbTooltip="Specify a maximum purchase amount on which the coupon can be applied." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Maximum Purchase Amount"
+              formControlName="maximumAmount"
+              appOnlyNumber
+              [ngClass]="{
+                validationcolor:
+                  user.get('maximumAmount').hasError('required') &&
+                  user.get('maximumAmount').touched &&
+                  submittedValues == true}"/>
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('minimumAmount').hasError('required') &&
+              user.get('minimumAmount').touched &&
+              submittedValues == true">
+              Minimum Purchase Amount is required
+          </div>
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Email Restrictions
+              <img placement="top" ngbTooltip="Separate the Email Ids, with commas to offer coupon to specific Customers." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email Restrictions"
+              formControlName="emailRestriction"/>
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Products applicable for this coupon
+              <img placement="top" ngbTooltip="Select the list of products on which this coupon can be applied." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <ng-select 
+            [items]="sandbox.getProductList$ | async" 
+            formControlName="products"
+            #productlist
+            (keyup)="searchProduct($event)" 
+            [ngClass]="{
+              validationcolor:
+                user.get('products').hasError('required') &&
+                user.get('products').touched &&
+                submittedValues == true
+            }"
+            [multiple]="true" 
+            bindLabel="name"
+            [(ngModel)]="selectedProduct">
+            </ng-select>
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('products').hasError('required') &&
+              user.get('products').touched &&
+              submittedValues == true
+            "
+          >
+          Select atleast one product
+          </div>
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>Usage limit for the coupon
+              <img placement="top" ngbTooltip="Specify, up to how many customers can use this coupon." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Usage Limit for the coupon"
+              formControlName="usageLimit"
+              appOnlyNumber
+              [ngClass]="{
+                validationcolor:
+                  user.get('usageLimit').hasError('required') &&
+                  user.get('usageLimit').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('usageLimit').hasError('required') &&
+              user.get('usageLimit').touched &&
+              submittedValues == true
+            "
+          >
+          Usage Limit is required
+          </div>
+          </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>No of times the user can use this discount
+              <img placement="top" ngbTooltip="Specify, up to how many times a customer can use this coupon. " style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder=""
+              formControlName="userCount"
+              appOnlyNumber
+              [ngClass]="{
+                validationcolor:
+                  user.get('userCount').hasError('required') &&
+                  user.get('userCount').touched &&
+                  submittedValues == true
+              }"
+            />
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('userCount').hasError('required') &&
+              user.get('userCount').touched &&
+              submittedValues == true
+            "
+          >
+          Discount Limit is required
+          </div>
+          </div>
+        </div>
+
+        <div class="ap-body-col">
+          <div class="form-group">
+            <label>{{'catalog.product.Status'| translate}}<sup>*</sup> </label>
+
+
+            <select class="custom-select col-12" formControlName="status"
+                [ngClass]="{'validationcolor':user.get('status').hasError('required') && user.get('status').touched&&submittedValues==true}">
+                <option value=''>- -Select Status- -</option>
+                <option value="1">Enabled</option>
+                <option value="0">Disabled</option>
+            </select>
+            <div
+            class="validation-error"
+            *ngIf="
+              user.get('status').hasError('required') &&
+              user.get('status').touched &&
+              submittedValues == true
+            "
+          >
+          Status is required
+          </div>
+        </div>
+        </div>
+        <div class="ap-body-col">
+          <div class="form-group">
+            <div class="custom-control custom-checkbox ">
+              <input
+                type="checkbox"
+                class="custom-control-input "
+                id="checkbox2"
+                value="check"
+                formControlName="couponQualified"
+                style="cursor:inherit"
+              />
+              <label
+                class="custom-control-label mail-tooltip"
+                for="checkbox2">Coupon Code Applies to all qualifying Items in the cart
+                <button
+                  type="button"
+                  class="btn"
+                  placement="right"
+                  style="padding: unset"
+                  ngbTooltip="">
+                </button>
+                <img placement="top" ngbTooltip="Check this box if the customer can use the same coupon code for all the items in the cart." src="assets/img/info-ico.png" />
+
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="ap-body-col" [ngClass]="{'disabled' : user.controls['couponQualified'].value === true}">
+          <div class="form-group">
+            <label>Specify the number of cart Items the coupon code can be applied
+              <img placement="top" ngbTooltip="Enter the number for, up to how many items in the cart the coupon can be applied." style="margin-left: 5px;" src="assets/img/info-ico.png"/>
+
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder=""
+              formControlName="cartItems"
+              appOnlyNumber
+              [ngClass]="{
+                validationcolor:
+                  user.get('cartItems').errors && submittedValues == true}"/>
+          </div>
+          <div class="validation-error" *ngIf="(user.controls['cartItems'].hasError('required') && submittedValues == true)">Cart item count is required</div>
+          <div *ngIf="user.controls['cartItems'].hasError('min') && !user.controls['cartItems'].untouched"
+          class="validation-error"> Cart items should be minimum 1</div>
+        </div>
+        <!--Col-->
+      </div>
+    </div>
+  </div>
+</form>

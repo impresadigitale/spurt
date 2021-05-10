@@ -1,0 +1,102 @@
+<mat-card fxLayout="row wrap" fxLayoutAlign="space-around">
+
+    <div class="divider w-100 mt-2"></div>
+    <h3 class="w-100 text-center py-2">{{'Vendor Sign Up'|translate}}</h3>
+
+    <form [formGroup]="vendorForm" (ngSubmit)="onVendorFormSubmit(vendorForm.value)" fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="51" class="px-1 head-style" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field class="w-100"
+            [ngClass]="{'validationcolor':((vendorForm.controls.name.errors?.required)&&(submitted))}">
+            <input matInput (keyup)="onKeyPress($event, 'name')" placeholder="{{'First Name'|translate}}"
+                formControlName="name" required>
+                <mat-error class="validation-error" *ngIf="vendorForm.controls['name'].errors?.required && submitted">
+                        {{'Error.FirstNameRequired'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="vendorForm.controls['name'].hasError('minlength') && submitted">{{'Error.FirstNameMinimumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="vendorForm.controls['name'].hasError('maxlength') && submitted">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="vendorForm.controls['name'].hasError('pattern') && submitted">{{'Error.NameMustBeString'|translate}}</mat-error>
+        </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="51" class="px-1 head-style" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field class="w-100 mt-2">
+                <input matInput (keyup)="onKeyPress($event, 'lastName')" placeholder="{{'Last Name'|translate}}"
+                    formControlName="lastName">
+                    <mat-error class="validation-error" *ngIf="vendorForm.controls['lastName'].hasError('maxlength') && submitted">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="vendorForm.controls['lastName'].hasError('pattern') && submitted">{{'Error.NameMustBeString'|translate}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="51" class="px-1 head-style" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field class="w-100 mt-2"
+            [ngClass]="{'validationcolor':((vendorForm.controls.contactPerson.errors?.required)&&(submitted))}">
+            <input matInput (keyup)="onKeyPress($event, 'contactPerson')"
+                placeholder="{{'Contact Person Name'|translate}}" formControlName="contactPerson" required>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['contactPerson'].errors?.required && submitted">
+                {{'Contact Person Name Is Required'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['contactPerson'].hasError('maxlength') && submitted">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['contactPerson'].hasError('minlength') && submitted">{{'Error.FirstNameMinimumLength'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['contactPerson'].hasError('pattern') && submitted">{{'Error.NameMustBeString'|translate}}</mat-error>
+        </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="51" class="px-1 head-style" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field class="w-100 mt-2"
+            [ngClass]="{'validationcolor':((vendorForm.controls.email.errors?.required)&&(submitted))}">
+            <input matInput placeholder="{{'Email ID'|translate}}" formControlName="email" required>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['email'].errors?.required && submitted">
+                {{'Email ID Is Required'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['email'].hasError('invalidEmail') && submitted">
+                {{'Error.InvalidEmailAddress'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['email'].hasError('maxlength') && submitted">{{'Error.EmailMaximumLength'|translate}}</mat-error>
+
+        </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="51" class="px-1 head-style" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field class="w-100"
+                [ngClass]="{'validationcolor':((vendorForm.controls.phone.errors?.required)&&(submitted))}">
+                <input matInput placeholder="{{'Mobile Number'|translate}}" formControlName="phone" maxlength="15"
+                    appOnlyNumber required>
+                    <mat-error class="validation-error" *ngIf="vendorForm.controls['phone'].errors?.required && submitted">
+                        {{'Error.MobilNumberRequired'|translate}}
+                </mat-error>
+                <mat-error class="validation-error" *ngIf="vendorForm.controls['phone'].hasError('maxlength') && submitted">{{'Error.MobilNumberMaximumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="vendorForm.controls['phone'].hasError('minlength') && submitted">{{'Error.MobilNumberMinimumLength'|translate}}</mat-error>
+    
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="25" class="px-1 head-style" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field class="w-100 mt-2"
+            [ngClass]="{'validationcolor':((vendorForm.controls.password.errors?.required)&&(submitted))}">
+            <input matInput type="password" placeholder="{{'Password'|translate}}" formControlName="password" required>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['password'].hasError('required') && submitted">{{'Error.PasswordisRequired'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['password'].hasError('minlength') && submitted">{{'Error.PasswordMustEightLetter'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['password'].hasError('hasCapitalCase') && submitted">{{'Error.PasswordMustContainCapitalCase'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['password'].hasError('hasSmallCase') && submitted">{{'Error.PasswordMustContainSmallCase'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['password'].hasError('hasNumber') && submitted">{{'Error.PasswordMustContainNumberOrSymbol'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['password'].hasError('maxlength') && submitted">{{'Error.PasswordMaximumLength'|translate}}</mat-error>
+    
+        </mat-form-field>
+   
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="26" class="px-1 " ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field class="w-100 mt-2"
+            [ngClass]="{'validationcolor':((vendorForm.controls.confirmPassword.errors?.required)&&(submitted))}">
+            <input matInput type="password" placeholder="{{'Confirm Password'|translate}}"
+                formControlName="confirmPassword" maxlength="50" required>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['confirmPassword'].errors?.required && submitted">
+                {{'Error.ConfirmPasswordRequired'|translate}}</mat-error>
+            <mat-error class="validation-error" *ngIf="vendorForm.controls['confirmPassword'].hasError('mismatchedPasswords')">
+                    {{'Error.PasswordNotMatch'|translate}}</mat-error>
+
+        </mat-form-field>
+        </div>
+        <div class="w-100 py-2 text-center">
+            <input type="checkbox" class="text-data" [(ngModel)]="policy" [ngModelOptions]="{standalone: true}">
+            <span><a href="JavaScript:void(0)" class="textAlign">I have read and agree to the Privacy Policy</a></span>
+        </div>
+        <div class="w-100 py-2 text-center">
+            <button mat-raised-button color="primary" type="submit">{{'contact.Submit'|translate}}</button>
+        </div>
+    </form>
+
+</mat-card>

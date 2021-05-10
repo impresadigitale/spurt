@@ -1,0 +1,52 @@
+<div class="flex setting2-inner-header">
+    <h3>{{'Settings.Local.Tax.SettingsLocalizationTaxPath' | translate}}</h3>
+    <button class="btn" (click)="addTax()" [appHideIfUnauthorized]="'create-tax'"><img
+            src="assets/img/add-white-ico.png"> {{'Settings.Local.Tax.AddTax' | translate}}
+    </button>
+</div>
+<div class="settings-right-wrapper">
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{'Settings.Local.Tax.TaxName' | translate}}</th>
+                    <th>{{'Settings.Local.Tax.Value' | translate}}</th>
+                    <th>{{'Settings.Local.Emailtemplate.Status' | translate}}</th>
+                    <th [appHideIfUnauthorized]="'edit-tax' || 'delete-tax'">{{'Settings.Local.Tax.Action' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let taxlist of (sandbox.taxList$|async); let i=index">
+                    <td>{{taxlist.title}}</td>
+                    <td>{{taxlist.value}}</td>
+                    <td>
+                        <div *ngIf="taxlist.isActive === 1">{{'Settings.Local.StockStatus.Active' | translate}}</div>
+                        <div *ngIf="taxlist.isActive === 0">{{'Settings.Local.StockStatus.InActive' | translate}}</div>
+                    </td>
+                    <td style="cursor:pointer" [appHideIfUnauthorized]="'edit-tax' || 'delete-tax'">
+                        <img src='assets/img/edit-ico.png' [appHideIfUnauthorized]="'edit-currency'" (click)="editTax(taxlist)" class="icon">
+                        <img src='assets/img/delete-file-ico.png' [appHideIfUnauthorized]="'delete-tax'" [ngbPopover]="deleteContent" placement="bottom" #deletePop="ngbPopover" class="icon" />
+                        <ng-template #deleteContent>
+                            <div class="style">
+                                <div class="modal-header">
+                                    <h6 class="modal-title" style="margin-left: 17%;">{{'CommonFormAll.Doyouwanttodelete' | translate}}</h6>
+
+                                </div>
+
+                                <div class="modal-footer" style="margin-right: 23%;">
+                                    <button type="button" class="btn btn-danger" (click)="deletePop.close();" data-dismiss="modal">No
+                                </button>
+                                    <button type="button" class="btn btn-success" (click)="deleteTax(taxlist.taxId, deletePop)" data-dismiss="modal">Yes
+                                </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <mat-paginator [length]="(sandbox.taxListCount$ | async)?.data" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+    </mat-paginator>
+</div>

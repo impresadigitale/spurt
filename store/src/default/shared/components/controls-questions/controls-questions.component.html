@@ -1,0 +1,38 @@
+<h3 class="flex">
+    {{'products.CustomerQuestionsAnswer'|translate}}
+  <button (click)="addQuestion(productDetails)" style="cursor:pointer">{{'products.PostYourQuestion'|translate}}</button>
+</h3>
+<div *ngIf="questionList?.length === 0 && questionLoaded">
+  <p class="no-review">{{'products.NoQuestionFound'|translate}}</p>
+</div>
+<div class="spinner-wrapper">
+      <app-spinner [isShow]="questionLoading"></app-spinner>
+</div>
+<div class="qa-row" *ngFor="let list of questionList | slice:0:3; let i=index">
+  <div class="flex qa-que">
+      <span>Question :</span>
+      <p>{{list.question}}?</p>
+  </div>
+  <ng-container *ngIf="list?.answerList">
+      <div class="flex qa-que">
+              <span>Answer :</span>
+              <p class="wt">{{list.answerList.answer}}.</p>
+              <span *ngIf="productDetails.buyed == 1" class="text-pop" style="width:120px"(click)="postAnswer(list)">{{'products.PostYourAnswer'|translate}}</span>
+              <a *ngIf="list.answerCount > 1" href="javascript:void(0)" class="read-others" data-toggle="modal" data-target="#exampleModal" (click)="viewAnswer(list)">{{'products.ReadOtherAnswer'|translate}}</a>
+          </div>
+          <div class="flex qa-pro-rep">
+              <h5>{{list.postedBy?.firstName}}  <span>{{list.answerList?.createdDate | date: "dd MMM,yyyy"}}</span></h5>
+              <div class="flex qa-rep">
+                  <p><a href="javascript:Void(0)"><mat-icon [style.color]= "list?.answerList?.likeType === 1 ? 'blue' : 'gray'" style="cursor: pointer;" (click)="likeOrDislike($event, list)">thumb_up</mat-icon> </a> {{list.answerList ? list.answerList.likes : 0}} </p>
+                  <p><a href="javascript:Void(0)"><mat-icon [style.color]= "list?.answerList?.likeType === 2 ? 'blue' : 'gray'" style="cursor: pointer;" (click)="likeOrDislike($event, list)">thumb_down</mat-icon> </a> {{list.answerList ? list.answerList.dislikes: 0}}</p>
+                  <a href="javascript:Void(0)" class="repot" (click)="reportAbuse(list)">Report Abuse</a>
+              </div>
+          </div>
+  </ng-container>
+</div>
+
+<div class="view-all"  *ngIf="questionList.length > 3">
+  <ng-container *ngIf="productDetails">
+          <a href="javascript:void(0)" (click)="viewAllQuestions(productDetails)">View All</a>
+  </ng-container>
+</div>

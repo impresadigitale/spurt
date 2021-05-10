@@ -1,0 +1,15 @@
+// Image list
+.image-list {
+    width: 46px;
+    height: 39px;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #ed571f !important;
+    border: #ed571f !important;
+}
+
+th,
+td {
+    height: 40px;
+}

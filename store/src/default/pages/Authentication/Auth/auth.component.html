@@ -1,0 +1,89 @@
+<mat-card>
+    <div fxLayout="row wrap"  class="sign-wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-2">
+            <router-outlet></router-outlet>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-2" ngClass.sm="mt-2" ngClass.xs="mt-2">
+            <h2 class="text-muted text-center">{{'authentication.SignUpNow'|translate}}</h2>
+            <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
+                <mat-form-field
+                        class="w-100 mt-2"
+                        [ngClass]="{validationcolor:registerForm.controls.name.hasError('required') && submitted }">
+                    <input matInput placeholder="{{'authentication.FirstName'|translate}}"
+                           formControlName="name" required>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['name'].hasError('required') && submitted">{{'Error.FirstNameRequired'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['name'].hasError('minlength') && submitted">{{'Error.FirstNameMinimumLength'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['name'].hasError('maxlength') && submitted">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['name'].hasError('pattern') && submitted">{{'Error.NameMustBeString'|translate}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                        class="w-100 mt-2"
+                        [ngClass]="{validationcolor:registerForm.controls.lastName.hasError('required') && submitted }">
+                    <input matInput placeholder="{{'authentication.LastName'|translate}}"
+                           formControlName="lastName" required>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['lastName'].hasError('required') && submitted">{{'Error.LastNameRequired'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['lastName'].hasError('pattern') && submitted">{{'Error.NameMustBeString'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['lastName'].hasError('maxlength') && submitted">{{'Error.FirstNameMaximumLength'|translate}}</mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field
+                        class="w-100 mt-1"
+                        [ngClass]="{validationcolor:registerForm.controls.email.hasError('required') && submitted }">
+                    <input matInput placeholder="{{'authentication.Email'|translate}}" formControlName="email" required #eval>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['email'].hasError('required') && submitted">{{'Error.EmailIsRequired'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['email'].hasError('invalidEmail')">{{'Error.InvalidEmailAddress'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['email'].hasError('maxlength') && submitted">{{'Error.EmailMaximumLength'|translate}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100 mt-1"
+                    [ngClass]="{validationcolor:registerForm.controls.phoneNumber.hasError('required') && submitted }">
+                        <input 
+                        matInput 
+                        type="text" appOnlyNumber
+                        placeholder="Mobile" 
+                        formControlName="phoneNumber" required>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['phoneNumber'].hasError('required') && submitted">{{'Error.MobilNumberRequired'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['phoneNumber'].hasError('maxlength') && submitted">{{'Error.MobilNumberMaximumLength'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['phoneNumber'].hasError('minlength') && submitted">{{'Error.MobilNumberMinimumLength'|translate}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                            class="w-100 mt-1"
+                            [ngClass]="{validationcolor:registerForm.controls.password.hasError('required') && submitted }">
+                        <input matInput placeholder="{{'authentication.Password'|translate}}" formControlName="password" type="password" minlength="8" required>       
+                </mat-form-field>
+                <mat-error class="validation-error" *ngIf="registerForm.controls['password'].hasError('required') && submitted">{{'Error.PasswordisRequired'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['password'].hasError('minlength') && submitted">{{'Error.PasswordMustEightLetter'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['password'].hasError('hasCapitalCase') && submitted">{{'Error.PasswordMustContainCapitalCase'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['password'].hasError('hasSmallCase') && submitted">{{'Error.PasswordMustContainSmallCase'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['password'].hasError('hasNumber') && submitted">{{'Error.PasswordMustContainNumberOrSymbol'|translate}}</mat-error>
+                        <mat-error class="validation-error" *ngIf="registerForm.controls['password'].hasError('maxlength') && submitted">{{'Error.PasswordMaximumLength'|translate}}</mat-error>
+                <ul class="password-note">
+                    <li>{{'Auth.MustBeEightcharacters'|translate}}</li>
+                    <li>{{'Auth.MustNotPartOfEmail'|translate}}</li>
+                    <li>{{'Auth.MustContainLowerUpper'|translate}}</li>
+                    <li>{{'Auth.MustContainSymbolNumber'|translate}}</li>
+                </ul>
+
+                <mat-form-field
+                        class="w-100 mt-1"
+                        [ngClass]="{validationcolor:registerForm.controls.confirmPassword.hasError('required') && submitted }">
+                    <input matInput maxlength="50" placeholder="{{'authentication.ConfirmPassword'|translate}}" formControlName="confirmPassword" type="password" required>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['confirmPassword'].hasError('required') && submitted">{{'Error.ConfirmPasswordRequired'|translate}}</mat-error>
+                    <mat-error class="validation-error" *ngIf="registerForm.controls['confirmPassword'].hasError('mismatchedPasswords') && submitted">{{'Error.PasswordNotMatch'|translate}}</mat-error>
+                </mat-form-field>
+
+
+                <div class="text-center mt-2">
+                    <button mat-fab color="primary" type="submit" class="mat-elevation-z6" >
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-card>
+
+

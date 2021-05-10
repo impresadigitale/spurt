@@ -1,0 +1,144 @@
+<div class="col-12">
+    <div class="breadcrumbs-row">
+        <div class="bc-col">
+            <ul>
+                <li> <a href="javascript:void(0)"> Services </a> </li>
+                <li> Enquiry </li>
+            </ul>
+        </div>
+        <div class="bc-col-btn addserv">
+
+        </div>
+    </div>
+</div>
+<!--Breadcrumbs-->
+<div class="col-12">
+    <div class="flex filter-row">
+        <div class="filter-lft">
+            <div class="toggle">
+                <p>Filters</p>
+                <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                <label class="tgl-btn" for="cb1"></label>
+            </div>
+        </div>
+        <!--Lft-->
+        <div class="filter-nav-list service-nav-list">
+            <ul class="flex">
+                
+                <li *ngIf="checkedData.length>0" style="margin-left: 15px;" [ngbPopover]="deleteContent1" placement="left" #deletePop="ngbPopover" [appHideIfUnauthorized]="'delete-service-enquiry'">
+                    <a><img src="assets/img/delete-ico.png">{{'catalog.nav.Delete'| translate}}
+                    </a>
+                </li>
+               
+            </ul>
+        </div>
+        <!--Right-->
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container w3-animate-left">
+            <app-services-enquiry-filter [pageSize]="pagesize" (progressEmits)=receiveProgress($event)></app-services-enquiry-filter>
+        </div>
+    </div>
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%" [appHideIfUnauthorized]="'delete-service-enquiry'">
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Comments</th>
+                        <th scope="col" [appHideIfUnauthorized]="'delete-service-enquiry'">Action</th>
+                        <th scope="col" width="100px">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let enquiry of enquirySandbox.enquiryList$ | async">
+                        <th scope="row" [appHideIfUnauthorized]="'delete-service-enquiry'">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" (click)="selectChkBox($event, enquiry.enquiryId)" id="{{enquiry.enquiryId}}" value="check">
+                                    <label class="custom-control-label" for="{{enquiry.enquiryId}}"></label>
+                                </div>
+                            </div>
+                        </th>
+                        <td>{{enquiry.name}}</td>
+                        <td>{{enquiry.email}}</td>
+                        <td>{{enquiry.mobile}}</td>
+                        <td>{{enquiry.comments}}</td>
+                        <td class="text-center" [appHideIfUnauthorized]="'delete-service-enquiry'">
+
+                            <i [ngbPopover]="deleteContent" placement="bottom" #deletePop="ngbPopover" style="margin-left: 15px;" class="fas fa-trash">
+                            <ng-template #deleteContent>
+                                <div class="style">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title"
+                                            style="margin-left: 17%;"> {{'catalog.product.DoYouWantToDelete'|
+                                            translate}}</h6>
+                                    </div>
+
+                                    <div class="modal-footer" style="margin-right: 23%;">
+                                        <button type="button" class="btn btn-danger" (click)="deletePop.close()"
+                                                data-dismiss="modal">{{'catalog.product.No'| translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success"
+                                                (click)="deleteEnquiry(enquiry.enquiryId)"
+                                                data-dismiss="modal">{{'catalog.product.Yes'| translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </i>
+                        </td>
+                      
+                        <td class="text-center">
+                            <div *ngIf="enquiry.isActive == 1">
+                                <span               class="tag-active"
+                                style="width: 60px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.Active'| translate}}</span>
+
+                            </div>
+                            <div *ngIf="enquiry.isActive == 0">
+                                <span               class="tag-inactive"
+                                style="width: 63px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.InActive'| translate}}</span>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(enquirySandbox.enquiryList$ | async)?.length==0">
+                <p>Data Not Found</p>
+            </div>
+            <mat-paginator #paginator [length]="enquirySandbox.enquiryCount$ | async" [pageSize]="pagesize" [pageIndex]="index" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+
+</div>
+<ng-template #deleteContent1>
+    <div class="style">
+        <div class="modal-header">
+            <h6 class="modal-title" style="margin-left: 17%;"> Do you want to delete ?</h6>
+
+        </div>
+
+        <div class="modal-footer" style="margin-right: 23%;">
+            <button type="button" class="btn btn-danger" (click)="deletePop.close()" data-dismiss="modal">No
+                </button>
+            <button type="button" class="btn btn-success" (click)="bulkDelete()" data-dismiss="modal">
+                    Yes
+                </button>
+        </div>
+    </div>
+</ng-template>

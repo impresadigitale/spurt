@@ -1,0 +1,150 @@
+<div class="flex search-exp">
+    <div class="search-left flex">
+        <input type="text" placeholder="Search Product Name, Category Name" class="search-menu" (keyup)="searchProduct($event.target.value)">
+    </div>
+    <div class="search-right flex">
+        <a href="javascript:void(0)" class="flex ripple hide-btn" [ngClass]="{'delete-multiple': (productSandbox.productBulkDeleteLoading$ | async), 'show': filterData.length > 0}" [ngbPopover]="deleteMultipleContent"
+            placement="left"
+            #deletePop="ngbPopover" title="delete product"> <img src="assets/imgs/delete-file-ico.png"> Delete</a>
+        <span class="multi-spin" *ngIf="(productSandbox.productBulkDeleteLoading$ | async)"><i class="fas fa-spinner fa-spin fa-2x" style="color: blue;"></i></span>
+        <ng-template #deleteMultipleContent>
+          <div class="style">
+            <div class="modal-header">
+              <h6 class="modal-title">
+                Do you want to delete?
+              </h6>
+            </div>
+        
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-dismiss="modal"
+              >
+                No
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                data-dismiss="modal"
+                (click)="deleteMultipleProduct()">
+                Yes
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+</div>
+<!---->
+<app-nodata *ngIf="((productSandbox.productList$ | async)?.length === 0) && (productSandbox.productListLoaded$ | async)"></app-nodata>
+<div class="loading" *ngIf="(productSandbox.productListLoading$ | async)">
+    <app-loader ></app-loader>
+</div>
+<div class="product-list-wrap" *ngIf="((productSandbox.productList$ | async)?.length > 0) && (productSandbox.productListLoaded$ | async)">
+
+    <p class="added-prd">There are {{(productSandbox.productList$ | async)?.length}} newly added products</p>
+
+    <div class="table-responsive" >
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th width="70px">
+                            <div class="form-group" title="select all product to delete">
+                                <input type="checkbox" id="checkbox1"
+                                [(ngModel)]="selectedAll" (change)="selectAll($event)"
+                                [ngModelOptions]="{standalone: true}">
+                                <label for="checkbox1"></label>
+                            </div>
+                        </th>
+                        <th width="80px">Image</th>
+                        <th width="30%">Product Name</th>
+                        <th>SKU</th>
+                        <th>Price</th>
+                        <th>Commission</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of productSandbox.productList$ | async">
+                        <td>
+                            <div class="form-group" title="click to delete">
+                                <input                     type="checkbox" [id]="product.productId"
+                                class="custom-control-input chk"
+                                [(ngModel)]="product.selected" (change)="checkIfAllSelected()"
+                                [value]="product.productId" [ngModelOptions]="{standalone: true}">
+                                <label [for]="product.productId"></label>
+                            </div>
+                        </td>
+                        <td class="product-img" *ngIf="product.productImage">
+                             <img [src]="imageUrl + '?path=' + product.productImage.containerName + '&name=' + product.productImage.image + '&width=300&height=300'"
+                                height=100 width=200> 
+                           
+                            </td>
+                            <td class="" *ngIf="!product.productImage">
+                       <img style="margin-left: -8px;" title="no image available" src="assets/imgs/no-image.jpg">
+                               </td>
+                        <td>
+                            <h4>{{product.name}}</h4>
+                            <p><span class="cat-sub-list" *ngFor="let array of product?.vendorCategory">{{array?.categoryName}}</span></p>
+                        </td>
+                        <td>
+                            {{product.sku}}
+                        </td>
+                        <td class="price">{{currencySymbol?.symbolLeft}} {{product.productprice}} {{currencySymbol?.symbolRight}}</td>
+                        <td class="price">{{product.vendorProductCommission}}%</td>
+                        <td class="active-switch" (click)="statusChangeEnable(product.approvalFlag)">
+                         <label class="switch cursor">
+                            <input type="checkbox" [id]="product.vendorProductId"
+                            type="checkbox"
+                            [(ngModel)]="product.isActive"
+                            (change)="statusChange($event, product)" [disabled]="product.approvalFlag === 0" 
+                            >
+                            <span class="slider"></span>
+                          </label>
+
+                        </td>
+                        <td title="edit product">
+                            <img class="cursor"  src="assets/imgs/edit-dark.svg" (click)="goToEdit(product.productId);">
+
+                        </td>
+                        <td  [ngbPopover]="deleteContent"
+                        placement="left"
+                        #deletePop="ngbPopover" title="delete product">
+                            <img class="cursor" style="width: 16px"  src="assets/imgs/trash-dark.svg">
+                        </td>
+                        <ng-template #deleteContent>
+                            <div class="style">
+                              <div class="modal-header">
+                                <h6 class="modal-title">
+                                  Do you want to delete?
+                                </h6>
+                              </div>
+                          
+                              <div class="modal-footer">
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  data-dismiss="modal"
+                                >
+                                  No
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-success"
+                                  data-dismiss="modal"
+                                (click)="deleteProduct(product.productId);">
+                                  Yes
+                                </button>
+                              </div>
+                            </div>
+                          </ng-template>
+                    </tr>
+                </tbody>
+            </table>
+
+    </div>
+
+</div>

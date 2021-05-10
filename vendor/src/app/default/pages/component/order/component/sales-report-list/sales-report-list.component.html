@@ -1,0 +1,147 @@
+
+<div class="page-title">
+    <h3>Sales Report List</h3>
+</div>
+<div class="flex search-exp">
+    <div class="search-left flex">
+        <div ngbDropdown class="d-inline-block">
+            <form [formGroup]="filterForm">
+                <img src="assets/imgs/filter.svg" title="filter" class="btn cursor" id="dropdownConfig" ngbDropdownToggle />
+                <div ngbDropdownMenu aria-labelledby="dropdownConfig" style="left: -22px !important;"
+                    class="act-filter-dropdown filter-menu" autoClose="false">
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <p class="filter-title">Filters</p>
+                    <div class="" style="    display: flex;
+                          justify-content: space-around;">
+                        <p class="act-filter-labels">From Date</p>
+                        <div class="input-group w-100 filter-group">
+                            <input class="form-control  placeholder-fix date-input" autocomplete="off"
+                                (dateSelect)="onDateSelect($event)" name="dp" id="cal-in" ngbDatepicker
+                                #f="ngbDatepicker" formControlName="fromDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary no-shadow border-clr calendar-btn"
+                                    (click)="f.toggle()" type="button">
+                                    <img src="assets/imgs/calender-ico.png"> </button>
+                            </div>
+                        </div>
+                        <p class="act-filter-labels">To Date</p>
+                        <div class="input-group w-100 filter-group">
+                            <input class="form-control  placeholder-fix date-input" name="dp" autocomplete="off"
+                                id="cal-in" ngbDatepicker #d="ngbDatepicker" formControlName="toDate"
+                                [ngClass]="{'disabled': dateError !== ''}" [minDate]="miniDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary border-clr no-shadow calendar-btn"
+                                    type="button" (click)="setMinValue(d)">
+                                    <img src="assets/imgs/calender-ico.png"> </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="error">
+                        {{dateError}}
+                    </div>
+                    <div class="error" *ngIf="isRequired">
+                        To Date is required
+                    </div>
+                    <button class="btn" style="background-color:#1b5ed8; color: white; margin: 20px 7px 0px 24px;
+                      float: right;" type="submit" (click)="applyFilter()"> Apply Filters </button>
+                   
+                </div>
+            </form>
+        </div>
+    </div>
+    <div  class="search-right flex">
+            <a href="javascript:void(0)" class="flex ripple" (click)="exportReport()"> <img src="assets/imgs/export.svg"> Export All</a>
+            <span class="multi-spin" *ngIf="(orderSandbox.exportSalesOrderLoading$ | async)"><i
+                    class="fas fa-spinner fa-spin fa-2x" style="color: blue;"></i>
+            </span>
+    </div>
+</div>
+<span *ngIf="filter" class="date-tag">{{startDate}} to {{endDate}}
+    <img class="cursor" title="Reset Filter" (click)="resetFilter()" src="assets/imgs/close-white-ico.png">
+</span>
+<!---->
+
+<div class="product-list-wrap">
+    <div class="loading" *ngIf="(orderSandbox.settlementListLoading$ | async)">
+        <app-loader></app-loader>
+    </div>
+    <div class="no-data"
+        *ngIf="(orderSandbox.settlementList$ | async)?.length === 0 && (orderSandbox.settlementListLoaded$ | async)">
+        <span>No sales report found</span> </div>
+    <div class="table-responsive "
+        *ngIf="(orderSandbox.settlementList$ | async)?.length > 0 && (orderSandbox.settlementListLoaded$ | async)">
+        <table class="table" [ngClass]="{'pay-table': (orderSandbox.downloadCsvLoading$ | async)}">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-group" title="click to export">
+                          
+                        </div>
+                    </th>
+                    <th>Order Line No</th>
+                    <th>Order Date</th>
+                    <th class=" text-center">Invoice</th>
+                    <th class=" text-center">Item</th>
+                    <th class=" text-center">Description</th>
+                    <th class=" text-center">Quantity</th>
+                    <th class="amt text-center">Base Value</th>
+                    <th class="cmsn text-center">Tax</th>
+                    <th class="amt text-center">Total Value</th>
+                    <th class=" text-center">Order Status</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let array of (orderSandbox.settlementList$ | async); let i = index;">
+                            <tr>
+                                <td>
+                                    <div class="form-group" title="click to export">
+                                  
+                                    </div>
+                                </td>
+                                <td class="cursor" (click)="goToOrders(array?.vendorOrderId)">
+                                    <h3>{{array?.orderProductPrefixId}}</h3>
+                                </td>
+                                <td>
+                                    <p>{{array?.createdDate | date:'dd/MM/yy'}}</p>
+                                </td>
+                                <td class=" text-center">{{array?.invoiceNo}}</td>
+                                <td class=" text-center">{{array?.skuName}}</td>
+                                <td class=" text-center">{{array?.productName}}</td>
+                                <td class=" text-center">{{array?.quantity}}</td>
+                                <td class="amt text-center">{{vendorDetails.currencySymbolLeft}}{{array?.basePrice}}</td>
+                                <td class="cmsn text-center">{{vendorDetails.currencySymbolLeft}}{{array?.taxAmount}}<p style="font-size: 9px">{{array.taxTypeValue}}</p></td>
+                                <td class="amt text-center">{{vendorDetails.currencySymbolLeft}}{{array?.total}}</td>
+                                <td class=" text-center">{{array?.orderStatusName}}</td>
+            
+                            </tr>
+                            <tr class="total" *ngIf="((orderSandbox.settlementList$ | async).length - 1) === i">
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="text-right grnd-ttl" colspan="2">Grand Total</td>
+                                <td class="text-center">{{array.quantityTotal}}</td>
+                                <td class="amt">{{vendorDetails.currencySymbolLeft}}{{array.baseTotal}}</td>
+                                <td class="nobrd cmsn">{{vendorDetails.currencySymbolLeft}}{{array?.taxTotal}}</td>
+                                <td class="text-center amt">{{vendorDetails.currencySymbolLeft}}{{array.subTotal}}</td>
+                                <td class="nobrd"></td>
+                            </tr>
+                </ng-container>
+            </tbody>
+            <i class="fas inv-loader fa-spinner fa-spin fa-2x" *ngIf="(orderSandbox.downloadCsvLoading$ | async)" style="color: blue;"></i>
+
+        </table>
+        <div class="pager" style="position: absolute; right: 0;">
+            <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage"
+              [counts]="(orderSandbox.settlementListCount$ | async)"></app-pager>
+          
+          </div>
+    </div>
+
+
+</div>

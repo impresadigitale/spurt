@@ -1,0 +1,16 @@
+<div class="filter-details">
+
+    <form class="" [formGroup]="filterForm" (ngSubmit)="filter()">
+        <div class="form-group">
+            <label for="keyboard">Keyword</label>
+            <input type="text" formControlName="keyword" class="form-control" id="keyboard" aria-describedby="emailHelp" placeholder="Enter Search Keyword">
+        </div>
+
+
+        <div class="text-right filter-btns">
+            <a href="javascript:void(0)" (click)="reset()">Reset</a>
+            <button type="submit" class="btn">Apply Filters</button>
+        </div>
+    </form>
+
+</div>

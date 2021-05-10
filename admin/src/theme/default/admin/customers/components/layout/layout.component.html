@@ -1,0 +1,76 @@
+<app-cms-header></app-cms-header>
+<div class="row" style="    padding-left: 20px;
+padding-right: 20px;">
+    <div class="col-12 layout-mar">
+        <div class="card">
+            <div class="product-ts-left">
+                <ul>
+                    <li>
+                        <p>{{'Customers.Customer.TotalCustomer' | translate}} </p>
+                        <span *ngIf="(layoutSandbox.customerCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(layoutSandbox.customerCount$ | async).totalCustomer}}
+                            <button type="button" class="btn" placement="bottom" ngbTooltip="Total number of registered Customers on the platform.">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>{{'Customers.Customer.ActiveCustomer' | translate}} </p>
+                        <span *ngIf="(layoutSandbox.customerCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+                        <h3>{{(layoutSandbox.customerCount$ | async).activeCustomer}}
+                            <button type="button" class="btn" placement="bottom" ngbTooltip="Number of active Customers on the platform.">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>{{'Customers.Customer.In-ActiveCustomer' | translate}}</p>
+                        <span *ngIf="(layoutSandbox.customerCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+                        <h3>{{(layoutSandbox.customerCount$ | async).inActiveCustomer}}
+                            <button type="button" class="btn" placement="bottom" ngbTooltip="Number of in-active Customers on the platform.">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+
+
+
+                    <li>
+                        <p>Total Customer Group </p>
+                        <span *ngIf="(layoutSandbox.customerCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+                        <h3>{{(layoutSandbox.customerCount$ | async).totalCustomerGroup}}
+                            <button type="button" class="btn" placement="bottom" ngbTooltip="Total number of Customer groups on the platform.">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+
+
+
+
+                    
+                    <li>
+                        <p>Active Customer Group </p>
+                        <span *ngIf="(layoutSandbox.customerCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+                        <h3>{{(layoutSandbox.customerCount$ | async).activeCustomerGroup}}
+                            <button type="button" class="btn" placement="bottom" ngbTooltip="Total number of active Customer groups on the platform.">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>In-Active Customer Group</p>
+                        <span *ngIf="(layoutSandbox.customerCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+
+                        <h3>{{(layoutSandbox.customerCount$ | async).inActiveCustomerGroup}}
+                            <button type="button" class="btn" placement="left" ngbTooltip="Total number of in-active Customer groups on the platform.">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                </ul>
+            </div>
+            <!--Left-->
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

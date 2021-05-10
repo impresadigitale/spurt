@@ -1,0 +1,25 @@
+<div class="sidebar-menu">
+
+    <div class="school-logo">
+        <img src="assets/imgs/logo-spurt.png">
+    </div>
+
+    <ul class="nav navbar-nav">
+
+        <!-- First level menu -->
+        <li *ngFor="let sidebarnavItem of menuItem" [routerLinkActive]="sidebarnavItem.path === '' ? '' : 'act-route'" [ngbTooltip]="sidebarnavItem.title" placement="right">
+            <a class="flex" *ngIf="!sidebarnavItem.extralink" [routerLink]="sidebarnavItem.path !== '' ? [sidebarnavItem.path] : null" > <img class="nav-img" [src]="sidebarnavItem.image"><img class="nav-act-img" [src]="sidebarnavItem.activeImage"> <span>{{sidebarnavItem.title}}</span></a>
+            <a class="flex" [routerLink]="sidebarnavItem.class === '' ? [sidebarnavItem.path] : null" *ngIf="sidebarnavItem.extralink;" (click)="addExpandClass(sidebarnavItem.title)" [routerLinkActive]="sidebarnavItem.path === '' ? '' : 'act-route'">
+                <img class="nav-img" [src]="sidebarnavItem.image"> <img class="nav-act-img" [src]="sidebarnavItem.activeImage"><span>{{sidebarnavItem.title}}</span> </a>
+            <!-- Second level menu -->
+            <div class="sub-menu-item collapse" aria-expanded="false" *ngIf="sidebarnavItem.submenu.length > 0" [ngClass]="{'in-show' : showMenu === sidebarnavItem.title, 'first-level': showMenu !== sidebarnavItem.title}">
+                <div *ngFor="let sidebarnavSubItem of sidebarnavItem.submenu" [class.active]="showSubMenu === sidebarnavSubItem.title" [routerLinkActive]="sidebarnavSubItem.submenu.length > 0 ? '' : 'active'">
+                    <a [routerLink]="sidebarnavSubItem.submenu.path === '' ? null : [sidebarnavSubItem.path]" [routerLinkActive]="sidebarnavSubItem.path === '' ? '' : 'active'" *ngIf="!sidebarnavSubItem.extralink">
+                        {{sidebarnavSubItem.title}}
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>

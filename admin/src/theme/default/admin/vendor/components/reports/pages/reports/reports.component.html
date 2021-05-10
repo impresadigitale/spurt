@@ -1,0 +1,33 @@
+<main class="cards" style="margin-top: 43px">
+    <div class="title-card">
+        <h3>Reports</h3>
+        <p>The eCommerce reports are the main KPI (key performance indicators). It is a great way to get a snapshot of what is happening in the business, in terms of revenue, conversion rates, transaction volume, average order value month over month and revenue from time to time. </p>
+    </div>
+
+    <table>
+        <tr>
+            <td>
+                <div class="report-card">
+                    <h3>Sales by Vendor</h3>
+                    <p>The Sales by Vendor report shows the total sales of products listed by a particular list of Vendors (one or more). This is a good report that indicates, which Vendor is making good sales through the platform. You can either choose to see the total sales by all the Vendors or choose a particular list of Vendors to get the sales report by them. Also, you can specify a date range to know the sales by Vendors, during a period.</p>
+                    <button [routerLink]="['/vendors/reports/vendor-report']">View Report</button>
+                </div>
+            </td>
+            <td>
+                <div class="report-card">
+                    <h3>Total Sales Report</h3>
+                    <p>Total Sales Report is a good report that indicates the total sales during a period, say in a month or three months or last six months. You can also specify a date range and price range to know the sales that has happened within a specified period and within a specified price range.</p>
+                    <button [routerLink]="['/vendors/reports/sales-report']">View Report</button>
+                </div>
+            </td>
+            <td>
+                <div class="report-card">
+                    <h3>Settlement</h3>
+                    <p>You can get a report on the settlement you have made for different orders of each vendor. You can choose a Vendor, choose a particular date range and also select whether you want to see all the settlements or ones that are settled or ones that are not settled.</p>
+                    <button [routerLink]="['/vendors/reports/settlement-report']">View Report</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</main>

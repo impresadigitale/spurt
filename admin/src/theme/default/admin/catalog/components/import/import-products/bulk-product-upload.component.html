@@ -1,0 +1,60 @@
+
+     <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                    <ul>
+                        <li><a href="javascript:void(0)" [routerLink]="['/catalog/product']">
+                                {{'catalog.product.Products'| translate}} </a></li>
+                        <li> Import Product</li>
+                    </ul>
+                </div>
+                <div class="bc-col-btn ap-col-btn flex search-exp bulk-header">
+                    <button class="ripple flex" (click)="downloadFile()"> <img src="assets/img/download-white.svg"> Download
+                        ZIP File </button>
+                </div>
+            </div>
+    </div>
+    
+    <div class="bulk-update-price flex" *ngIf="initialPage">
+
+        <img src="assets/img/bulk-img.svg">
+
+        <h5>Your Bulk Product Update page is empty</h5>
+
+        <ul class="flex">
+            <li class="flex"> <img src="assets/img/csv.svg"> Download ZIP File </li>
+            <li class="flex"> <img src="assets/img/csv.svg"> Update Product </li>
+            <li class="flex"> <img src="assets/img/csv.svg"> Upload updated File </li>
+        </ul>
+
+        <button class="ripple cursor" (click)="uploadZip()"> Upload ZIP File </button>
+
+    </div>
+
+    <div class="bup-file-upload" *ngIf="uploadPage">
+
+        <h3>File Upload</h3>
+
+        <div class="csv-upload flex">
+
+            <div class="browse-upload">
+                <p>* Only .ZIP files accepted</p>
+                <div class="bu-box flex cursor">
+                    <input class="cursor" #fileInput type="file" [(ngModel)]="uploadFile" accept=".zip" (change)="onUpload($event)">
+                    <a href="javascript:void(0)">Browse and upload Files</a>
+                </div>
+                <div class="error" *ngIf="(!zipFile && uploadSubmit)">No file chosen</div>
+                <div class="fil-name">{{zipFileName}}</div>
+            </div>
+
+        </div>
+        <!--Row-->
+
+        <div class="all-btn flex">
+            <button type="submit" class="ripple allocate" (click)="uploadSuccess()">
+                <span>Upload</span></button>
+            <button class="ripple" (click)="reset(fileInput)">Reset</button>
+        </div>
+
+    </div>
+

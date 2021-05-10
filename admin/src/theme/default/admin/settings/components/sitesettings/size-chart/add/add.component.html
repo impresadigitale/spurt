@@ -1,0 +1,97 @@
+<div class="flex setting-inner-header">
+    <h3 class="headData"> Settings > Site Settings > SizeChart </h3>
+</div>
+
+  <div class="settings-right-wrapper">
+    <!---->
+    <form [formGroup]="chartForm">
+    <div class="filters-wrap">
+  
+      <div class="fw-row flex">
+  
+        <div class="fw-group">
+          <p>Size Chart Template</p>
+          <input type="text" formControlName="chartName">
+          <div *ngIf="submitted &&  chartForm.controls.chartName.errors" >
+            <div class="text-danger invalid-data"> Chart  Template is required
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      <!--row-->
+  
+  
+  
+      <div class="fw-value-filters flex">
+  
+        <div class="fw-var-att">
+          <h3 class="flex"> Header Text  <a href="javascript:void(0)">
+            <img src="assets/img/add-dark.svg" (click)="addHeader()"></a> </h3>
+          <div class="fw-group asct-group" *ngIf="headerPart">
+            <p>Enter new Header Text</p>
+            <input type="text" [(ngModel)]="headerText" (keyup)="headerData($event)" [ngModelOptions]="{standalone: true}">
+            <button class="saves" (click)="addHederText()">Save</button>
+          </div>
+          <div class="text-danger" *ngIf="headerPart && errorData">Header Text is required</div>
+          <div class="fw-bx">
+            <input type="text" placeholder="Type your search here" class="fw-search">
+            <div class="fw-att-cont">
+              <div class="form-group" *ngFor="let item of sandbox.headerTextList$ | async">
+                <input class="headerInput" type="checkbox" id="{{item.id}}" (change)="changeHeaderText($event, item)" [checked]="item.checkData">
+                <label for="{{item.id}}"   class="flex">
+                  {{item.headerText}}
+                  <div class="flex act">
+                    <a href="javascript:void(0)" (click)="editHeaderText(item)"   [ngClass]="{'disableData': item.checkData}"><img src="assets/img/edit-ico.png"> </a>
+                    <a href="javascript:void(0)" [ngbPopover]="deleteContent"  placement="bottom" #deletePop="ngbPopover" [ngClass]="{'disableData': item.checkData}"><img src="assets/img/delete.svg"> </a>
+                    <ng-template #deleteContent>
+                        <div class="style">
+                            <div class="modal-header">
+                                <h6 class="modal-title" style="margin-left: 17%;"> Do you want to delete ?</h6>
+                            </div>
+                            <div class="modal-footer" style="margin-right: 23%;">
+                                <button type="button" class="btn btn-danger" (click)="deletePop.close()"
+                                        data-dismiss="modal">No
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        (click)="deleteHeaderText(item, deletePop)"
+                                        data-dismiss="modal">Yes
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--1-->
+  
+        <div class="fw-values">
+          <h3>Selected Header Text</h3>
+          <div class="fw-bx fw-val-bx">
+            <div class="flex sel-cat">
+              <span class="flex" *ngFor="let item of selectedItem">{{item.headerText}} <a href="javascript:void(0)" (click)="clearData(item)">x</a> </span>
+            </div>
+          </div>
+        </div>
+  
+  
+      </div>
+      <!--row-->
+  
+  
+  
+      <div class="flex action-btn">
+        <button class="save" (click)="onSubmit()" >Save</button>
+        <button (click)="cancel()">Cancel</button>
+      </div>
+  
+    </div>
+    </form>
+  </div>
+  
+  
+  
+  

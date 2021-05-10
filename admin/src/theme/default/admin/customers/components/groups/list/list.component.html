@@ -1,0 +1,197 @@
+<div class="row products-section products-sub-section">
+  <div class="col-12">
+    <div class="breadcrumbs-row">
+      <div class="bc-col">
+        <ul>
+          <li>
+            <a href="javascript:void(0)">Groups </a>
+          </li>
+          <li>Groups</li>
+        </ul>
+      </div>
+      <div class="bc-col-btn">
+        <button class="btn customer-btn" (click)="addCustomerGroup()" [appHideIfUnauthorized]="'create-customer-group'">
+          <img src="assets/img/add-white-ico.png" />
+          Add Customer Group
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--Breadcrumbs-->
+  <div class="col-12">
+    <div class="flex filter-row">
+      <div class="filter-lft">
+        <div class="toggle">
+          <p>Filters</p>
+          <input
+            class="tgl tgl-light"
+            id="cb1"
+            type="checkbox"
+            [checked]="true"
+            (change)="check($event)"
+          /> 
+          <label class="tgl-btn" for="cb1"></label>
+        </div>
+        <div class="order-status">
+          <p>Status</p>
+          <li style="list-style: none">
+            <span
+              style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"
+            ></span
+            >Active
+            <span
+              style="display: inline-block;width: 14px;height: 16px;margin-left: 3px;margin-right: 7px;vertical-align: middle;background-color: #f14e6e;"
+            ></span
+            >In Active
+          </li>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+  <div *ngIf="buttonCheck == true" class="filter-section border-right">
+    <div class="w3-container w3-animate-left">
+      <app-customer-filter
+        (progressEmits)="receiveProgress($event)"
+      ></app-customer-filter>
+    </div>
+    <!--Filter-->
+  </div>
+
+  <div class="product-table" [ngClass]="{ changesize: buttonCheck == true }">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" width="5%">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox mr-sm-2"></div>
+              </div>
+            </th>
+            <th scope="col">Group Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Color Code</th>
+            <th [appHideIfUnauthorized]="'delete-customer-group' || 'edit-customer-group'">Action</th>
+            <th>
+              Is Active
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let customersGrouplist of sandbox.getCustomersGroupList$ | async
+            "
+          >
+            <th scope="row">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox mr-sm-2">
+    
+                </div>
+              </div>
+            </th>
+
+            <td class="td_css">
+              <span
+                style="padding:6px; font-size: 1px ;margin-right: 5px"
+                [ngStyle]="{
+                  color: 'white',
+                  background: customersGrouplist.colorCode
+                }"
+              >
+              </span>
+              {{ customersGrouplist.name }}
+            </td>
+            <td>{{ customersGrouplist.description }}</td>
+            <td>{{ customersGrouplist.colorCode }}</td>
+
+            <td [appHideIfUnauthorized]="'delete-customer-group' || 'edit-customer-group'">
+              <a
+                href="javascript:void(0)"
+                (click)="editList(customersGrouplist)" [appHideIfUnauthorized]="'edit-customer-group'"
+              >
+                <img src="assets/img/edit-ico.png" />
+              </a>
+              <i
+                [ngbPopover]="deleteContent"
+                placement="bottom"
+                #deletePop="ngbPopover"
+                style="margin-left: 15px;"
+                class="fas fa-trash" [appHideIfUnauthorized]="'delete-customer-group'"
+              >
+                <ng-template #deleteContent>
+                  <div class="style">
+                    <div class="modal-header">
+                      <h6 class="modal-title" style="margin-left: 17%;">
+                        Do you want to delete ?
+                      </h6>
+                    </div>
+
+                    <div class="modal-footer" style="margin-right: 23%;">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="deletePop.close()"
+                        data-dismiss="modal"
+                      >
+                        No
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="
+                          deleteCustomerGroup(
+                            customersGrouplist.groupId,
+                            deletePop
+                          )
+                        "
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+              </i>
+            </td>
+            <td>
+              <div *ngIf="customersGrouplist.isActive === 1">
+                <span
+                class="tag-active"
+
+                  style="width: 60px; display: inline-block;padding: 1px 4px;"
+                  >{{ 'Settings.Role.Active' | translate }}</span
+                >
+              </div>
+              <div *ngIf="customersGrouplist.isActive === 0">
+                <span
+                class="tag-inactive"
+
+                  style="width: 63px; display: inline-block;padding: 1px 4px;"
+                  >{{ 'Settings.Role.InActive' | translate }}</span
+                >
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    <div
+      class="no_data"
+      *ngIf="(sandbox.getCustomersGroupList$ | async)?.length == 0"
+    >
+      <p>{{ 'Sales.Orders.datanotfound' | translate }}</p>
+    </div>
+    <mat-paginator
+      #paginator
+      [length]="sandbox.getpagination$ | async"
+      [pageIndex]="index"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[pageSize]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</div>

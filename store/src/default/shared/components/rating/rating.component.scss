@@ -1,0 +1,33 @@
+.star {
+    font-size: 1.4rem;
+    color: #d3d3d3;
+    position: relative;
+}
+
+.full {
+    color: #fba70d;
+    overflow: hidden;
+}
+
+.half {
+    position: absolute;
+    overflow: hidden;
+    color: #fba70d;
+}
+.mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
+    line-height: unset !important;
+}
+
+.mat-icon-button{
+    height: unset !important;
+}
+
+:host ::ng-deep mat-icon{
+    width: 17px !important;
+
+}
+
+:host ::ng-deep .material-icons {
+    font-size: 13px;
+
+}

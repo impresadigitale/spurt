@@ -1,0 +1,66 @@
+        <app-breadcrumbs></app-breadcrumbs>
+
+        <div class="page-title"> <h3>Earnings</h3> </div>
+        <div class="flex search-exp">
+            <div class="search-left flex">
+                <input type="text" placeholder="Search Product Name, Price" class="search-menu" (keyup)="search($event.target.value)">
+            </div>
+            <div *ngIf="(paymentSandbox.categoryList$ | async)?.length > 0" class="search-right flex" (click)="exportEarnings()" [title]=" filterDataId.length === 0 ? 'Bulk export' : 'Export'">
+                <a href="javascript:void(0)" class="flex ripple"> <img src="assets/imgs/export.svg"> Export</a>
+                <span class="multi-spin" *ngIf="(paymentSandbox.exportEarningLoading$ | async) || (paymentSandbox.MultipleEarningExportLoading$ | async)"><i class="fas fa-spinner fa-spin fa-2x" style="color: blue;"></i></span>
+
+            </div>
+        </div>
+        <!---->
+
+        <div class="product-list-wrap">
+
+            <div class="loading" *ngIf="(paymentSandbox.categoryListLoading$ | async)">
+                <app-loader></app-loader>
+            </div>
+            <div class="no-data"
+                *ngIf="(paymentSandbox.categoryList$ | async)?.length === 0 && (paymentSandbox.categoryListLoaded$ | async)">
+                <span>No Earnings found</span> </div>
+            <div class="table-responsive " *ngIf="(paymentSandbox.categoryList$ | async)?.length > 0 && (paymentSandbox.categoryListLoaded$ | async)">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div title="click to export" class="form-group" title="click to export">
+                                <input type="checkbox" id="checkbox1" [(ngModel)]="selectedAll" (change)="selectAll($event)"
+                                    [ngModelOptions]="{standalone: true}">
+                                <label for="checkbox1"></label>
+                            </div>
+                        </th>
+                        <th width="35%">Product</th>
+                        <th>SKU</th>
+                        <th class="sold">Total Sold</th>
+                        <th class="revenue">Revenue</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let array of (paymentSandbox.categoryList$ | async); let i = index;">
+                        <td>
+                            <div title="click to export" class="form-group" title="click to export">
+                                <input type="checkbox" [id]="array.productId" class="custom-control-input chk"
+                                    [(ngModel)]="array.selected" (change)="checkIfAllSelected()"
+                                    [value]="array.productId" [ngModelOptions]="{standalone: true}">
+                                <label [for]="array.productId"></label>
+                            </div>
+                        </td>
+                            <td><h4>{{array?.name}}</h4></td>
+                            <td><p>{{array?.sku}}</p></td>
+                            <td class="sold text-right"> {{array?.soldCount}} </td>
+                            <td class="revenue text-center"> {{array?.totalRevenue | currency:currencyCode:''}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <div class="pager" style="position: absolute; bottom: 30px; right: 0;">
+            <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage"
+              [counts]="(paymentSandbox.EarningCount$ | async)"></app-pager>
+          
+          </div>

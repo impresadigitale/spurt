@@ -1,0 +1,35 @@
+<div class="row products-section">
+    <div class="col-12">
+        <div class="card">
+            <div class="product-ts-left">
+                <ul>
+                    <li>
+                        <p>Total Widgets</p>
+                        <span *ngIf="(sandbox.getWidgetCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(sandbox.getWidgetCount$ | async)?.totalWidget}}
+                            <button type="button" class="btn" placement="right" ngbTooltip="Tooltip on right">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>Active Widgets</p>
+                        <span *ngIf="(sandbox.getWidgetCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(sandbox.getWidgetCount$ | async)?.activeWidget}}
+                            <button type="button" class="btn" placement="right" ngbTooltip="{{'Customers.ToolTip.Tooltiponright'| translate}}">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>In-Active Widgets</p>
+                        <span *ngIf="(sandbox.getWidgetCountLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(sandbox.getWidgetCount$ | async)?.inActiveWidget}}
+                            <button type="button" class="btn" placement="right" ngbTooltip="{{'Customers.ToolTip.Tooltiponright'| translate}}">
+                                <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                </ul>
+            </div>
+            <!--Left-->
+        </div>
+    </div>
+</div>

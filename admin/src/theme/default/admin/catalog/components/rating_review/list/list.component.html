@@ -1,0 +1,106 @@
+<div class="row products-section products-sub-section">
+    <div class="col-12">
+        <div class="breadcrumbs-row">
+            <div class="bc-col" style="margin-left: -321px;">
+                <ul>
+                    <li><a href="javascript:void(0)"> {{'catalog.categories.Catalog'| translate}} </a></li>
+                    <li> {{'catalog.ratingReview.ReviewRating'| translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle filter">
+                    <p>Filters</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn filter-btn" for="cb1"></label>
+                </div>
+            </div>
+            <!--Lft-->
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container w3-animate-left">
+            <app-spurt-catalog-ratings-review-filter (progressEmit)="receiveProgress($event)">
+            </app-spurt-catalog-ratings-review-filter>
+        </div>
+    </div>
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%">
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                        <th scope="col">{{'catalog.ratingReview.Image'| translate}}</th>
+                        <th scope="col" width="20%">{{'catalog.ratingReview.productName'| translate}}</th>
+                        <th scope="col">{{'catalog.ratingReview.Rating'| translate}}</th>
+                        <th scope="col" width="20%">{{'catalog.ratingReview.Review'| translate}}</th>
+                        <th scope="col">{{'catalog.ratingReview.CreatedDate'| translate}}</th>
+                        <th scope="col">{{'catalog.ratingReview.CustomerName'| translate}}</th>
+                        <th> {{'catalog.product.Status'| translate}}</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--response from category list or category filter list-->
+                    <tr *ngFor="let data of ratingReviewSandbox.ratingReviewList$ | async ; let i=index">
+
+                        <th scope="row">
+                        </th>
+                        <td style="cursor: pointer">
+                            <img *ngIf="data.image" [src]="imageUrl + '?path=' +data.imagePath + '&name=' + data.image + '&width=60&height=60'" onError="this.src='/assets/error-images/Load-icon-Products.png';" (load)="productListImageLoading(data.productId)" [hidden]="!productListImage[data.productId]">
+                            <img src="./assets/error-images/Load-icon-Products.png" [hidden]="productListImage[data.productId]">
+                        </td>
+                        <td>{{data.name}}</td>
+                        <td>
+                            <app-rating [ratingValue]="data.rating"></app-rating>
+                        </td>
+                        <td width="20%">{{data.review | slice :0:80}}{{data.review.length > 80 ?'...':''}}<a href="javascript:void(0)" *ngIf="data.review.length > 80" [ngbPopover]="viewContent" placement="bottom" #viewPop="ngbPopover">Read More
+                            <ng-template #viewContent>
+                                <div class="view-content">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Review</h6>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{data.review}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </a></td>
+                        <td>{{data.createdDate | date : "dd-MM-yyyy"}}</td>
+                        <td>{{data.firstName}} {{data.lastName}}</td>
+                        <td  [appHideIfUnauthorized]="'edit-rating-review'">
+                            <div class="toggle">
+                                <input class="tgl tgl-light" type="checkbox" id={{data.ratingId}}active [(ngModel)]="data.isActive" [ngModelOptions]="{standalone: true}" (change)="updateRatingStatus($event,data)" type="checkbox" />
+                                <label class="tgl-btn toggle-btn" for={{data.ratingId}}active></label>
+                            </div>
+                        </td>
+                        <td>
+                            <span style="color: #008c00;" *ngIf="data.isActive == 1">Active</span>
+                            <span style="color: #f00;" *ngIf="data.isActive == 0">In-Active</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(ratingReviewSandbox.ratingReviewList$ | async)?.length==0">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator #paginator [length]="ratingReviewSandbox.ratingReviewListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+</div>

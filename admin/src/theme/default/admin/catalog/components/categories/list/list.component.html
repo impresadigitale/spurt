@@ -1,0 +1,130 @@
+<div class="row products-section products-sub-section">
+    <div class="col-12">
+        <div class="breadcrumbs-row">
+            <div class="bc-col">
+                <ul>
+                    <li><a href="javascript:void(0)"> {{'catalog.categories.Catalog'| translate}} </a></li>
+                    <li> {{'catalog.categories.Categories'| translate}}</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn">
+                <button class="btn" (click)="addCategories()" [appHideIfUnauthorized]="'create-category'"><img
+                        src="assets/img/add-white-ico.png">{{'catalog.categories.AddCategory'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Breadcrumbs-->
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>Filters</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <div class="order-status">
+                    <p>{{'Sales.Orders.Status'| translate}}</p>
+                    <li style="list-style: none">
+                        <span style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"></span>Active
+                        <span style="display: inline-block;width: 14px;height: 16px;margin-left: 3px;margin-right: 7px;vertical-align: middle;background-color: #f14e6e; "></span>In Active
+
+                    </li>
+                </div>
+            </div>
+            <!--Lft-->
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container w3-animate-left">
+            <app-spurt-catalog-categories-filter (progressEmit)="receiveProgress($event)">
+            </app-spurt-catalog-categories-filter>
+        </div>
+    </div>
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%">
+                            <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                    </div>
+                            </div>
+                        </th>
+                        <th scope="col">{{'catalog.product.Image'| translate}}</th>
+                        <th scope="col" width="20%">{{'catalog.categories.CategoryName'| translate}}</th>
+                        <th scope="col" width="37%">{{'catalog.categories.Levels'| translate}}</th>
+                        <th scope="col">{{'catalog.categories.SortOrder'| translate}}</th>
+                        <th scope="col" [appHideIfUnauthorized]="'edit-category' || 'delete-category'">{{'catalog.categories.Action'| translate}}</th>
+                        <th class="text-center" scope="col" width="100px" class="text-center">{{'catalog.product.Status'| translate}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--response from category list or category filter list-->
+                    <tr *ngFor="let data of categorySandbox.getCategoriesList$ | async;let i=index">
+                        <th scope="row">
+                        </th>
+                        <td style="cursor: pointer">
+                            <img *ngIf="data.imagePath" [src]="imageUrl + '?path=' + data.imagePath + '&name=' + data.image + '&width=60&height=60'" onError="this.src='/assets/error-images/Load-icon-Products.png';" (load)="categoryImageLoading(data.categoryId)" [hidden]="!categoryImage[data.categoryId]">
+                            <img src="./assets/error-images/Load-icon-Products.png" [hidden]="categoryImage[data.categoryId]">
+                        </td>
+                        <td>{{data.name}}</td>
+                        <td>{{data.levels}}</td>
+                        <td>{{data.sortOrder}}</td>
+                        <td [appHideIfUnauthorized]="'edit-category' || 'delete-category'">
+                            <a href="javascript:void(0)" [appHideIfUnauthorized]="'edit-category'" (click)="editCategory(data)"> <img src="assets/img/edit-ico.png">
+                            </a>
+                            <i [ngbPopover]="deleteContent" [appHideIfUnauthorized]="'delete-category'" placement="bottom" #deletePop="ngbPopover" style="margin-left: 15px; " class="fas fa-trash cursor">
+                            <ng-template #deleteContent>
+                                <div class="style">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title"
+                                            style="margin-left: 17%;"> {{'catalog.product.DoYouWantToDelete'|
+                                            translate}}</h6>
+                                    </div>
+
+                                    <div class="modal-footer" style="margin-right: 23%;">
+                                        <button type="button" class="btn btn-danger" (click)="deletePop.close()"
+                                                data-dismiss="modal">{{'catalog.product.No'| translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-success"
+                                                (click)="deleteCategory(data.categoryId)"
+                                                data-dismiss="modal">{{'catalog.product.Yes'| translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </i>
+                        </td>
+                        <td class="text-center">
+                            <div *ngIf="data.isActive == 1">
+                                <span
+                                class="tag-active"
+                                style="width: 60px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.Active'| translate}}</span>
+
+                            </div>
+                            <div *ngIf="data.isActive == 0">
+                                <span 
+                                class="tag-inactive"
+                                style="width: 63px;display: inline-block;padding: 1px 4px;">{{'Settings.Role.InActive'| translate}}</span>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(categorySandbox.getCategoriesList$ | async)?.length==0">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator #paginator [length]="categorySandbox.getCategoriesListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+</div>

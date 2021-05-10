@@ -1,0 +1,17 @@
+
+<form [formGroup]="filterForm">
+
+    <div class="form-group">
+        <label for="keyword">{{'catalog.Brand.BrandName'| translate}}</label>
+        <input type="text" formControlName="keyword" class="form-control" id="Keyword" aria-describedby="emailHelp"
+               placeholder="{{'catalog.Brand.EnterBrandName'| translate}}">
+    </div>
+
+    <div class="text-right filter-btns">
+        <a (click)="resetFilter()" style="cursor: pointer">{{'catalog.product.Reset'| translate}}</a>
+
+        <button type="submit" class="btn"
+                (click)="applyFilter()">{{'catalog.product.ApplyFilters'| translate}}
+        </button>
+    </div>
+</form>

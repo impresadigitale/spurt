@@ -1,0 +1,307 @@
+
+.vsetting-section {
+    padding: 0 5px;
+    .breadcrumbs-row {
+      border-bottom: 0;
+      margin-left: 26px;
+    }
+  }
+
+
+.vendor-section {
+    margin: 0;
+  }
+  .products-section {
+    margin-top: 40px;
+    margin-left: -75px;
+  }
+
+
+
+.vendorsales-wrap {
+    .vs-list {
+      .vsl-top {
+        display: inline-block;
+        h3 {
+          justify-content: space-between;
+        }
+      }
+      .vsl-vendor .vslv-row {
+        justify-content: space-between;
+        align-items: center;
+        .vslv-col {
+          padding: 0;
+          width: calc(100% - 0px);
+          .order-no {
+            justify-content: space-between !important;
+          }
+          h3 {
+            font-size: 16px;
+            font-weight: 500;
+            // justify-content: space-between;
+            // align-items: center;
+            span {
+              font-size: 200;
+              font-size: 12px;
+              font-weight: 600;
+              color: gray;
+              position: relative;
+              // left: 45px;
+            }
+          }
+          h4 {
+            font-size: 14px;
+          }
+          p {
+            font-size: 12px;
+          }
+        }
+        .vol-prd {
+          width: 100%;
+          justify-content: flex-start;
+          h4 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #15bbba;
+            margin: 0 15px 0px 0;
+          }
+          p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #999;
+          }
+        }
+        &.active {
+          .vslv-col {
+            h3 {
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
+.vendorsettings-wrap {
+    justify-content: space-between;
+    background: white;
+    // width: 1250px;
+    // height: calc(100vh - 222px);
+  }
+
+
+
+
+.vs-list {
+    width: 300px;
+    border-right: solid thin #ddd;
+    // height: calc(100vh - 207px);
+    .vsl-top {
+      padding: 15px;
+      width: 300px;
+      h3 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .input {
+        border: solid thin #ddd;
+        border-radius: 2px;
+        padding: 10px 10px 10px 40px;
+        background-color: #eee;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        width: 100%;
+        background-image: url(../../../../../../../../../assets/img/search-ico.png);
+        background-position: 10px;
+        background-repeat: no-repeat;
+      }
+    }
+    .no-data {
+      color: gray;
+      display: block;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .vsl-vendor {
+          height: calc(100vh - 200px);
+      height: calc(100vh - 324px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      .vslv-row {
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px;
+        border-top: solid thin #ddd;
+        &.active {
+          background: #e7ffff;
+          border-right: solid 2px #00b3b2;
+        }
+        .vendor-img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+        .vslv-col {
+          width: calc(100% - 70px);
+          padding: 0 10px 0 20px;
+          h3 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin: 0 0 5px;
+          }
+          p {
+            font-size: 12px;
+            font-weight: 500;
+            color: #999;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+
+  .filter {
+    border: 1px solid gray;
+    padding: 20px;
+    height: 200px;
+    background-color: white;
+    color: black;
+  }
+
+  .filter-image {
+    position: fixed;
+    left: 310px;
+  
+
+  .filter-image::after {
+    position: fixed;
+    left: 310px;
+    top: 160px;
+  }
+}
+
+
+.date {
+  background-image: url(../../../../../../../../../assets/img/calender-ico.png);
+  background-position: 95%;
+  background-repeat: no-repeat;
+  width: 113px;
+    /* margin: 20px; */
+    margin-top: unset;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.filter-row {
+  justify-content: space-between;
+  align-items: flex-end;
+
+  .filter-category {
+      width: 30%;
+  }
+
+  .filter-group {
+      // width: 100%;
+  }
+}
+.act-filter-dropdown {
+  width: 500px;
+  padding: 20px;
+  font-size: 12px;
+  left: 240px !important;
+  background: #FFFFFF;
+  box-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.13) !important;
+  position: absolute;
+  transform: translate(-93.8%, 35px) !important;
+  border: none;
+  .input-group {
+    border: 1px solid #eee !important;
+  }
+}
+.reset:focus {
+  box-shadow: none !important;
+}
+.date-tag {
+  background: #42b3b3;
+  width: 60%;
+  margin: auto;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: white;
+  display: flex;
+    justify-content: space-around;
+}
+.disabled {
+  pointer-events: none;
+}
+.error {
+  position: absolute;
+    bottom: 40px;
+    color: red;
+    font-size: 13px;
+}
+.act-filter-date {
+  width: 100%;
+  height: 28px;
+
+}
+.input-group {
+   width: 30% !important;
+   display: inline-flex !important;
+}
+.date-input {
+  border: none !important;
+}
+.date-input:focus {
+  box-shadow: unset !important;
+}
+.act-filter-labels {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 450;
+  font-size: 13px;
+  color: #000000;
+  letter-spacing: -0.12px;
+  text-align: left;
+  display: inline-block;
+}
+.filtr-heading {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: #3F3E3E;
+  letter-spacing: 0.37px;
+  margin-bottom: 2%;
+
+}
+.act-filter-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #151414;
+  letter-spacing: 0.44px;
+  text-align: left;
+}
+.calendar-btn {
+ border: none !important;
+ outline: none !important;
+}
+.calendar-btn:hover {
+background: transparent !important;
+ }
+ .calendar-btn:focus {
+  box-shadow: unset !important;
+}

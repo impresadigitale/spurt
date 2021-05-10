@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+.mat-dialog-container,
+.mat-dialog-content {
+    padding: 0!important;
+    margin: 0!important;
+    max-height: 100% !important;
+}
+
+.sd-header {
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f1f1;
+    padding: 15px;
+    .sdh-l {
+        width: 80%;
+        h3 {
+            font-size: 22px;
+            font-weight: 400;
+            color: #262626;
+        }
+        p {
+            font-size: 20px;
+            font-weight: 300;
+            color: #262626;
+            opacity: .77;
+        }
+    }
+}
+
+.sdh-content {
+    padding: 20px 30px;
+    background: white;
+    input,
+    textarea {
+        font-family: 'Poppins', sans-serif;
+        display: block;
+        width: 100%;
+        padding: 15px;
+        border: solid thin #fff;
+        border-bottom: solid thin #dcdcdc;
+        font-size: 16px;
+        font-weight: 300;
+        color: black;
+        margin-bottom: 20px;
+        &:focus {
+            border: 0px!important;
+            box-shadow: none!important;
+        }
+    }
+    a {
+        display: block;
+        width: 100%;
+        border-radius: 3px;
+        background: #4e9412;
+        padding: 15px;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 400;
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.close-btn-outer {
+    button {
+        background-color: #f1f1f2!important;
+        box-shadow: none!important;
+        color: #000!important;
+    }
+}
+
+.success-dialog {
+    max-width: 100%!important;
+    height: 100vh;
+    width: 100%;
+}
+
+.invalid {
+    border-bottom: 1px solid red !important;
+}
+
+.invalid ::placeholder {
+    color: red !important;
+    /* Firefox */
+}

@@ -1,0 +1,25 @@
+<div class="filter-details">
+
+    <form [formGroup]="serviceCategoryfilterForm">
+        <div class="form-group">
+            <label>Categories Name</label>
+            <select class="custom-select col-12" formControlName="serviceCategoryNameList">
+                <option selected>Select</option>
+                <option  *ngFor="let data of serviceCategorySandBox.getServiceCategoriesListFilter$ | async;let i=index">{{data.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Sort Order</label>
+            <select class="custom-select col-12" formControlName="sortOrder">
+                <option value='' disabled selected hidden>--Select--</option>
+                <option value="1">Ascending</option>
+                <option value="2">Descending</option>
+            </select>
+        </div>
+        <div class="text-right filter-btns">
+            <a style="cursor: pointer" (click)="reset()">Reset</a>
+            <button type="submit" (click)="filter()"class="btn">Apply Filters</button>
+        </div>
+    </form>
+
+</div>

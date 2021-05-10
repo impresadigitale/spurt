@@ -1,0 +1,9 @@
+<div class="tab">
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/seo']" class="tablinks" >SEO</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/social']" class="tablinks" >Social</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/filter']" class="tablinks" >Filter</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/variants']" class="tablinks" >Variants</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/attributes']" class="tablinks" >Attributes</button>
+    <button [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/attributes-group']" class="tablinks" >Attributes Group</button>
+</div>
+<router-outlet></router-outlet>

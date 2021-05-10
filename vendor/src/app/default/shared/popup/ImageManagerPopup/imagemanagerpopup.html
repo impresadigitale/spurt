@@ -1,0 +1,80 @@
+<div class="image-manager">
+    <div class="modal-header">
+        <div *ngIf="(mediaSandbox.getBucketListData$ | async)?.Prefix as prefix">
+            <h4 *ngIf="prefixPath == true" class="modal-title">Image Manager {{prefix}}</h4>
+        </div>
+
+        <h4 *ngIf="prefixPath == false" class="modal-title" id="modal-basic-title">Image Manager {{folderPathNames}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" [ngClass]="{'loading': mediaSandbox.getbucketlistRequestLoading$ | async} || (mediaSandbox.getCreateFolderLoading$ | async)">
+        <div class="flex search-nav">
+            <div class="search-section">
+                <input placeholder="Search" type="text" (keyup)="search_Folder($event.target.value)">
+            </div>
+            <div class="img-action-links">
+                <ul class="flex" id="menu">
+                    <li *ngIf="((mediaSandbox.getBucketListData$ | async)?.Prefix) as prefix">
+                        <a [ngClass]="{'disabled': ((mediaSandbox.getBucketListData$ | async)?.Prefix) === prefixId}" href="javascript:void(0)" (click)="goBack(prefix)">
+                            <img src="assets/imgs/back_img_gallary.png"> </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" (click)="refresh()">
+                            <img src="assets/imgs/refresh-ico.png">
+                        </a>
+                    </li>
+                    <li class="folder">
+                        <input id="check01" type="checkbox" name="menu" [(ngModel)]="createFolderEnable" />
+                        <label for="check01" placement="bottom"><img
+                                src="assets/imgs/file-open-ico.png"></label>
+                        <ul class="submenu">
+                            <li>Create Folder</li>
+                            <li>
+                                <input type="text" [(ngModel)]="textValue">
+                                <button (click)="createFolder()" class="create"> Create</button>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" (click)="deleteFile()"> <img src="assets/imgs/delete-file-ico.png">
+                        </a>
+                    </li>
+                    <input type="file" (change)="uploadImageAction($event)" accept="image/*" #filePath style="display: none" />
+                    <li><a href="javascript:void(0)" (click)="uploadImage()" class="upload-lnk"> Upload </a></li>
+                    <li>
+                        <a
+                        *ngIf="checkedData.length > 0"
+                          href="javascript:void(0)"
+                          (click)="registerImage()"
+                          class="upload-lnk"
+                        >
+                          Insert
+                        </a>
+                      </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flex image-row">
+            <div class="image-col" *ngFor="let folder of (mediaSandbox.getBucketListData$ | async)?.CommonPrefixes">
+                <div class="img-bdy cursor"><img src="assets/imgs/file-img.png" (click)="openFolder(folder.Prefix)"></div>
+                <p>{{removeSlash(folder.Prefix)}}</p>
+            </div>
+            <div class="image-col" *ngFor="let images of (mediaSandbox.getBucketListData$ | async)?.Contents">
+                <div class="img-bdy" (click)="selectFile(images.Key)">
+                    <img class="cursor" [src]="imageUrls + '?width=120&height=120&path=' + '&name=' + images.Key">
+                </div>
+                <p>{{enhanceName(images.Key)}}</p>
+                <input type="checkbox" value="{{images.Key}}"  (change)="fileCheckBox($event, images.Key, i)">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="(mediaSandbox.getbucketlistRequestLoading$ | async) || (mediaSandbox.getCreateFolderLoading$ | async)" class="loader" style="position: absolute;
+    top: 50%;
+    right: 50%;">
+        <app-loader></app-loader>
+    </div>
+</div>
+<!--  -->

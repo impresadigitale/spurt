@@ -1,0 +1,171 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<div class="dashboard-count flex">
+    <div class="dc-col">
+        <h5>PRODUCTS LISTED TILL DATE</h5>
+        <div class="flex dc-act-inact">
+            <div class="dc-act">
+                <h2 *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin"
+                        style="font-size:20px; color: #1d5ed8;"></i></h2>
+                <h2 *ngIf="(dashboardSandbox.dashboardCountLoaded$ | async)">
+                    {{(dashboardSandbox.dashboardCount$ | async)?.activeProductCount}}</h2>
+                <p>Active</p>
+            </div>
+            <div class="dc-act dc-inact">
+                <h2 *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin"
+                        style="font-size:20px; color: #1d5ed8;"></i></h2>
+                <h2 *ngIf="(dashboardSandbox.dashboardCountLoaded$ | async)">
+                    {{(dashboardSandbox.dashboardCount$ | async)?.inActiveVendorProductList}}</h2>
+                <p>Inactive</p>
+            </div>
+        </div>
+    </div>
+    <div class="dc-col">
+        <h5>ORDERS</h5>
+        <div class="dc-act">
+            <h2 *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin"
+                    style="font-size:20px; color: #1d5ed8;"></i></h2>
+            <h2 *ngIf="(dashboardSandbox.dashboardCountLoaded$ | async)">
+                {{(dashboardSandbox.dashboardCount$ | async)?.totalOrderCount}}</h2>
+
+        </div>
+    </div>
+    <div class="dc-col">
+        <h5>Sales</h5>
+        <div class="dc-act">
+            <h2 *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin"
+                    style="font-size:20px; color: #1d5ed8;"></i></h2>
+            <h2 *ngIf="(dashboardSandbox.dashboardCountLoaded$ | async)">
+                {{(dashboardSandbox.dashboardCount$ | async)?.salesCount}}</h2>
+   
+        </div>
+    </div>
+    <div class="dc-col">
+        <h5>Revenue</h5>
+        <div class="dc-act">
+            <h2 *ngIf="(dashboardSandbox.dashboardCountLoading$ | async)"><i class="fa fa-circle-o-notch fa-spin"
+                    style="font-size:20px; color: #1d5ed8;"></i></h2>
+            <h2 class="revenue" *ngIf="(dashboardSandbox.dashboardCountLoaded$ | async)">
+               {{userDetails?.currencySymbolLeft}} {{(dashboardSandbox.dashboardCount$ | async)?.revenue | number : '1.2-2'}}</h2>
+         
+        </div>
+    </div>
+</div>
+<div class="flex recent-sellings">
+    <div class="top-sel-rec flex">
+
+        <div class="ts-col">
+            <div class="flex tsc-head">
+                <h3>TOP SELLING PRODUCTS</h3>
+
+                <div class="select tis-week">
+                    <select (change)="getDuration($event.target.value)">
+                        <option value="1">This Week</option>
+                        <option value="2">This MONTH</option>
+                        <option value="3">This YEAR</option>
+                    </select>
+                </div>
+            </div>
+            <!--head-->
+            <span class="no-data" *ngIf="(dashboardSandbox.getTopSellingProductsList$ | async)?.length === 0">No
+                Products found</span>
+
+            <div class="table-responsive" *ngIf="(dashboardSandbox.getTopSellingProductsList$ | async)?.length > 0">
+                <table class="table">
+                    <tbody>
+                        <tr *ngFor="let array of (dashboardSandbox.getTopSellingProductsList$ | async)">
+                            <td class="" width="60%">{{array?.product?.name}}</td>
+                            <td class="itl">{{array?.soldCount}} sold</td>
+                            <td class="itl">{{array?.buyerCount}} Buyer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ts-col">
+            <div class="flex tsc-head">
+                <h3>RECEIVED ORDERS {{(dashboardSandbox.getLanguageList$ | async)?.orderCount}}</h3>
+                <div class="select tis-week">
+                    <select (change)="getChartDuration($event.target.value)">
+                        <option value="1">This Week</option>
+                        <option value="2">This MONTH</option>
+                        <option value="3">This YEAR</option>
+                    </select>
+                </div>
+            </div>
+            <!--head-->
+            <span class="no-data" *ngIf="(dashboardSandbox.getLanguageList$ | async)?.orderCount == 0">No orders
+                found</span>
+            <div class="flex order-chart" >
+
+                <canvas        height="40vh" width="80vw"
+                *ngIf="(dashboardSandbox.getLanguageList$ | async)?.orderCount != 0"  baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                    [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
+                </canvas>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="flex recent-sellings order-sell">
+    <div class="top-sel-rec flex">
+
+        <div class="ts-col">
+            <div class="flex tsc-head">
+                <h3>RECENT ORDERS</h3>
+                </div>
+            <span class="no-data" *ngIf="(dashboardSandbox.orderList$ | async)?.length === 0">No orders
+                today</span>
+
+            <div class="table-responsive" *ngIf="(dashboardSandbox.orderList$ | async)?.length > 0">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                        </tr>
+                        <tr *ngFor="let array of (dashboardSandbox.orderList$ | async)">
+                            <td class="">{{array?.createdDate | date:"hh:mm a"}}</td>
+                            <td class="">{{array?.subOrderId}}</td>
+                            <td class="text-dark" style="width: 10px;"></td>
+                            <td class="text-center"><span
+                                    [ngClass]="{'paid': array.orderStatusName === 'paid', 'placed': array.orderStatusName === 'order-placed'}">{{array?.orderStatusName | uppercase}}</span>
+                            </td>
+                            <td class="text-dark text-right" style="color: black !important;">{{array?.currencySymbolLeft}}
+                                {{array?.NetAmount | currency:currencyCode:''}} {{array?.currencySymbolRight}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ts-col">
+            <div class="flex tsc-head">
+                <h3>RECENT SALES</h3>
+                </div>
+            <span class="no-data" *ngIf="(paymentSandbox.paymentList$ | async)?.length === 0">No Sales
+                today</span>
+
+            <div class="table-responsive" *ngIf="(paymentSandbox.paymentList$ | async)?.length > 0">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                        </tr>
+                        <tr *ngFor="let array of (paymentSandbox.paymentList$ | async); let i = index;">
+                            <td class="">{{array?.createdDate | date:'hh:mm'}}</td>
+                            <td class="">{{array?.subOrderId}}</td>
+                            <td class="text-dark" style="width: 10px;">{{array?.customerFirstName}}</td>
+                            <td class="text-dark text-right" style="color: black !important;">{{array?.currencySymbolLeft}} {{array?.NetAmount}}
+                                {{array?.currencySymbolRight}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

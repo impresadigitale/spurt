@@ -1,0 +1,79 @@
+<!-- The Modal -->
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="close()">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form [formGroup]="failedOrderForm">
+            <table>
+                <tr>
+                  <th width="80%">Payment Method</th>
+                  <th class="text-center"></th>
+                </tr>
+                <tr *ngFor="let list of sandbox.paymentList$ | async">
+                  <td width="80%">{{list.pluginName}}</td>
+                  <td class="text-center">
+                          <mat-radio-button id="{{list.id}}" (click)="getPaymentId(list)"></mat-radio-button>
+                  </td>
+                </tr>
+                <div class="error" style="margin-top:10px" *ngIf="!paymentSelected && submittedValues == true">
+                  Please select payment method
+
+                </div>
+              </table>
+
+            <div class="main-form">
+              <div class="section">
+
+                  <div class="column">
+                    <label>Payment Ref Id</label>
+                      <input type="text" class="form-control" formControlName="paymentRefId">
+                    <div class="error"
+                      *ngIf=" failedOrderForm.get('paymentRefId').hasError('required') &&
+                      failedOrderForm.get('paymentRefId').touched &&
+                      submittedValues == true"> Payment red id is required
+                    </div>
+                  </div>
+
+                  <div class="column">
+                      <label>Payment Status</label>
+                      <select type="text" class="form-control" formControlName="paymentStatus">
+                        <option selected hidden disabled>--Select--</option>
+                        <option value="1">Paid</option>
+                        <option value="2">UnPaid</option>
+                      </select>
+                    <div class="error"
+                      *ngIf=" failedOrderForm.get('paymentStatus').hasError('required') &&
+                      failedOrderForm.get('paymentStatus').touched &&
+                      submittedValues == true"> Payment status is required
+                    </div>
+                  </div>
+
+              </div>
+              <div class="section">
+                  <div class="column">
+                      <label>Payment Details</label>
+                    <textarea name="detail" id="" cols="30" rows="10" formControlName="paymentDetails"></textarea>
+                    <div class="error"
+                      *ngIf=" failedOrderForm.get('paymentDetails').hasError('required') &&
+                      failedOrderForm.get('paymentDetails').touched &&
+                      submittedValues == true"> Payment details is required
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </form> 
+          
+          <div class="foot">
+            <button [disabled]="sandbox.moveToMainOrderLoading$ | async" type="button" class="btn btn-danger spinner-button" data-dismiss="modal" (click)="submit()">
+                <mat-spinner diameter="20" *ngIf="sandbox.moveToMainOrderLoading$ | async"></mat-spinner>
+                Submit
+              </button>
+          </div>
+        </div>
+      </div>

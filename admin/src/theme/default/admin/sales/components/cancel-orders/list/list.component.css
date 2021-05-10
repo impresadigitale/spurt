@@ -1,0 +1,17 @@
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #dc4d5b !important;
+    border: #dc4d5b !important;
+}
+
+mat-radio-button {
+    padding-right: 10px !important;
+    margin-top: 6px;
+
+}
+.product-ts-left ul li {
+    width: 50% !important;
+}
+.products-section .toggle .tgl:checked + .tgl-btn:after {
+    background-color: #dc4d5b !important;
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="56" viewBox="0 0 80 56">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#FFF" stroke="#E40B0B" stroke-width="3" d="M40 3l37 51H3z"/>
+        <text fill="#E40B0B" font-family="Kanit-Regular, Kanit" font-size="35" transform="translate(3 3)">
+            <tspan x="32.447" y="41">!</tspan>
+        </text>
+    </g>
+</svg>

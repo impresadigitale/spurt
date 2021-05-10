@@ -1,0 +1,201 @@
+    <h2>Delivery Person’s List</h2>
+
+    <a href="javascript:void(0)" class="add-delivery-person flex " (click)="addUser()"> <img
+        class="cursor"    src="assets/imgs/add-plus-blue.svg"> Add Delivery Person </a>
+
+    <div class="adp-row" *ngIf="add">
+
+        <button class="close" (click)="remove('user')"><img src="assets/imgs/close.svg"> </button>
+
+        <div class="flex adp-innr-row">
+
+            <div class="user-photo flex">
+
+                <img *ngIf="!ifImageAvailable" (click)="uploadButtonClickForUser()" src="assets/imgs/default-user.svg" onError="this.src='assets/imgs/default-user.svg';" class="pp">
+                <img *ngIf="ifImageAvailable" (click)="uploadButtonClickForUser()" [src]="imageUrl" class="pp">
+
+                <p>
+                    <input type="file" (change)="uploadChange($event)" accept="image/*" #filePathForUser >
+                    <a href="javascript:void(0)" class="cursor">Edit</a>
+                </p>
+            </div>
+            <!--left-->
+
+            <div class="adp-innr-rht">
+              <form [formGroup]="addPersonForm">
+                <div class="fg-row2 flex">
+                    <div class="filter-group">
+                        <p>Delivery Person Name</p>
+                        <input type="text" formControlName="name" [ngClass]="{'error-field': (addPersonForm.controls['name'].hasError('required') && addPersonForm.controls['name'].touched) && submitted}">
+                    </div>
+
+                    <div class="filter-group">
+                        <p>Mobile Number</p>
+                        <input type="text" formControlName="mobileNumber" maxlength="15" [ngClass]="{'error-field': (addPersonForm.controls['mobileNumber'].hasError('required') && addPersonForm.controls['mobileNumber'].touched) && submitted}">
+                    </div>
+                    <div class="filter-group">
+                        <p>Email</p>
+                        <input type="text" formControlName="email" [ngClass]="{'error-field': (addPersonForm.controls['email'].hasError('required') && addPersonForm.controls['email'].touched) && submitted}">
+                        <div class="error" style="color: red;" *ngIf="(addPersonForm.get('email').hasError('pattern') && addPersonForm.get('email').touched) && submitted">
+                            Incorrect email
+                        </div>
+                    </div>
+                    <div class="filter-group">
+
+                    </div>
+                    <div class="filter-group">
+                        <p>Password</p>
+                        <input type="password" formControlName="password" [ngClass]="{'error-field': (addPersonForm.controls['password'].hasError('required') && addPersonForm.controls['password'].touched) && submitted}">
+                        <div *ngIf="addPersonForm.get('password').touched && addPersonForm.get('password').invalid" class="help-block text-danger ng-star-inserted">
+                            <div class="error-data" *ngIf="addPersonForm.get('password').hasError('minlength')">
+                              New Password should have minimum 5 characters.
+                            </div>
+                          </div>
+                    </div>
+                    <div class="filter-group">
+                        <p>Confirm Password</p>
+                        <input type="password" formControlName="confpassword" [ngClass]="{'error-field': (addPersonForm.controls['confpassword'].hasError('required') && addPersonForm.controls['confpassword'].touched) && submitted}">
+                        <div *ngIf="addPersonForm.get('confpassword').touched && addPersonForm.get('confpassword').invalid" class="help-block text-danger ng-star-inserted">
+                            <div class="error-data" *ngIf="addPersonForm.get('confpassword').hasError('mustMatch')">
+                                Passwords do not match
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="adl" formControlName="allLocation" (change)="allLocationChange($event)">
+                        <label for="adl">All Delivery Location</label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <input class="tgl tgl-light" id="cb1" type="checkbox" formControlName="status"/>
+                        <label class="tgl-btn" for="cb1"></label>
+                        <span>Active</span>
+                    </div>
+
+                    <div class="select-group" [ngClass]="{'disable' : locationDisable}">
+                        <label class="dropdown">
+                            <p>Choose Locations</p>
+                            <ng-select [items]="(deliverySandBox.deliveryLocationList$ | async)" [multiple]="true"
+                            bindLabel="locationName" formControlName="location"
+                            placeholder="Select Locations"     [selectableGroup]="true"
+                            [closeOnSelect]="false"
+                            [(ngModel)]="selectedCity">
+                              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.locationName}}
+                            </ng-template>
+                 </ng-select>
+                        </label>
+                    </div>
+                    <div class="button-group flex">
+                        <button class="save" (click)="addDeliveryPerson()"><i
+                            *ngIf="(deliverySandBox.deliveryPersonAddLoading$ | async) || (deliverySandBox.deliveryPersonUpdateLoading$ | async)"
+                            class="fas fa-spinner fa-spin fa-1x"></i>{{editPersonId ? 'Update Person' : 'Add Person'}}</button>
+                    </div>
+                    <span class="error">{{locationError}}</span>
+                </div>
+            </form>
+            </div>
+            <!--rht-->
+
+        </div>
+
+    </div>
+    <!--Add Person-->
+
+    <div class="dpf-row flex">
+        <p>{{(deliverySandBox.deliveryPersonsCount$ | async)}} Delivery Persons found</p>
+        <input type="text" placeholder="Search Delivery Person Name" (keyup)="searchPerson($event.target.value)">
+    </div>
+    <!---->
+    <div class="loading" *ngIf="(deliverySandBox.deliveryPersonslistLoading$ | async)">
+        <app-loader></app-loader>
+    </div>
+    <div class="no-data"
+        *ngIf="(deliverySandBox.deliveryPersonslist$ | async)?.length === 0 && (deliverySandBox.deliveryPersonslistLoaded$ | async)">
+        <span>No Delivery Persons found</span> </div>
+    <div class="table-responsive" *ngIf="(deliverySandBox.deliveryPersonslistLoaded$ | async) && (deliverySandBox.deliveryPersonslist$ | async)?.length > 0">
+        <table class="table">
+            <tr>
+                <th width="35px"></th>
+                <th>Delivery Person Name</th>
+                <th>Mobile</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let array of (deliverySandBox.deliveryPersonslist$ | async)">
+                <td style="width: 5%;" *ngIf="array.image && array.imagePath"> <img [src]="baseImageUrl + '?path=' + array.imagePath + '&name=' + array.image + '&width=300&height=300'"
+                    >  </td>
+                    <td style="width: 5%;" *ngIf="!array.image || !array.imagePath"> <img  src="assets/imgs/default-user.svg">  </td>
+                <td class="nowrap">{{array?.firstName}}</td>
+                <td>{{array?.mobileNumber}}</td>
+                <td *ngIf="array?.allLocation === 0">
+                    <div class="loc flex">
+                    <span class="flex">{{array?.locations?.length}}</span>
+                        <p>{{array?.locations?.length > 0 ? array?.locations[0].location : ''}}</p>
+                        <div class="kjl" *ngIf="array?.locations?.length > 0">
+                            <p *ngFor="let loc of array?.locations">{{loc?.location}}</p>
+                        </div>
+                    </div>
+                </td>
+                <td *ngIf="array?.allLocation === 1">
+                    <div class="loc flex">
+                        <p style="padding-left: 20px;">All Locations</p>
+                    </div>
+                </td>
+                <td class="active-switch">
+                    <label class="switch cursor" [title]="array.isActive === 1 ? 'active' : 'in active'">
+                      <input type="checkbox" type="checkbox" [(ngModel)]="array.isActive"
+                        [ngModelOptions]="{standalone: true}" (change)="statusChange($event, array)"
+                        >
+                      <span class="slider" ></span>
+                    </label>
+        
+                  </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-ellipsis-h"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu user-menu" role="menu">
+                            <li (click)="editPerson(array, selectedCity)" class="cursor"><a href="javascript:void(0)" class="flex"> <img src="assets/imgs/edit.svg"> Edit</a></li>
+                            <li [ngbPopover]="deleteContent1"
+                            placement="left"
+                            #deletePop="ngbPopover" ><a href="javascript:void(0)" class="flex cursor"> <img src="assets/imgs/trash.svg"> Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <ng-template #deleteContent1>
+                    <div class="style">
+                      <div class="modal-header">
+                        <h6 class="modal-title">
+                          Do you want to delete?
+                        </h6>
+                      </div>
+                  
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          data-dismiss="modal"
+                        >
+                          No
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-success"
+                          data-dismiss="modal" (click)="deleteDeliveryPerson(array?.id)"
+                        >
+                          Yes
+                        </button>
+                      </div>
+                    </div>
+                  </ng-template>
+            </tr>
+        </table>
+    </div>
+    <div class="pager" style="position: absolute; bottom: 30px; right: 0;">
+        <app-pager (pageChange)="pageChange($event)" [pageSize]="limit" [currentPage]="currentPage" [counts]="(deliverySandBox.deliveryPersonsCount$ | async)"></app-pager>
+    
+    </div>

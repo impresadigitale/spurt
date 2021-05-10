@@ -1,0 +1,17 @@
+<div class="text-muted chk-shp">
+    <p>Available Option</p>
+    <ng-container *ngIf="variantDetails&& variantDetails.length > 0">
+        <ng-container *ngFor="let variantDetail of variantDetails; last as isLast">
+            <div class="flex aop" [ngClass]="{'aop-sc': !isLast}">
+                <p> {{ variantDetail.name }} </p>
+                <div class="aopsc-rt">
+                    <mat-radio-group aria-label="Select an option" name="variant-{{ variantDetail.id }}" [ngModel]="selectedVariant[variantDetail.id]">
+                        <ng-container *ngFor="let variantValue of variantDetail.varientsValue">
+                             <mat-radio-button color="primary" [value]="variantValue.id" (click)="changeVariant(variantDetail.id, variantValue.id, variantValue)"> {{ variantValue.valueName }} </mat-radio-button>
+                        </ng-container>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

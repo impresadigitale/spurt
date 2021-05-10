@@ -1,0 +1,90 @@
+<form [formGroup]="addAddressForm" (ngSubmit)="onSubmit(addAddressForm.value)">
+    <h3></h3>
+    <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+                <mat-form-field class="w-100">
+                    <input matInput placeholder="{{'account.Name'|translate}}" formControlName="name" required>
+                    <mat-error class="validation-error" *ngIf="addAddressForm.controls.name.errors?.required">Name is required</mat-error>
+                </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="{{'account.Address1'|translate}}" formControlName="address1" required>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls.address1.errors?.required">{{'Error.Address1Required'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['address1'].hasError('maxlength')">{{'Error.AddressMaximumLength'|translate}}</mat-error>
+
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="{{'account.Address2'|translate}}" formControlName="address2">
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['address2'].hasError('maxlength')">{{'Error.AddressMaximumLength'|translate}}</mat-error>
+
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="{{'account.City'|translate}}" formControlName="city" required>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls.city.errors?.required">{{'Error.CityRequired'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['city'].hasError('maxlength')">{{'Error.AddressMaximumLength'|translate}}</mat-error>
+
+        </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" *ngIf="countryId != 99">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="{{'account.State'|translate}}" formControlName="state" required>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls.state.errors?.required">{{'Error.StateRequired'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['state'].hasError('maxlength')">{{'Error.AddressMaximumLength'|translate}}</mat-error>
+
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" *ngIf="countryId == 99">
+            <mat-form-field class="w-100">
+                <mat-select formControlName="state">
+                    <mat-option *ngFor="let list of accountSandbox.zoneList$ | async" [value]="list.name" >
+                            {{list.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls.state.errors?.required">{{'Error.StateRequired'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['state'].hasError('maxlength')">{{'Error.AddressMaximumLength'|translate}}</mat-error>
+
+            </mat-form-field>
+           
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="{{'account.Pincode'|translate}}" appOnlyNumber  formControlName="postcode" required>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls.postcode.errors?.required">{{'Error.PostalCodeRequired'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['postcode'].hasError('maxlength')">{{'Error.PostalCodeMaximumLength'|translate}}</mat-error>
+                <mat-error class="validation-error" *ngIf="addAddressForm.controls['postcode'].hasError('minlength')">{{'Error.PostalCodeMinimumLength'|translate}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field class="w-100">
+                <mat-select formControlName="country" (selectionChange)="selectCountry($event)">
+                    <mat-option *ngFor="let list of listSandbox.countryList$ | async" [value]="list.countryId" >
+                            {{list.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error class="validation-error" *ngIf="addAddressForm.controls.country.errors?.required">{{'Error.CountryRequired'|translate}}</mat-error>
+            </mat-form-field>
+            
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1 atype mode-group">
+            <label>{{'account.AddressType'|translate}}</label>
+            <mat-radio-group formControlName="addresstype" fxLayout="column" fxLayoutGap=".25rem">
+                <mat-radio-button [value]="'1'">Home
+                </mat-radio-button>
+                <mat-radio-button [value]="'0'">Work
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div fxFlex="100" class="text-center mt-2 ">
+            <button style="cursor: pointer;" (click)="cancel()" class="cancel">{{'account.Cancel'|translate}}</button>
+            <button mat-raised-button color="primary">{{'account.SaveAddress'|translate}}</button>
+        </div>
+    </div>
+</form>

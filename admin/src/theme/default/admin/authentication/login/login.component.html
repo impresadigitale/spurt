@@ -1,0 +1,72 @@
+
+
+<div class="card-align">
+  <div class="cards">
+    <form (ngSubmit)="onSubmit(loginForm.value)" [formGroup]="loginForm">
+      <div class="admin">Admin Log in</div>
+      <input
+        type="text"
+        class="form-control placeholder-fix"
+        placeholder="User Name"
+        formControlName="userName"
+        [ngClass]="{
+          validationcolor:
+            (loginForm.get('userName').hasError('required') &&
+              loginForm.get('userName').touched &&
+              ifSubmitted == true) ||
+            badResponse == true
+        }"
+      />
+      <div
+        class="error"
+        *ngIf="
+          loginForm.get('userName').hasError('required') &&
+          loginForm.get('userName').touched &&
+          ifSubmitted == true
+        "
+      >
+        User Name required
+      </div>
+      <div
+        class="error"
+        *ngIf="
+          loginForm.get('userName').hasError('pattern') &&
+          loginForm.get('userName').touched &&
+          ifSubmitted == true
+        "
+      >
+        Incorrect email
+      </div>
+      <input
+        type="password"
+        class="form-control placeholder-fix"
+        placeholder="Password"
+        formControlName="password"
+        [ngClass]="{
+          validationcolor:
+            (loginForm.get('password').hasError('required') &&
+              loginForm.get('password').touched &&
+              ifSubmitted == true) ||
+            badResponse == true
+        }"
+      />
+      <div
+        class="error"
+        *ngIf="
+          loginForm.get('password').hasError('required') &&
+          loginForm.get('password').touched &&
+          ifSubmitted == true
+        "
+      >
+        password required
+      </div>
+      <div class="error" *ngIf="badResponse == true">
+        User Name or password is incorrect
+      </div>
+      <button class="btn btn-log">Log in</button>
+      <div class="forgot" [routerLink]="['/auth/forgot-password']">
+        Cant login?
+      </div>
+    </form>
+  </div>
+</div>

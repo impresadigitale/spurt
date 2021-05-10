@@ -1,0 +1,60 @@
+<!--  -->
+
+
+<div class="logo-avl-loc sign-logo">
+    <a href="index.html" class="logo"><img src="assets/images/logo.png"></a>
+</div>
+<!-- Logo -->
+
+
+<div class="sign-wrapper flex">
+
+    <div class="sign-row flex">
+
+        <div class="sign-left"> <img src="assets/images/signup-img.svg"> </div>
+
+        <div class="sign-form">
+
+
+            <h2>Sign Up</h2>
+            <form [formGroup]="registerForm">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" formControlName="fName" placeholder="First Name">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" formControlName="lName" placeholder="Last Name">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" formControlName="email" placeholder="Email Id"></div>
+                    <div class="input-group">
+                        <input type="password" formControlName="password" placeholder="Password"></div>
+                    <div class="input-group">
+                        <input type="password" formControlName="confirmPassword" placeholder="Confirm Password"></div>
+                    <div class="input-group">
+                        <input type="text" formControlName="phoneNumber" placeholder="Mobile Number"></div>
+
+                    <div class="flex signin-col">
+                        <button class="btn  sign-btn  ripple" (click)="onRegisterFormSubmit(registerForm.value)" style="padding-top: 0px;" type="submit">
+                <app-loader *ngIf="authSandbox.registerLoading$ | async"></app-loader>
+              Sign Up
+            </button>
+                        <p class="or">or</p>
+                        <h5>Sign In With Google or Facebook</h5>
+                        <ul class="flex">
+                            <li>
+                                <a href="javascript:void(0)"><img src="assets/images/google.svg"></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><img src="assets/images/facebook.svg"></a>
+                            </li>
+                        </ul>
+                        <p class="signup-par">If have account <a href="javascript:void(0)" [routerLink]="['/auth/login']">Sign In</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,165 @@
+<main class="cards">
+
+    <div class="top-btn">
+            <h3 class="title">Settlement Report</h3>
+            <button class="btn" [routerLink]="['/vendors/reports/list']">Cancel</button>
+    </div>
+
+    <form [formGroup]="settlementReportFilterForm">
+
+    <div class="flex filter">
+        <div class="form-blk brd-rht">
+                <div class="form-group" style="position: relative">
+                        <label class="hd" style="position: absolute; top:5px">From Date</label>
+                        <mat-form-field (click)="picker1.open()" style="width:100%" appearance="none">
+                            <input style="height: 35px;border: 1px solid #ddd9d9;" class="form-control"
+                                formControlName="fromDate" type="text" matInput
+                                [matDatepicker]="picker1" autocomplete="off" (dateChange)="onDateChange($event)">
+                            <mat-datepicker-toggle matSuffix [for]="picker1">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                </div>
+                <div class="form-group" style="width: 90%">
+                    <label class="hd">Choose Vendors</label>
+                    <ng-select 
+                    [items]="sandbox.vendorList$ | async"
+                    [multiple]="true" 
+                    bindLabel="companyName"
+                    [clearable]= "false"
+                    formControlName="vendorId"
+                    >
+                    </ng-select>
+                </div>
+
+        </div>
+        <div class="form-blk">
+            <div class="form-group" style="position: relative">
+                    <label class="hd" style="position: absolute; top:5px">To Date</label>
+                    <mat-form-field (click)="picker2.open()" style="width:100%" appearance="none">
+                        <input style="height: 35px;border: 1px solid #ddd9d9;" class="form-control"
+                            formControlName="toDate" type="text" matInput [min]="mininimumDate"
+                            [matDatepicker]="picker2" autocomplete="off">
+                        <mat-datepicker-toggle matSuffix [for]="picker2">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+            </div>
+
+            <div class="form-group" style="width: 90%">
+                <label class="hd">Order Status</label>
+                <ng-select 
+                [items]="sandbox.orderStatusList$ | async"
+                [multiple]="true" 
+                bindLabel="name"
+                [clearable]= "false"
+                formControlName="orderStatus">
+                </ng-select>
+            </div>
+      </div>
+        <mat-radio-group formControlName="settlementFlag">
+            <mat-radio-button value="" style="margin:3px">All</mat-radio-button>
+            <mat-radio-button value="1" style="margin:3px">Settled</mat-radio-button>
+            <mat-radio-button value="2" style="margin:3px">Not Settled</mat-radio-button>
+        </mat-radio-group>
+        <div class="gen-rep">
+            <button type="submit" class="btn" (click)="generateReport()">
+                Generate Report
+            </button>
+        </div>
+    </div>
+</form>
+
+    <div class="flex export-btn" *ngIf="(sandbox.settlementReportLoaded$ | async) && (sandbox.settlementReport$ | async).length > 0">
+        <button (click)="exportSettlementReport()">Export to Excel/CSV</button>
+    </div>
+
+    <div class="vr-wrap" >
+
+        <div class="table-responsive">
+                <table class="table" *ngIf="(sandbox.settlementReportLoaded$ | async) && (sandbox.settlementReport$ | async).length > 0">
+                        <ng-container *ngFor="let reports of sandbox.settlementReport$ | async; let i = index">
+        
+                        <tr>
+                            <td colspan="11" class="nobrd">
+                                <h3 class="vr-tit flex">Member - {{reports.companyName}} <span>{{reports.vendorOrderDetailsCount}} records</span> </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Order-Line-No #</th>
+                            <th>Order-Line-No-Date</th>
+                            <th>Sub-Invoice #</th>
+                            <th>Item #</th>
+                            <th>Description</th>
+                            <th>Settlement Status</th>
+
+                            <th class="text-right brd-left brd-right">Quantity</th>
+                            <th class="text-right brd-right">Base Value</th>
+                            <th class="text-right brd-right">Tax</th>
+                            <th class="text-right brd-right">Total Value</th>
+                            <th>Order Status <span>(at Line Level)</span></th>
+                        </tr>
+                        <tr *ngFor="let list of reports.vendorOrderDetails; let j = index">
+                            <td>{{j+1}}</td>
+                            <td>{{list.orderProductPrefixId}}</td>
+                            <td>{{list.createdDate | date: "dd/MM/yyyy"}}</td>
+                            <td>{{list.invoiceNo}}</td>
+                            <td>{{list.skuName}}</td>
+                            <td>{{list.productName}}</td>
+                            <td>{{list.settlementStatus}}</td>
+                            <td class="text-right brd-left brd-right">{{list.quantity}}</td>
+                            <td class="text-right brd-right">{{currency.symbol}}{{list.basePrice}}</td>
+                            <td class="text-right brd-right">{{currency.symbol}}{{list.taxAmount}}<p style="font-size: 9px">{{list.taxTypeValue}}</p></td>
+                            <td class="text-right brd-right">{{currency.symbol}}{{list.total}}</td>
+                            <td>{{list.orderStatusName}}</td>
+                        </tr>
+                        <tr class="total">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right">Sub Total</td>
+                                <td class="text-right brd-left brd-right brd-btm">{{reports?.quantityTotal}}</td>
+                                <td class="text-right brd-right brd-btm">{{currency.symbol}}{{reports?.baseTotal}}</td>
+                                <td class="text-right brd-right brd-btm">{{currency.symbol}}{{reports.taxTotal}}</td>
+                                <td class="text-right brd-right brd-btm">{{currency.symbol}}{{reports?.subTotal}}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" class="nobrd"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" class="nobrd"></td>
+                            </tr>
+                            <tr class="total" *ngIf="((sandbox.settlementReport$ | async).length - 1) === i">
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="nobrd"></td>
+                                <td class="text-right">Grand Total</td>
+                                <td class="text-right brd-left brd-right brd-btm">{{quantityTotal}}</td>
+                                <td class="text-right brd-right brd-btm">{{currency.symbol}}{{baseTotal}}</td>
+                                <td class="text-right brd-right brd-btm">{{currency.symbol}}{{taxTotal}}</td>
+                                <td class="text-right brd-right brd-btm">{{currency.symbol}}{{subTotal}}</td>
+                                <td class="nobrd"></td>
+                            </tr>
+                        <tr>
+                            <td colspan="11" class="nobrd"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" class="nobrd"></td>
+                        </tr>
+                    </ng-container>
+                </table>
+                <div class="no_data"*ngIf="(sandbox.settlementReportLoaded$ | async) && (sandbox.settlementReport$ | async).length === 0">
+                    <p>Data Not Found</p>
+                </div>
+        </div>
+    </div>
+
+</main>

@@ -1,0 +1,22 @@
+<div class="subtoolbar catalogtoolbar">
+    <div class="sub-nav-menu">
+        <a href="javascript:void(0)" [appHideIfUnauthorized]="'catalog-product'" [routerLink]="['/catalog/product']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cat-product.svg"> {{'catalog.nav.Product'| translate}}
+        </a>
+        <a href="javascript:void(0)" [appHideIfUnauthorized]="'catalog-category'" [routerLink]="['/catalog/categories']" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cat-categories.svg"> {{'catalog.nav.Categories'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]=" ['/catalog/brand']" [appHideIfUnauthorized]="'catalog-brand'" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cat-brand.svg"> {{'catalog.nav.Brand'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/catalog/rating_review']" [appHideIfUnauthorized]="'catalog-rating-review'" placement="bottom" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cat-rating-review.svg"> {{'catalog.nav.RatingReview'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/catalog/coupon']" [appHideIfUnauthorized]="'catalog-coupon'" placement="bottom" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cat-coupon.svg"> {{'catalog.nav.Coupon'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/catalog/import']" [appHideIfUnauthorized]="'catalog-coupon'" placement="bottom" [routerLinkActive]="'active'">
+            <img src="assets/img/header-icons/cat-import.svg"> Import
+        </a>
+    </div>
+</div>

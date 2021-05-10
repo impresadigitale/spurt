@@ -1,0 +1,35 @@
+<div class="row products-section">
+    <div class="col-12 ">
+        <div class="card">
+            <div class="product-ts-left">
+                <ul>
+                    <li>
+                        <p>Total Blogs</p>
+                        <span *ngIf="(blogsSandbox.getBlogCountsLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(blogsSandbox.getBlogCounts$ | async).activeBlog}}
+                            <button type="button" class="btn" placement="right" ngbTooltip="{{'Customers.ToolTip.Tooltiponright'| translate}}">
+                    <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>Active Blogs</p>
+                        <span *ngIf="(blogsSandbox.getBlogCountsLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(blogsSandbox.getBlogCounts$ | async).activeBlog}}
+                            <button type="button" class="btn" placement="right" ngbTooltip="{{'Customers.ToolTip.Tooltiponright'| translate}}">
+                            <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+                    <li>
+                        <p>In-Active Blogs</p>
+                        <span *ngIf="(blogsSandbox.getBlogCountsLoading$ | async)" class="spinner-border spinner-border-sm pull-right" aria-hidden="true"></span>
+                        <h3>{{(blogsSandbox.getBlogCounts$ | async).inActiveBlog}}
+                            <button type="button" class="btn" placement="right" ngbTooltip="{{'Customers.ToolTip.Tooltiponright'| translate}}">
+                        <img src="assets/img/info-ico.png"></button>
+                        </h3>
+                    </li>
+ 
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

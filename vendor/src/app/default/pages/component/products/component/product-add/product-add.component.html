@@ -1,0 +1,748 @@
+<div class="stepper">
+    <ol class="progresses" data-steps="4">
+        <li class="done" [ngClass]="{'completeOne' : generalTab}">
+            <span class="step initial"><span>&#10003;</span></span>
+        </li>
+        <li class="done" [ngClass]="{'nextOne' : generalTab, 'completeTwo': catTab}">
+            <span class="step others"><span>&#10003;</span></span>
+        </li>
+        <li class="done" [ngClass]="{'nextTwo' : catTab, 'completeThree': prodTab}">
+            <span class="step others"><span>&#10003;</span></span>
+        </li>
+
+        <li class="done" [ngClass]="{'nextThree' : prodTab, 'completeFour': imageTab}">
+            <span class="step others"><span>&#10003;</span></span>
+        </li>
+
+        <li class="done" [ngClass]="{'nextFour' : imageTab, 'completeFive': priceTab}">
+            <span class="step others"><span>&#10003;</span></span>
+        </li>
+        <li class="done" [ngClass]="{'nextFive' : priceTab, 'completeLast': seoTab}">
+            <span class="step others"><span>&#10003;</span></span>
+        </li>
+    </ol>
+</div>
+
+
+<div>
+    <ngb-tabset type="pills">
+
+        <ngb-tab title="General" id="1">
+            <ng-template ngbTabContent>
+                <form [formGroup]="productForm">
+                    <div class="general-wrap">
+
+                        <div class="filter-group product-name">
+                            <p>Product Name</p>
+                            <input type="text" formControlName="productName">
+                            <div class="error-data"
+                                *ngIf="productForm.controls['productName'].hasError('required') && productForm.get('productName').touched && productSubmit">
+                                Product Name is required</div>
+
+                        </div>
+
+                        <div class="flex row-3">
+
+                            <div class="filter-group">
+                                <p>SKU Number <span class="tooltips" tooltip="Stock Keeping unit" flow="right"><img
+                                            src="assets/imgs/info.svg"></span>
+                                    <span>*</span> </p>
+                                <input type="text" formControlName="sku">
+                                <div class="error-data"
+                                    *ngIf="productForm.controls['sku'].hasError('required') && productForm.get('sku').touched && productSubmit">SKU
+                                    Number is required</div>
+                            </div>
+
+                            <div class="filter-group">
+                                <p>Product Slug <span class="tooltips"
+                                        tooltip="Enter product slug title for the product." flow="up"><img
+                                            src="assets/imgs/info.svg"></span><span>*</span></p>
+                                <input type="text" formControlName="metaTagTitle">
+                                <div class="error-data"
+                                    *ngIf="productForm.controls['metaTagTitle'].hasError('required') && productForm.get('metaTagTitle').touched && productSubmit">
+                                    Product Slug is required</div>
+                            </div>
+
+                        </div>
+
+                        <div class="filter-group product-name">
+                            <p>Product Description</p>
+                            <ckeditor formControlName="productDescription" [config]="{
+                                                toolbar: [
+                                                  [
+                                                  ]
+                                                ]
+                                              }" name='productDescription'>
+                            </ckeditor>
+                            <div class="error-data"
+                                *ngIf="productForm.controls['productDescription'].hasError('required') && productForm.get('productDescription').touched && productSubmit">
+                                Product Description is required</div>
+
+                        </div>
+                    </div>
+
+                    <div class="flex filter-apply">
+                        <a href="javascript:void(0)" class="ripple apply" (click)="submitInitialSetup('2')">Next</a>
+                        <a href="javascript:void(0)" class="ripple" (click)="resetInitialForm()">Reset</a>
+                    </div>
+                </form>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="2">
+            <ng-template ngbTabTitle>Category</ng-template>
+            <ng-template ngbTabContent>
+                <div class="category-wrap flex">
+
+                    <div class="category-col">
+                        <div class="filter-group">
+                            <p>Available Categories</p>
+                            <input type="text" class="search" [(ngModel)]="searchText">
+                        </div>
+                        <div class="flex add-all" *ngIf="productSandbox.tempCategoryList$ | async as list">
+                            <a href="javascript:void(0)" (click)="addAllCategory(list)"> Add All </a>
+                        </div>
+                        <div class="add-category">
+                            <a href="javascript:void(0)" class="flex"
+                                *ngFor="let category of (productSandbox.categoryList$ | async) | filter : searchText"
+                                (click)="addCategory(category)"> <img
+                                    src="assets/imgs/add-round.svg">{{category.categoryName}}</a>
+
+                        </div>
+                    </div>
+
+                    <div class="category-col">
+                        <div class="filter-group">
+                            <p>Selected Categories</p>
+                            <input type="text" class="search" [(ngModel)]="searchSelectedText">
+                        </div>
+                        <div class="flex add-all">
+                            <a href="javascript:void(0)" (click)="removeAllCategory()"> Clear </a>
+                        </div>
+                        <div class="add-category">
+                            <div class="error-data">{{showError}}</div>
+                            <a href="javascript:void(0)" class="flex"
+                                *ngFor="let select of selectedCategory  | filter : searchSelectedText"
+                                (click)="removecategory(select)"> <img
+                                    src="assets/imgs/minus-round.svg">{{select.categoryName}}</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="previous-apply flex">
+
+                    <a href="javascript:void(0)" class="ripple prev" (click)="tabset.select('1')">Previous</a>
+
+                    <div class="flex filter-apply">
+                        <a href="javascript:void(0)" class="ripple apply" (click)="submitCategory()">Next</a>
+                        <a href="javascript:void(0)" class="ripple" (click)="resetCategory()">Reset</a>
+                    </div>
+
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Product Details" id="3">
+            <ng-template ngbTabContent>
+                <form [formGroup]="detailsForm">
+                    <div class="general-wrap">
+
+                        <div class="flex row-3">
+                            <div class="filter-group">
+                                <p>UPC <span class="tooltips" tooltip="Universal Product Code" flow="right"><img
+                                            src="assets/imgs/info.svg"></span>
+                                </p>
+                                <input type="text" formControlName="upc">
+                                <div class="error-data"
+                                    *ngIf="detailsForm.controls['upc'].hasError('required') && detailsForm.get('upc').touched && detailSubmit">UPC is
+                                    required</div>
+                            </div>
+
+                            <div class="filter-group">
+                                <p>HSN</p>
+                                <input type="text" formControlName="hsn">
+                            </div>
+
+                            <div class="filter-group">
+                                <p>Quantity </p>
+                                <input type="text" formControlName="quantity">
+                                <div class="error-data"
+                                    *ngIf="detailsForm.controls['quantity'].hasError('required') && detailsForm.get('quantity').touched  && detailSubmit">
+                                    Quantity is required</div>
+                            </div>
+      
+
+                            <div class="filter-group">
+                                <p>Product Availability </p>
+                                <div class="form-group select ">
+                                    <select formControlName="outOfStockStatus">
+                                        <option value="1">In Stock</option>
+                                        <option value="2">Out of Stock</option>
+
+                                    </select>
+                                </div>
+                                <div class="error-data"
+                                    *ngIf="detailsForm.controls['outOfStockStatus'].hasError('required') && detailsForm.get('outOfStockStatus').touched && detailSubmit">
+                                    Stock is required</div>
+
+                            </div>
+
+                            <div class="filter-group">
+                                <p>Product Activation Date<span class="tooltips"
+                                        tooltip="Enter a date from when you want the product to be active and live for display to Customers."
+                                        flow="right"><img src="assets/imgs/info.svg"></span></p>
+                                <div class="input-group w-100 filter-group">
+                                <input class="form-control  placeholder-fix date-input" autocomplete="off" name="dp" id="cal-in" ngbDatepicker
+                                  #f="ngbDatepicker"  formControlName="dateAvailable">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary no-shadow border-clr calendar-btn"
+                                    (click)="f.toggle()" type="button">
+                                    <img src="assets/imgs/calender-ico.png"> </button>
+                                </div>
+                              </div>
+                                <div class="error-data"
+                                    *ngIf="detailsForm.controls['dateAvailable'].hasError('required') &&  detailsForm.get('dateAvailable').touched && detailSubmit">
+                                    Date Available is required</div>
+
+                            </div>
+
+                            <div class="filter-group free-shipping">
+                                <div class="form-group shipping">
+                                    <input type="checkbox" id="html" formControlName="pincodeBasedDelivery">
+                                    <label for="html">
+                                        <h4>Enable postal code verification for shipping</h4>
+                                    </label>
+                                </div>
+                            </div>
+                           
+                            <div class="filter-group">
+                                <p> Manufacturer </p>
+                                <div class="form-group select ">
+                                    <select formControlName="manufacturer">
+                                        <option value="" selected hidden disabled>Select Manufacturer</option>
+                                        <option value="{{list.manufacturerId}}" *ngFor="let list of productSandbox.manufacturerList$ | async">{{list.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="error-data"
+                                    *ngIf="detailsForm.controls['manufacturer'].hasError('required') && detailsForm.get('manufacturer').touched && detailSubmit">
+                                    Manufacturer is required</div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="previous-apply flex">
+
+                        <a href="javascript:void(0)" class="ripple prev" (click)="tabset.select('2')">Previous</a>
+
+                        <div class="flex filter-apply">
+                            <a href="javascript:void(0)" class="ripple apply" (click)="submitDetail()">Next</a>
+                            <a href="javascript:void(0)" class="ripple" (click)="resetDetailForm()">Reset</a>
+                        </div>
+
+                    </div>
+                </form>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Images" id="4">
+            <ng-template ngbTabContent>
+                <div class="product-images">
+
+                    <div class="flex pi-row">
+
+                        <div class="pi-col image-container" *ngFor="let data of uploadImage;let i=index">
+                         
+                            <img
+                                [src]="imageUrls + '?path=' + data.containerName + '&name=' + data.image + '&width=100&height=100'">
+                            <a href="javascript:void(0)" class="close-img flex" (click)="deleteImage(i)"> x </a>
+                        </div>
+
+                        <div class="pi-col">
+                            <a href="javascript:void(0)" class="default-img" (click)="uploadProductImages()"><img
+                                    src="assets/imgs/add-picture.svg" class="piimg"> </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="previous-apply flex">
+
+                    <a href="javascript:void(0)" class="ripple prev" (click)="tabset.select('3')">Previous</a>
+
+
+                    <div class="flex filter-apply">
+                        <a href="javascript:void(0)" class="ripple apply" (click)="submitImage()">Next</a>
+                    </div>
+
+                </div>
+            </ng-template>
+        </ngb-tab>
+
+        <!-- options -->
+
+        <ngb-tab id="7">
+            <ng-template ngbTabTitle>Variant</ng-template>
+            <ng-template ngbTabContent>
+                <form [formGroup]="variantForm">
+
+              <div class="flex select-variant">
+                <div class="sv-names">
+                  <h3>Select variant Names</h3>
+                  <ul>
+                    <li class="flex selected" *ngFor="let list of productSandbox.variantList$ | async">
+                      <a href="javascript:Void(0)" class="flex" [ngClass]="{'icon-disabled': editId && isVariantExist}" (click)="selectVariant(list)"> <img *ngIf="list.selected === true" src="assets/imgs/add-blue-circle.png">
+                        <img *ngIf="list.selected === false " src="assets/imgs/plus-sign-button.png"> {{list.name}} </a>
+                      <span>({{list.type}})</span>
+                    </li>
+
+                  </ul>
+                </div>
+                <!--lft-->
+                <div class="sv-values">
+                  <h3>Variant Values</h3>
+                  <div class="table-responsive" *ngIf="(productSandbox.selectedVariant$ | async)?.length > 0">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Variant Names</th>
+                          <th>Variant Value 1</th>
+                          <th>Variant Value 2</th>
+                          <th>Variant Value 3</th>
+                          <th>Variant Value 4</th>
+                          <th>Variant Value 5</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let value of productSandbox.selectedVariant$ | async">
+                        <td>{{value.name}}</td>
+                        <ng-container *ngFor="let item of value.varientsValue">
+                                    <td> <input [readonly]="true" type="text" value="{{item.valueName}}"> </td>
+                        </ng-container>
+                        <ng-container *ngIf="checkLength(value.varientsValue?.length)">
+                            <ng-container *ngFor="let i of emptyVariant">
+                                    <td> <input [readonly]="true" type="text" value=""> </td>
+                            </ng-container>
+                        </ng-container>
+                        <td style="width: 50px"><button> <img [ngClass]="{'icon-disabled': editId && isVariantExist}" src="assets/imgs/delete.svg" (click)="selectVariant(value)"> </button> </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!--rht-->
+              </div>
+              <!--top-->
+  
+              <div class="pv-row" *ngIf="(productSandbox.probabiltyOptions$ | async)?.length > 0">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Options</th>
+                      <th>SKU</th>
+                      <th>Price</th>
+                      <th>Barcode</th>
+                      <th>Inventory <img src="assets/imgs/info.svg"> </th>
+                      <th width="120px"></th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+   
+                    <ng-container formArrayName="variantItems" *ngFor="let options of variantForm.get('variantItems')['controls']; let i = index;">
+                    <ng-container [formGroupName]="i">
+                    
+                      <tr>
+                        <td class="text-center">
+                            
+                          <div class="pd-img" *ngIf="optionImageArray[i]?.length > 0">
+                        <ng-container *ngFor="let imgItem of optionImageArray[i]">
+
+                            <img width="80px" height="60px" (click)="uploadOptionImage($event, options, i)" [src]="imageUrls + '?path=' + imgItem.containerName + '&name=' + imgItem.image + '&width=60&height=60'">
+                            <button (click)="removeOptionImage(options, i)"><img class="close" src="assets/imgs/close-white-ico.png"> </button>
+                        </ng-container>  
+                        </div>
+                          <div class="pd-img-upld" *ngIf="optionImageArray[i]?.length === 0">
+                            <input (click)="uploadOptionImage($event, options, i)">
+                            <a href="javascript:void(0)" class="flex"> <span>+</span> Photo </a>
+                            </div>
+
+                        </td>
+                        <td >
+                            <ng-container *ngFor="let item of optionValueArray[i]; let j = index">
+                                <span *ngIf="j > 0 && j < optionValueArray[i].length">-</span><span>{{item.value}}</span>
+                            </ng-container>
+                        </td>
+                        <td style="position: relative"> <input type="text" formControlName="sku">
+                            <ng-container *ngIf="options.get('sku').hasError('required') && detailSubmit == true">
+                                    <span class="errorMsg">Sku is required</span>
+                            </ng-container>
+                         </td>
+                        <td>
+                          <div class="price-imp"> <input type="text" formControlName="price"><button class="price-val">{{symbol}}</button></div>
+                        </td>
+                        <td> <input type="text" formControlName="barcode"> </td>
+                        <td> <input type="text" formControlName="inventory"> 
+                            <ng-container *ngIf="options.get('inventory').hasError('required') && detailSubmit == true">
+                                <span class="errorMsg">Inventory is required</span>
+                        </ng-container>
+                        </td>
+                        <td>
+                            <div class="toggle">
+                                    <input class="tgl tgl-light" id="{{'id'+ i}}" type="checkbox" formControlName="isActive"/>
+                                    <label class="tgl-btn" for="{{'id'+ i}}"></label>
+                                    Active
+                            </div>                        
+                        </td>
+                        <td style="width:50px"> <button> <img src="assets/imgs/delete.svg" (click)="removeProbablityOption(options, i)"> </button> </td>
+                      </tr>
+                    </ng-container>
+                </ng-container>
+                
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="previous-apply flex">
+
+                <a href="javascript:void(0)" class="ripple prev" (click)="tabset.select('4')">Previous</a>
+
+                <div class="flex filter-apply">
+                    <a href="javascript:void(0)" class="ripple apply" (click)="submitVariant()">Next</a>
+                </div>
+
+            </div>
+
+              </form>
+  
+            </ng-template>
+          </ngb-tab>
+
+        <!-- options -->
+        <ngb-tab title="Price" id="5">
+            <ng-template ngbTabContent>
+                <div class="product-images">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Default Price
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="main-content">
+                                <form [formGroup]="priceForm">
+                                    <div class="sub-content">
+                                        <label>
+                                            Product Cost
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">{{symbol}}</span>
+                                            <input class="dark-input form-control" type="text"
+                                                (keyup)="getPrice($event)" (keypress)="numberOnly($event)"
+                                                formControlName="productPrice"> </div>
+
+                                    </div>
+                                   
+                                    <span class="add-symbol">+</span>
+
+                                    <div class="sub-content">
+                                        <label style="width: 100%">
+                                            Tax
+                                        </label>
+                                        <mat-radio-group aria-label="Select an option">
+                                            <mat-radio-button style="padding-right: 10px" value="1" [checked]="taxType === '1'" (change)="getTaxValue($event)">Value</mat-radio-button>
+                                            <mat-radio-button value="2" [checked]="taxType === '2'" (change)="getTaxValue($event)">Percentage</mat-radio-button>
+                                          </mat-radio-group>
+                                        <div class="input-group" *ngIf="taxType === '1'">
+                                            <span class="input-group-addon">{{symbol}}</span>
+                                            <input class="dark-input" type="text"
+                                            (keypress)="numberOnly($event)" (keyup)="getTax($event.target.value)" [(ngModel)]="taxValue" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                        <div class="input-group" *ngIf="taxType === '2'">
+                                                <select style="border:none" class="custom-select col-12" [(ngModel)]="currentTaxId" [ngModelOptions]="{standalone: true}" (change)="getTaxPercentage($event.target.value)">
+                                                        <option value="">- -Select Tax- -</option>
+                                                       <option [value]="array?.taxId" *ngFor="let array of (productSandbox.taxList$ | async)"> {{array.taxName}}</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                    <span class="add-symbol">=</span>
+
+                                    <div class="sub-content">
+                                        <label>
+                                            Total Cost
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">{{symbol}}</span>
+                                            <input class="dark-input" type="text" readonly [(ngModel)]="totalPrice"
+                                            [ngModelOptions]="{standalone: true}"></div>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Discount
+                                </mat-panel-title>
+                                <mat-panel-description>
+
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div class="discount-main-content">
+                                <form [formGroup]="discountForm">
+                                    <div formArrayName="discountItems"
+                                        *ngFor="let item of discountForm.get('discountItems')['controls']; let i = index;">
+                                        <div [formGroupName]="i">
+                                                <div class="sub-content">
+                                                        <label> SKU </label>
+                                                        <select class="custom-select col-12" formControlName="discountSku">
+                                                        <option value='' selected hidden disabled>- -Select Sku- -</option>
+                                                        <option value="{{list}}" *ngFor="let list of productSandbox.skuArrayList$ | async">{{list}}</option>
+                                                      </select> 
+
+                                                </div>
+                                            <div class="sub-content">
+                                                <label>
+                                                    Priority </label>
+                                                <input class="dark-input" type="text"
+                                                    formControlName="discountPriority">
+                                            </div>
+
+                                            <div class="sub-content">
+                                                <label>
+                                                    Price
+                                                </label>
+                                                <input class="dark-input" type="text" formControlName="discountPrice">
+                                            </div>
+
+                                            <div class="sub-content">
+                                                <label>
+                                                    Date Start
+                                                </label>
+                                                <mat-form-field (click)="picker2.open()">
+                                                    <input readonly class="input-group" [min]="current"
+                                                        formControlName="discountDateStart" type="text" matInput
+                                                        [matDatepicker]="picker2" autocomplete="off">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="sub-content">
+                                                <label>
+                                                    Date End
+                                                </label>
+                                                <mat-form-field (click)="picker3.open()">
+                                                    <input readonly class="input-group" [min]="current"
+                                                        formControlName="discountDateEnd" type="text" matInput
+                                                        [matDatepicker]="picker3" autocomplete="off">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker3">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker3></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <img title="Remove discount" class="remove"
+                                                src="assets/imgs/minus-red-ico-big.png" (click)="removeDiscountForm(i)">
+                                        </div>
+                                    </div>
+                                    <div class="add">
+                                        <img [matTooltip]="editId ? 'Add more dicount price' : 'you can add discount price while update'" src="assets/imgs/add-blue-circle.png"
+                                            (click)="addDiscountForm()">
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Special
+                                </mat-panel-title>
+                                <mat-panel-description>
+
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="discount-main-content">
+                                <form [formGroup]="specialForm">
+                                    <div formArrayName="specialItems"
+                                        *ngFor="let item of specialForm.get('specialItems')['controls']; let i = index;">
+                                        <div [formGroupName]="i">
+                                                <div class="sub-content">
+                                                        <label> SKU </label>
+                                                        <select class="custom-select col-12" formControlName="specialSku">
+                                                                <option value='' selected hidden disabled>- -Select Sku- -</option>
+                                                                <option value="{{list}}" *ngFor="let list of productSandbox.skuArrayList$ | async">{{list}}</option>
+                                                        </select> 
+                                                     
+                                                    </div>
+                                            <div class="sub-content">
+                                                <label>
+                                                    Priority </label>
+                                                <input class="dark-input" type="text" formControlName="specialPriority">
+                                            </div>
+
+                                            <div class="sub-content">
+                                                <label>
+                                                    Price
+                                                </label>
+                                                <input class="dark-input" type="text" formControlName="specialPrice">
+                                            </div>
+
+                                            <div class="sub-content">
+                                                <label>
+                                                    Date Start
+                                                </label>
+                                                <mat-form-field (click)="picker2.open()">
+                                                    <input readonly class="input-group" [min]="current" [min]="current"
+                                                        formControlName="specialDateStart" type="text" matInput 
+                                                        [matDatepicker]="picker2" autocomplete="off">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="sub-content">
+                                                <label>
+                                                    Date End
+                                                </label>
+                                                <mat-form-field (click)="picker3.open()">
+                                                    <input readonly class="input-group" formControlName="specialDateEnd" [min]="current"
+                                                        type="text" matInput [matDatepicker]="picker3"
+                                                        autocomplete="off">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker3">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker3></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <img title="Remove special price" class="remove"
+                                                src="assets/imgs/minus-red-ico-big.png" (click)="removeSpecialForm(i)">
+                                        </div>
+                                    </div>
+                                    <div class="add">
+                                        <img [matTooltip]="editId ? 'Add more special price' : 'you can add special price while update'"  src="assets/imgs/add-blue-circle.png"
+                                            (click)="addSpecialForm()">
+                                    </div>
+                                </form>
+
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                </div>
+
+                <div class="previous-apply flex">
+
+                    <a href="javascript:void(0)" class="ripple prev" (click)="tabset.select('7')">Previous</a>
+
+
+                    <div class="flex filter-apply">
+                        <a href="javascript:void(0)" class="ripple apply" (click)="submitPrice()">Next</a>
+                        <a href="javascript:void(0)" class="ripple" (click)="resetDetailForm()">Reset</a>
+                    </div>
+
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="SEO " id="6">
+            <ng-template ngbTabContent>
+                <div class="product-images">
+
+                    <div class="general-wrap">
+                        <form [formGroup]="seoForm">
+
+                            <div class="flex row-3">
+                                <div class="filter-group">
+                                    <p>Meta Tag Title <span class="tooltips"
+                                            tooltip="Enter an SEO tag title, preferably between 60-70 characters"
+                                            flow="right"><img src="assets/imgs/info.svg"></span>
+                                        <span>*</span> </p> <input type="text" formControlName="metaTagTitle">
+                                    <div class="error-data"
+                                        *ngIf="seoForm.controls['metaTagTitle'].hasError('required') && seoForm.get('metaTagTitle').touched && productSubmit">
+                                        Meta tag title is required</div>
+                                </div>
+
+                                <div class="filter-group">
+                                    <p>Meta Tag Keyword <span class="tooltips"
+                                            tooltip="Enter meta tag keywords for the product" flow="left"><img
+                                                src="assets/imgs/info.svg"></span>
+                                        <span>*</span> </p> <input type="text" formControlName="metaTagKeyword">
+                                    <div class="error-data"
+                                        *ngIf="seoForm.controls['metaTagKeyword'].hasError('required') && seoForm.get('metaTagKeyword').touched  && productSubmit">
+                                        Meta tag keyword is required</div>
+                                </div>
+
+                            </div>
+                            <div class="filter-group product-name">
+                                <p>Meta Tag Description <span class="tooltips"
+                                        tooltip="Type a Meta tag description for the product, preferably between 160-170 characters"
+                                        flow="right"><img src="assets/imgs/info.svg"></span>
+                                    <span>*</span> </p>
+                                <ckeditor [config]="{
+                                            toolbar: [
+                                              [
+                                              ]
+                                            ]
+                                          }" name='productDescription' formControlName="metaTagDescription">
+                                </ckeditor>
+
+                            </div>
+                            <div class="error-data"
+                                *ngIf="seoForm.controls['metaTagDescription'].hasError('required') && seoForm.get('metaTagDescription').touched  && productSubmit">
+                                Meta tag description is required</div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="previous-apply flex">
+
+                    <a href="javascript:void(0)" class="ripple prev" (click)="tabset.select('3')">Previous</a>
+
+                    <div class="flex filter-apply">
+                        <a href="javascript:void(0)" class="ripple apply" (click)="submitProduct()">
+                            <span><i *ngIf="(productSandbox.productAddLoading$ | async) || (productSandbox.productUpdateLoading$ | async)"
+                                    class="fas fa-spinner fa-spin fa-5x"></i>
+                                Submit</span>
+                        </a>
+                    </div>
+
+                </div>
+            </ng-template>
+        </ngb-tab>
+
+    </ngb-tabset>
+</div>
+
+
+
+
+<div class="modal fade succesfully-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="flex success">
+
+                    <img src="assets/imgs/tick-round-green.svg">
+
+                    <p>Your Product Successfully Created</p>
+
+                    <button type="button" class="" style="border: none;" data-dismiss="modal">Okay</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
