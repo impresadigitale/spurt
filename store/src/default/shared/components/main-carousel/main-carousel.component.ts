@@ -7,7 +7,7 @@
  * Author piccosoft ltd <support@piccosoft.com>
  * Licensed under the MIT license.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgModule } from '@angular/core';
 import {
   SwiperConfigInterface,
   SwiperPaginationInterface
@@ -16,6 +16,7 @@ import { ConfigService } from '../../../../core/service/config.service';
 import { AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ListsSandbox } from '../../../../core/lists/lists.sandbox';
+import { RicercaComponent } from '../ricerca/ricerca.component';
 
 @Component({
   selector: 'app-main-carousel',

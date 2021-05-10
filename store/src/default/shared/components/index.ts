@@ -1,3 +1,5 @@
+import { RicercaComponent } from './ricerca/ricerca.component';
+
 /*
  * spurtcommerce
  * version 4.4
@@ -32,7 +34,6 @@ import {CartNavComponent} from './cart/cart.component';
 import {RelatedProductsComponent} from './related-products/related-products.component';
 import {WidgetProductsComponent} from './widget-products/widget-products.component';
 import { SpecificationControlsComponent } from './specification-controls/specification-controls.component';
-
 
 // modules
 import {PipesModule} from '../pipes/pipes.module';
@@ -73,6 +74,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 export const COMPONENTS = [
     MainCarouselComponent,
+    RicercaComponent,
     BrandsCarouselComponent,
     CategoryListComponent,
     BreadcrumbComponent,

@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .main-slider-right {
@@ -90,7 +90,7 @@
 .main-slider {
   height: 500px;
   margin-top: 14px;
-  width: 100%;
+  width: calc(100% -280px);
 
   .slide-item {
     height: 100%;
