@@ -1,58 +1,62 @@
-<div *ngIf="products && products.length>0" class="swiper-container" [swiper]="config">
-    <div class="swiper-wrapper h-100">
-        <div *ngFor="let product of products" class="swiper-slide">
-            <mat-card class="product-item " *ngIf='product'>
-                <mat-chip-list *ngIf="product.discount">
-                    <mat-chip selected="true" *ngIf="product.discount<=discountPrice" color="warn">
-                        {{product.discount}}%
-                    </mat-chip>
-                    <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount">
-                        {{product.discount}}%
-                    </mat-chip>
-                    <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">
-                        {{product.discount}}%
-                    </mat-chip>
-                </mat-chip-list>
+<div class="row justify-content-center">
+    <div class="col-xl-10">
 
-                <a [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
-                    <img *ngIf='product.image' [src]="imagePath+ '?path=' + product.image.containerName + '&name=' + product.image.image + '&width=260&height=260'" onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
-                    <img *ngIf='!product.image' src="assets/images/default_image.png">
-                </a>
-                <a [routerLink]="['/products/productdetails', product.productSlug]" class="title text-truncate">
+
+
+        <div *ngIf="products && products.length>0" class="swiper-container" [swiper]="config">
+            <div class="swiper-wrapper h-100">
+                <div *ngFor="let product of products" class="swiper-slide">
+                    <mat-card class="product-item " *ngIf='product'>
+                        <mat-chip-list *ngIf="product.discount">
+                            <mat-chip selected="true" *ngIf="product.discount<=discountPrice" color="warn">
+                                {{product.discount}}%
+                            </mat-chip>
+                            <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount">
+                                {{product.discount}}%
+                            </mat-chip>
+                            <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">
+                                {{product.discount}}%
+                            </mat-chip>
+                        </mat-chip-list>
+
+                        <a [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
+                            <img *ngIf='product.image' [src]="imagePath+ '?path=' + product.image.containerName + '&name=' + product.image.image + '&width=260&height=260'" onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
+                            <img *ngIf='!product.image' src="assets/images/default_image.png">
+                        </a>
+                        <a [routerLink]="['/products/productdetails', product.productSlug]" class="title text-truncate">
                     {{product.name}}
                 </a>
-                <p style="text-align: left">
-                    <app-mat-star-rating [rating]="product.rating"></app-mat-star-rating>
-                </p>
-                <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
-                    <div fxLayout="column" fxLayoutAlign="center start">
-                            <p class="new-price">
-                                <ng-container *ngIf="(product.flag=='')&&(product.pricerefer=='');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
-                                </ng-container>
-                                <ng-template #one>
-                                    <div *ngIf="product.flag === 0">
-                                        {{ calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
-                                        <div class="transparent-card"> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                        <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
+                            <div fxLayout="column" fxLayoutAlign="center start">
+                                <p class="new-price">
+                                    <ng-container *ngIf="(product.flag=='')&&(product.pricerefer=='');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                                    </ng-container>
+                                    <ng-template #one>
+                                        <div *ngIf="product.flag === 0">
+                                            {{ calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                                            <div class="transparent-card"> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                                        <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
 
-                                </ng-template>
-                              
-                            </p>
-                    </div>
+                                    </ng-template>
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="divider mt-2"></div>
+                        <div class="icons">
+                            <app-controls [product]="product" [type]="'home'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
+                        </div>
+                    </mat-card>
                 </div>
-                <div class="divider mt-2"></div>
-                <div class="icons">
-                    <app-controls [product]="product" [type]="'home'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
-                </div>
-            </mat-card>
-        </div>
-    </div>
-    <button mat-mini-fab class="swiper-button-prev swipe-arrow">
+            </div>
+            <!--<button mat-mini-fab class="swiper-button-prev swipe-arrow">
         <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-mini-fab class="swiper-button-next swipe-arrow">
+            <button mat-mini-fab class="swiper-button-next swipe-arrow">
         <mat-icon>keyboard_arrow_right</mat-icon>
-    </button>
+    </button>-->
+        </div>
+    </div>
 </div>

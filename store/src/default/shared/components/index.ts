@@ -64,6 +64,7 @@ import {ControlsProductDetailComponent} from './controls-product-detail/controls
 import {ReviewControlsComponent} from './review-controls/review-controls.component';
 import {ControlsOptionsComponent} from './controls-options/controls-options.component';
 import {ControlsVariantComponent} from './controls-variant/controls-variant.component';
+import { WhyComponent } from './why/why.component';
 
 
 
@@ -75,6 +76,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 export const COMPONENTS = [
     MainCarouselComponent,
     RicercaComponent,
+    WhyComponent,
     BrandsCarouselComponent,
     CategoryListComponent,
     BreadcrumbComponent,

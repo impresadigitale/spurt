@@ -180,6 +180,67 @@
 .transparent-card {
     opacity: 0;
 }
+
 .product-item .prices {
     margin: unset !important;
+}
+
+.justify-content-center {
+    -webkit-box-pack: center!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+
+.wrapService img {
+    display: block;
+    margin: 40px auto;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.wrapService {
+    p {
+        padding: 10px;
+    }
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: nowrap;
+    margin-left: 150px;
+    margin-right: 150px;
+    align-items: flex-end;
+}
+
+.row-2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px
+}
+
+.flex-row {
+    -webkit-box-orient: horizontal!important;
+    -webkit-box-direction: normal!important;
+    -ms-flex-direction: row!important;
+    flex-direction: row!important
+}
+
+.col-xl-6,
+.col-xl-10,
+.col-xl-12 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px
 }

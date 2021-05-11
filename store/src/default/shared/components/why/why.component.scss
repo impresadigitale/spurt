@@ -1,0 +1,127 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+#why {
+    background: #f2f2f2;
+    padding: 60px 0;
+    margin-top: 20px;
+}
+
+#why h2 {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+#why p {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+
+.justify-content-center {
+    -webkit-box-pack: center!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+
+.wrapService img {
+    display: block;
+    margin: 40px auto;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.wrapService {
+    p {
+        padding: 10px;
+    }
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: nowrap;
+    margin-left: 50px;
+    margin-right: 50px;
+    align-items: flex-end;
+}
+
+.row-2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px
+}
+
+.flex-row {
+    -webkit-box-orient: horizontal!important;
+    -webkit-box-direction: normal!important;
+    -ms-flex-direction: row!important;
+    flex-direction: row!important
+}
+
+.col-xl-6,
+.col-xl-10,
+.col-xl-12 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px
+}
+
+.col-xl-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%
+}
+
+.col-xl-6 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%
+}
+
+.col-xl-3 {
+    input {
+        width: 300px;
+        height: 40px;
+        border: none;
+        border-radius: 0px;
+        background: #AF121E;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        margin: 0 auto;
+    }
+}
+
+.btn-info {
+    margin-top: 30px;
+}
+
+.title-why {
+    font-size: 28px;
+    color: #333;
+    font-weight: 800;
+}
+
+.title-whys {
+    font-size: 40px;
+    color: #333;
+    font-weight: 800;
+}
