@@ -70,9 +70,11 @@
                 margin-top: 8px;
             }
             a.title {
-                font-size: 22px;
-                font-weight: 500;
-                color: black !important;
+                font-size: 20px;
+                text-align: left;
+                margin: 0;
+                font-weight: 700;
+                color: #022754;
             }
             .new-price {
                 font-size: 22px;
@@ -243,4 +245,48 @@ img {
     min-height: 1px;
     padding-right: 15px;
     padding-left: 15px
+}
+
+
+/*DETTAGLIO CARD */
+
+.details {
+    background: #ccc;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center
+}
+
+.details ul {
+    text-align: center;
+}
+
+.infoAuto ul {
+    list-style-type: none;
+}
+
+.details ul li:last-child {
+    margin-right: 0;
+}
+
+.details ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.infoAuto ul li {
+    margin-bottom: 5px;
+}
+
+.details ul li p {
+    display: inline;
+    margin: 0;
+    font-size: 0.75em;
+}
+
+.infoAuto p {
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 0;
 }

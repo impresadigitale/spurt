@@ -2,32 +2,41 @@
 <app-brands-carousel [brands]="listSandbox.manufacturer$ | async"></app-brands-carousel>
 <div class="products-tabs justin">
 
-    <mat-tab-group mat-stretch-tabs>
 
-        <h2 class="evidece-car">AUTO IN EVIDENZA </h2>
-        <mat-tab label="AUTO IN EVIDENZA">
+    <div class="content">
 
-            <app-products-carousel [products]="listSandbox.featuredList$ | async"></app-products-carousel>
-        </mat-tab>
+        <mat-tab-group mat-stretch-tabs>
+
+            <h2 class="evidece-car">AUTO IN EVIDENZA </h2>
+            <mat-tab label="AUTO IN EVIDENZA">
+
+                <app-products-carousel [products]="listSandbox.featuredList$ | async"></app-products-carousel>
+            </mat-tab>
 
 
-    </mat-tab-group>
+        </mat-tab-group>
 
+    </div>
 
 </div>
 
+<app-car-park></app-car-park>
+
 <app-why></app-why>
 
-<div class="products-tabs justin">
+<div class="contents">
 
-    <mat-tab-group mat-stretch-tabs>
+    <div class="products-tabs justin">
 
-        <mat-tab label="Today Deals">
-            <app-products-carousel [products]="listSandbox.todayDealList$ | async"></app-products-carousel>
-        </mat-tab>
-    </mat-tab-group>
+        <mat-tab-group mat-stretch-tabs>
+
+            <mat-tab label="AFFARI DEL MESE">
+                <app-products-carousel [products]="listSandbox.todayDealList$ | async"></app-products-carousel>
+            </mat-tab>
+        </mat-tab-group>
 
 
+    </div>
 </div>
 
 <ng-container *ngFor="let widget of listSandbox.widgetProductList$ | async">

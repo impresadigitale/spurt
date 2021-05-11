@@ -1,0 +1,69 @@
+#parcoauto {
+    padding: 60px 0;
+    height: 500px;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.justify-content-center {
+    -webkit-box-pack: center!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+
+.descPA * {
+    color: #022754;
+    font-weight: 700;
+    display: block;
+    margin: 0;
+    text-align: right;
+}
+
+.overTextMain {
+    color: #022754 !important;
+}
+
+.descPA p {
+    font-size: 50px;
+}
+
+.descPA h2 {
+    font-size: 100px;
+}
+
+.descPA a,
+.redButt,
+.bluButt,
+#leadAcc input.redButt {
+    display: block;
+    width: 100%;
+    background: #AF121E;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    line-height: 50px;
+    font-weight: 700;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.overBgEv,
+.wrapBrand span,
+.redButt,
+.slickAuto .slick-dots li.slick-active button,
+.wrapAuto .isOffer,
+.slickAuto .slick-prev,
+.slickAuto .slick-next,
+.login a {
+    background-color: #af121e !important;
+}

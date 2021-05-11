@@ -9,9 +9,7 @@
                     <div [attr.data-background]="imagePath + '?path=' + slide.imagePath + '&name=' + slide.image + '&width=1860&height=1860'" class="slide-item swiper-lazy">
                         <div class="mask"></div>
                         <div fxLayout="column" fxLayoutAlign="center center" class="content">
-                            <h1>{{slide.title}}</h1>
-                            <h3 [innerHtml]='slide.content'></h3>
-                            <button mat-raised-button color="primary" routerLink="/products">{{'Shared.ShopNow'|translate}}</button>
+
                         </div>
                     </div>
                 </div>
