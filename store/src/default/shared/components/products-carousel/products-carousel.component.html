@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-xl-10">
         <div *ngIf="products && products.length>0" class="swiper-container" [swiper]="config">
-            <div class="swiper-wrapper h-100">
+            <div class="swiper-wrapper h-100 ">
                 <div *ngFor="let product of products" class="swiper-slide">
                     <mat-card class="product-item " *ngIf='product'>
                         <mat-chip-list *ngIf="product.discount">
@@ -23,7 +23,7 @@
                         <a [routerLink]="['/products/productdetails', product.productSlug]" class="title text-truncate">
                     {{product.name}}
                 </a>
-                        
+
                         <div class="divider mt-2"></div>
                         <div class="details" wfd-id="248">
                             <div class="row align-items-center" wfd-id="249">

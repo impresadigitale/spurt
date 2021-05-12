@@ -1,57 +1,162 @@
-<mat-card fxLayout="row wrap" fxLayoutAlign="space-around">
-    <div fxFlex="100" fxFlex.gt-xs="33.3">
-        <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
-            <mat-icon color="primary" class="mat-icon-lg">home</mat-icon>
-            <h3 class="primary-text py-1">{{'contact.ADDRESS'|translate}}</h3>
-            <span class="text-muted">{{(listSandbox.settingDetail$ | async)?.storeAddress}}</span>
-        </div>
-    </div>
-    <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <mat-icon color="primary" class="mat-icon-lg">call</mat-icon>
-            <h3 class="primary-text py-1">{{'contact.PHONES'|translate}}</h3>
-            <span class="text-muted">{{(listSandbox.settingDetail$ | async)?.storeTelephone}}</span>
-        </div>
-    </div>
-    <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <mat-icon color="primary" class="mat-icon-lg">mail_outline</mat-icon>
-            <h3 class="primary-text py-1">{{'contact.E-MAIL'|translate}}</h3>
-            <span class="text-muted">{{(listSandbox.settingDetail$ | async)?.storeEmail}}</span>
-        </div>
-    </div>
-    <div class="divider w-100 mt-2"></div>
-    <h3 class="w-100 text-center py-2">{{'contact.CONTACTUS'|translate}}</h3>
+<!-- <h3 class="w-100 text-center py-2">{{'contact.CONTACTUS'|translate}}</h3>
 
-    <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit(contactForm.value)" fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
-            <mat-form-field class="w-100" [ngClass]="{'validationcolor':((contactForm.controls.name.errors?.required)&&(submitted))}">
-                <input matInput (keyup)="onKeyPress($event, 'name')" placeholder="{{'contact.Name'|translate}}" formControlName="name" required>
-                <mat-error *ngIf="contactForm.controls['name'].errors?.required && submitted">{{'Error.NameIsRequired'|translate}}</mat-error>
-            </mat-form-field>
+    <div class="divider w-100 mt-2"></div>-->
+<section id="singleAuto" class="about" wfd-id="294">
+    <div class="container-fluid" wfd-id="295">
+        <div class="row" wfd-id="296">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-10 offset-1" wfd-id="297">
+                <div class="row rowTitle align-items-center" wfd-id="300">
+                    <div class="col-xl-12 col-12" wfd-id="301">
+                        <h1>COMPRIAMO LA TUA AUTO</h1>
+                    </div>
+                </div>
+                <div class="row" wfd-id="298">
+                    <div class="col-xl-12" wfd-id="299">
+                        <h2>Hai deciso di cambiare auto? Il tuo usato lo acquistiamo noi!</h2><br>
+                        <p>La nostra <strong>missione aziendale</strong> è <strong>soddisfare sempre il nostro cliente</strong>, e per questo acquistiamo la tua auto anche in sole 24 ore. E un' importante sottolineare che la nostra è una vera
+                            <strong>offerta</strong>, probabilmente inferiore rispetto a quanto potreste realizzare vendendo l'auto ad un privato, ma è <strong>reale, garantita e sicura</strong>.</p>
+                        <p>Diffidate dalle quotazioni generate da software automatici e algoritmi. </p>
+                        <p><strong>Gruppo Piccirillo vuole solo il meglio per te.</strong></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
-            <mat-form-field class="w-100" [ngClass]="{'validationcolor':((contactForm.controls.email.errors?.required)&&(submitted))}">
-                <input matInput placeholder="{{'contact.Email'|translate}}" formControlName="email" required>
-                <mat-error *ngIf="contactForm.controls['email'].errors?.required && submitted">{{'Error.EmailIsRequired'|translate}}</mat-error>
-                <mat-error *ngIf="contactForm.controls['email'].hasError('invalidEmail') && submitted">{{'Error.InvalidEmailAddress'|translate}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
-            <mat-form-field class="w-100" [ngClass]="{'validationcolor':((contactForm.controls.phone.errors?.required)&&(submitted))}">
-                <input matInput placeholder="{{'contact.Phone'|translate}}" formControlName="phone" maxlength="15" appOnlyNumber required>
-                <mat-error *ngIf="contactForm.controls['phone'].errors?.required && submitted">{{'Error.PhoneIsRequired'|translate}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div fxFlex="100" class="px-1 mt-1">
-            <mat-form-field class="w-100" [ngClass]="{'validationcolor':((contactForm.controls.message.errors?.required)&&(submitted))}">
-                <input matInput (keyup)="onKeyPress($event, 'message')" placeholder="{{'contact.Message'|translate}}" formControlName="message" required>
-                <mat-error *ngIf="contactForm.controls['message'].errors?.required && submitted">{{'Error.MessageIsRequired'|translate}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="w-100 py-2 text-center">
-            <button mat-raised-button color="primary" type="submit">{{'contact.Submit'|translate}}</button>
-        </div>
-    </form>
+    </div>
+</section>
 
-</mat-card>
+<section class="secLead" wfd-id="195">
+    <div class="container-fluid" wfd-id="196">
+        <div class="row" wfd-id="197">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-10 offset-1" wfd-id="198">
+                <div class="row titleLead" wfd-id="292">
+                    <div class="col-xl-12" wfd-id="293">
+                        <h3>Vendi la tua auto a Gruppo Piccirillo</h3>
+                        <p>Compila gratuitamente e senza impegno il form, indicando le specifiche della tua automobile<br>
+                            <strong>Un nostro operatore la contatteremo entro 24h per fissare un appuntamento!</strong></p>
+                    </div>
+                </div>
+                <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit(contactForm.value)" fxLayout="row wrap">
+                    <!--I tuoi dati-->
+                    <div class="rows">
+                        <strong>I tuoi dati personali</strong>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Nome <span>*</span></label>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Cognome <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">E-mail <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Telefono <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Città <span>*</span></label>
+
+                    </div>
+                    <!--I dati della tua auto-->
+
+                    <div class="rows">
+                        <strong>I dati della tua auto</strong>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                            <option value="">Seleziona</option>
+                        </select>
+                        <label class="personal-label" for="">Marca <span>*</span></label>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                            <option value="">Seleziona</option>
+                        </select>
+                        <label class="personal-label" for="">Modello <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                            <option value="">Seleziona</option>
+                        </select>
+                        <label class="personal-label" for="">Versione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Targa <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">KM <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                            <option value="">Seleziona</option>
+                        </select>
+                        <label class="personal-label" for="">Alimentazione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">cilindrata </label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Kw </label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="date">
+                        <label class="personal-label" for="">Mese di immatricolazione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Anno di immatricolazione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Numero di propietari </label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Valutazione desiderata <span>*</span></label>
+
+                    </div>
+
+
+
+                    <div class="divider w-100 mt-2"></div>
+                    <label class="radiotext" wfd-id="239"><strong class="radiotext">Sei intenzionato a comprare un auto dopo questa permuta?</strong></label>
+                    <div class="boxRadio" wfd-id="237">
+                        <input type="radio" required="" name="new_auto" value="si" wfd-id="342">
+                        <label class="radiotext" wfd-id="238">SI</label>
+                    </div>
+                    <div class="boxRadio" wfd-id="235">
+                        <input type="radio" required="" id="new_auto" name="new_auto" value="no" wfd-id="341">
+                        <label class="radiotext" wfd-id="236">NO</label>
+                    </div>
+
+
+                    <div class="w-100 py-2 text-center">
+                        <button mat-raised-button color="primary" type="Invia">{{'contact.Submit'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
