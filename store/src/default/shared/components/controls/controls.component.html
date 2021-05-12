@@ -14,6 +14,22 @@
             <a  (click)="addToCart(product)"> Add Cart </a>
         </span>-->
     </div>
+    
+            <p class="new-price">
+                <ng-container *ngIf="(product.flag=='')&&(product.pricerefer=='');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                </ng-container>
+                <ng-template #one>
+                    <div *ngIf="product.flag === 0">
+                        {{ calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                        <div class="transparent-card"> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                        </div>
+                    </div>
+                    <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+
+                </ng-template>
+
+            </p>
+        
 </div>
 <div *ngIf="product?.availibilityCount == 0 && type=='all'" class="bg-warn p-1 mt-2">
     Sorry, this item is unavailable. Please choose a different one.

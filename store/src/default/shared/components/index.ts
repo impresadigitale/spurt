@@ -65,7 +65,7 @@ import {ReviewControlsComponent} from './review-controls/review-controls.compone
 import {ControlsOptionsComponent} from './controls-options/controls-options.component';
 import {ControlsVariantComponent} from './controls-variant/controls-variant.component';
 import { WhyComponent } from './why/why.component';
-import { CarParkComponent } from './ca-park/car-park.component';
+import { CarParkComponent } from './car-park/car-park.component';
 
 
 

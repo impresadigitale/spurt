@@ -159,6 +159,21 @@ export class ControlsComponent implements OnInit, OnDestroy {
     this.QuantityChange.emit(value);
   }
 
+  calculatePrice(price: number, taxType: number, taxValue: number) {
+    switch (taxType) {
+      case 1:
+        const priceWithOutTax = +price + taxValue;
+        return Math.round(priceWithOutTax);
+      case 2:
+        const percentToAmount = price * (taxValue / 100);
+        const priceWithTax = +price + percentToAmount;
+        return Math.round(priceWithTax);
+      default:
+        return price;
+    }
+  }
+
+
   // unsubscribe subscribed events while destroy the page
   ngOnDestroy() {
     this.subscriptions.forEach(each => {
