@@ -82,6 +82,7 @@
 .wrap {
     background: #fff;
     align-items: flex-start;
+    justify-content: center;
     .swiper-left {
         flex-direction: column!important;
         padding: 10px;
@@ -158,7 +159,6 @@
         }
         h2 {
             font-size: 1.68em;
-            margin: 0;
             font-weight: 500;
         }
         .ratings-count {
@@ -181,7 +181,7 @@
                     font-weight: bold;
                     color: #0e0e0e;
                     margin-right: 10px;
-                    margin-bottom: 0;
+
                 }
                 span {
                     font-size: 14px;
@@ -392,7 +392,6 @@
                 font-size: 20px;
                 font-weight: 500;
                 color: #000000;
-                margin: 0 0 8px;
                 justify-content: space-between;
                 align-items: center;
                 button {
@@ -702,4 +701,42 @@
     color: #393d34;
     margin-bottom: 1.5rem;
     font-family: Roboto Slab, serif;
+}
+
+.table-car{
+    width: 100%;
+    text-align: center;
+}
+
+.td-tabel-car-dark{
+    width: 25%;
+    height: 50px;
+    background: #dbdbdb;
+    font-weight: 800;
+}
+
+.td-tabel-car-dark-33{
+    width: 33.3%;
+    height: 50px;
+    background: #f2f2f2;
+}
+
+.fixings-table{
+    text-align: center;
+    width: 100%;
+}
+
+.td-tabel-car-light{
+    width: 25%;
+    height: 50px;
+    background: #f2f2f2;
+}
+
+.fixings-title{
+    margin-top: 20px;
+    height: 50px;
+    background: #f2f2f2;
+    width: 25%;
+    text-align: center;
+
 }

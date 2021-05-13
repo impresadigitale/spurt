@@ -1,7 +1,25 @@
 <div class="prd-detail-cnt">
 
     <h3>Specifications</h3>
-    <ng-container *ngFor="let list of groupAttribute; let group = index">
+
+
+    <div class="row" *ngFor="let list of groupAttribute; let group = index" >
+        <div style="width: 25%; float: left; display: inline;" *ngFor="let item of list.value ">
+            {{item.attributeName}}
+        </div>
+        <div style="width: 25%; float: left; display: inline;" *ngFor="let item of list.value " >
+            {{item.text}}
+        </div>
+        <div style="width: 25%; float: left; display: inline;" *ngFor="let item of list.value ">
+            {{item.attributeName}}
+        </div>
+        <div style="width: 25%; float: left; display: inline;" *ngFor="let item of list.value ">
+            {{item.text}}
+        </div>
+    </div>
+
+    <!--Tabella -->
+   <!-- <ng-container *ngFor="let list of groupAttribute; let group = index">
         <table class="table spec-table" cellpadding=" 0 " cellspacing="0 ">
             <tr>
                 <th colspan="2">{{list.group}}</th>
@@ -12,5 +30,6 @@
             </tr>
 
         </table>
-    </ng-container>
+    </ng-container>-->
+    
 </div>

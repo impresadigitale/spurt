@@ -41,6 +41,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   public configuration: SwiperConfigInterface = {};
   public product: any;
   // images
+  public imageObject: Array<object>;
   public image: any;
   public zoomImage: any;
   public zoomPopupImage: any;
@@ -120,9 +121,44 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  slides = [
+    {img: "https://via.placeholder.com/600.png/09f/fff"},
+    {img: "https://via.placeholder.com/600.png/021/fff"},
+    {img: "https://via.placeholder.com/600.png/321/fff"},
+    {img: "https://via.placeholder.com/600.png/422/fff"},
+    {img: "https://via.placeholder.com/600.png/654/fff"}
+  ];
+  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
+  
+  addSlide() {
+    this.slides.push({img: "http://placehold.it/350x150/777777"})
+  }
+  
+  removeSlide() {
+    this.slides.length = this.slides.length - 1;
+  }
+  
+  slickInit(e) {
+    console.log('slick initialized');
+  }
+  
+  breakpoint(e) {
+    console.log('breakpoint');
+  }
+  
+  afterChange(e) {
+    console.log('afterChange');
+  }
+  
+  beforeChange(e) {
+    console.log('beforeChange');
+  } 
+  
   /** Initially initialize getProductdetail,getRelatedProducts when subscribed
    * subscribe productDetails$ and set initially default values for required options **/
   ngOnInit() {
+
+  
     this.currency = JSON.parse(localStorage.getItem('currency'));
     if (isPlatformBrowser(this.platformId)) {
       this.user = JSON.parse(localStorage.getItem('storeUser'));

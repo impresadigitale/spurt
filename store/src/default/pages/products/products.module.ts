@@ -108,7 +108,7 @@ const shareProp = {
     ShareButtonModule.withConfig({ prop: shareProp }),
     HttpClientModule,
     HttpClientJsonpModule,
-    NumberAcceptModule
+    NumberAcceptModule,
   ],
   declarations: [
     ProductsComponent,
