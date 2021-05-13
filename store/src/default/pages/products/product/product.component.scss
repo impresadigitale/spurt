@@ -1,44 +1,44 @@
 .mat-card.product-image {
     padding: 0px;
     text-align: center;
-    button{
+    button {
         position: absolute;
         top: 0;
         right: 0;
         z-index: 99;
     }
-    img{
+    img {
         max-width: 100%;
     }
 }
 
-.small-carousel{
+.small-carousel {
     margin-top: 8px;
-    .swiper-container{
+    .swiper-container {
         padding: 2px;
-        .swiper-slide{
+        .swiper-slide {
             text-align: center;
             .mat-card.active-img {
                 border: solid thin #f00;
             }
-            img{
+            img {
                 max-width: 100%;
             }
         }
     }
-    .swiper-button-next.swiper-button-disabled, 
-    .swiper-button-prev.swiper-button-disabled{
+    .swiper-button-next.swiper-button-disabled,
+    .swiper-button-prev.swiper-button-disabled {
         opacity: 0;
     }
-    .swiper-button-prev{
+    .swiper-button-prev {
         left: -10px;
     }
-    .swiper-button-next{
+    .swiper-button-next {
         right: -10px;
     }
 }
 
-.mat-card.zoom-viewer{
+.mat-card.zoom-viewer {
     position: absolute;
     display: none;
     background-repeat: no-repeat;
@@ -46,36 +46,36 @@
     z-index: 99;
 }
 
-.mt-16{
+.mt-16 {
     margin-top: 16px;
 }
 
-.details button{
-    padding:0;
+.details button {
+    padding: 0;
     min-width: 36px;
     margin-left: 6px;
 }
 
-.mat-list.reviews{
-    .mat-list-item .mat-list-avatar.review-author{
+.mat-list.reviews {
+    .mat-list-item .mat-list-avatar.review-author {
         width: 80px;
         height: 80px;
     }
-    .mat-list-item .mat-line.text{
+    .mat-list-item .mat-line.text {
         white-space: unset;
         font-style: italic;
         margin: 10px 0;
     }
 }
-.full-desc{
+
+.full-desc {
     padding: 30px 40px;
 }
 
-
-@media (min-width: 1280px) {  
-    .mat-card.product-image img{
+@media (min-width: 1280px) {
+    .mat-card.product-image img {
         cursor: zoom-in;
-        cursor:url('../../../../assets/images/others/zoom.svg') 10 10, zoom-in;
+        cursor: url('../../../../assets/images/others/zoom.svg') 10 10, zoom-in;
     }
 }
 
@@ -413,10 +413,9 @@
                 padding: 10px 0;
             }
             .full-desc {
-                padding :0;
+                padding: 0;
                 .mat-list-item-content {
-                    .mat-list-text {
-                    }
+                    .mat-list-text {}
                 }
             }
             .cqa-search {
@@ -497,7 +496,6 @@
                             text-decoration: none;
                         }
                     }
-
                 }
             }
             .view-all {
@@ -509,7 +507,7 @@
                     line-height: 32px;
                     border-radius: 3px;
                     border: solid 1px #1976d2;
-                    background-color:white;
+                    background-color: white;
                     text-align: center;
                     font-size: 14px;
                     font-weight: normal;
@@ -536,6 +534,7 @@
         }
     }
 }
+
 @media (max-width: 960px) {
     .wrap {
         .product-right {
@@ -579,15 +578,14 @@
         font-size: 12px;
         font-weight: 500;
         color: #1976d2;
-        & + span {
+        &+span {
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s linear 0.33s, opacity 0.33s linear;
             display: none;
         }
-
         // Show if checkbox is clicked
-        &:checked + span {
+        &:checked+span {
             visibility: visible;
             opacity: 1;
             transition-delay: 0s;
@@ -626,6 +624,7 @@
         }
     }
 }
+
 .que-sbmt {
     justify-content: space-between;
     align-items: center;
@@ -648,9 +647,7 @@
     outline: none;
 }
 
-
 // spinner
-
 .wrapper {
     width: 100%;
     height: 100%;
@@ -661,6 +658,7 @@
     justify-content: center;
     justify-items: center;
 }
+
 .overlay {
     position: absolute;
     z-index: 1002;
@@ -672,6 +670,7 @@
 :host ::ng-deep .mat-dialog-container {
     padding: 0px !important;
 }
+
 .text-pop {
     padding-right: 10px !important;
     color: #002bff !important;
@@ -682,10 +681,9 @@
     margin-top: 40px!important;
 }
 
-.ven-profile{
+.ven-profile {
     // margin-right: 15px;
     padding: 10px 50px 10px;
-
     #profileImg {
         font-family: Arial, Helvetica, sans-serif;
         width: 30px;
@@ -697,10 +695,11 @@
         line-height: 2rem;
     }
 }
-.re-prod-head{
+
+.re-prod-head {
     font-size: 1.75rem;
     font-weight: 400;
     color: #393d34;
     margin-bottom: 1.5rem;
-    font-family: Roboto Slab,serif;
+    font-family: Roboto Slab, serif;
 }

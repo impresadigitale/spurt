@@ -66,6 +66,8 @@ import {ControlsOptionsComponent} from './controls-options/controls-options.comp
 import {ControlsVariantComponent} from './controls-variant/controls-variant.component';
 import { WhyComponent } from './why/why.component';
 import { CarParkComponent } from './car-park/car-park.component';
+import { PreventivoComponent } from './product-preventivo/preventivo.component';
+import { FinanziamentoComponent } from './product-finanziamento/finanziamento.component';
 
 
 
@@ -75,6 +77,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 export const COMPONENTS = [
+    FinanziamentoComponent,
+    PreventivoComponent,
     MainCarouselComponent,
     CarParkComponent,
     RicercaComponent,

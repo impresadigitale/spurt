@@ -1,0 +1,108 @@
+#finanz,
+#related {
+    background: #f2f2f2;
+    padding: 30px 0;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+@media (min-width: 1200px) {
+    .offset-xl-2 {
+        margin-left: 16.666667%;
+    }
+}
+
+@media (min-width: 1200px) {
+    @media (min-width: 1200px) {
+        .col-xl-8 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 66.666667%;
+            flex: 0 0 66.666667%;
+            max-width: 66.666667%;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-xl-12 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+#finanz h1 {
+    font-weight: 800;
+    color: #AF121E;
+    font-size: 1.4em;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 1200px) {
+    .col-xl-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+#finanz label {
+    display: block;
+    text-align: center;
+}
+
+#finanz input[type="text"],
+#finanz select {
+    background: none;
+    border: none;
+    font-size: 2em;
+    font-weight: 800;
+    color: #AF121E;
+    display: block;
+    width: 100%;
+    text-align: center;
+    display: block;
+    font-family: 'Poppins';
+}
+
+.text {
+    margin-top: 20px;
+    text-align: center;
+}
