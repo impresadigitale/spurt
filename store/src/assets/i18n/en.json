@@ -178,7 +178,7 @@
         "ReviewProduct": "Review this product",
         "Reason": "Reason",
         "Discription": "Description",
-        "Submit": "Submit",
+        "Submit": "Invia",
         "PaymentMethod": "Payment Method",
         "OrderSummary": "Order Summary",
         "Quantity": "Quantity",
@@ -253,7 +253,7 @@
         "NoQuestionFound": "No Questions Found. If you have any queries, post your question",
         "NoReviewFound": "No reviews found",
         "NoRelatedProductFound": "No related products found",
-        "BuyNow": "Buy Now"
+        "BuyNow": "Compra ora"
 
 
 
@@ -284,7 +284,7 @@
         "Name": "Name",
         "Email": "Email",
         "Message": "Message",
-        "Submit": "Submit",
+        "Submit": "INVIA RICHIESTA",
         "Phone": "Phone"
     },
     "trackOrder": {

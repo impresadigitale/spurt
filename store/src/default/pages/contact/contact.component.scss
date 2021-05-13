@@ -166,5 +166,59 @@
                   }
                   
                   .radiotext {
-                      font-size: .5rem;
+                      font-size: 10px;
+                      margin-top: 10px;
+                      margin-right: 5px;
+                  }
+                  
+                  .boxRadio {
+                      margin: 0;
+                  }
+                  
+                  .img-responsive {
+                      max-width: 100%;
+                  }
+                  
+                  img {
+                      vertical-align: middle;
+                      border-style: none;
+                  }
+                  
+                  .fakeUploadImg {
+                      background: none!important;
+                      padding: 0!important;
+                      margin: auto;
+                      text-align: center;
+                      display: block;
+                  }
+                  
+                  .sendLead .fakeUpload,
+                  .secLead .fakeUpload {
+                      background: #0E2754;
+                      color: #fff;
+                      text-transform: uppercase;
+                      text-align: center;
+                      line-height: 42px;
+                      cursor: pointer;
+                      padding: 0 20px;
+                      display: inline-block;
+                      font-weight: bold;
+                  }
+                  
+                  .sendLead fieldset label,
+                  .secLead fieldset label {
+                      font-size: 0.8em;
+                      color: #434144;
+                  }
+                  
+                  .marTop {
+                      margin-top: 20px;
+                  }
+                  
+                  .btn-buy-car {
+                      width: 50%;
+                      height: 50px;
+                      border-radius: 0px;
+                      background: #af121e !important;
+                      border: none;
                   }

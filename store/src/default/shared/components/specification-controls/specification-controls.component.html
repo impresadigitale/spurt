@@ -1,16 +1,16 @@
 <div class="prd-detail-cnt">
 
-  <h3>Specifications</h3>
-  <ng-container *ngFor="let list of groupAttribute; let group = index">
-    <table class="table spec-table" cellpadding="0" cellspacing="0">
+    <h3>Specifications</h3>
+    <ng-container *ngFor="let list of groupAttribute; let group = index">
+        <table class="table spec-table" cellpadding=" 0 " cellspacing="0 ">
             <tr>
                 <th colspan="2">{{list.group}}</th>
             </tr>
-            <tr *ngFor="let item of list.value">
-                <td width="40%">{{item.attributeName}}</td>
-                <td>{{item.text}}</td>
+            <tr *ngFor="let item of list.value ">
+                <td class="attribute-name " fxFlex="100" fxFlex.gt-sm="33.3">{{item.attributeName}}</td>
+                <td class="attribute-text " fxFlex="100" fxFlex.gt-sm="33.3">{{item.text}}</td>
             </tr>
 
-    </table>
-  </ng-container>
-  </div>
+        </table>
+    </ng-container>
+</div>
