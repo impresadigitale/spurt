@@ -321,10 +321,17 @@ span {
     display: block;
     text-decoration: none;
     padding-right: 15px;
-    text-align: right;
+    text-align: left;
 }
 
 .brand-car-card {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    padding-right: 10px;
+}
+
+.title-car-card{
+    display: flex;
+    padding: 10px;
 }

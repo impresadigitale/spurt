@@ -33,6 +33,11 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class ProductsCardComponent implements OnInit, AfterViewInit {
 
+  @Input() brands: Array<any> = [];
+  public BrandImagePath: string;
+  public brandId = '';
+  
+
   @Input() products: any;
   public config: SwiperConfigInterface = {};
   public imagePath: string;

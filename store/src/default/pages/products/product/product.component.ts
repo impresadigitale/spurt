@@ -41,6 +41,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   public configuration: SwiperConfigInterface = {};
   public product: any;
   // images
+  public brand: string;
   public imageObject: Array<object>;
   public image: any;
   public zoomImage: any;
@@ -168,6 +169,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     // subscribe route params and trigger selected product detail, related products
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
+      this.getBrand();
       this.getProductdetail();
       this.getBannerList();
       this.getRelatedProducts();

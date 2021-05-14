@@ -51,6 +51,8 @@
     <p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.Category[0]">Category : {{(productDetail.productDetails$ | async)?.Category[0].categoryName}}</p>
     <!--titolo veicolo--> 
     <h2 class="title-product">{{(productDetail.productDetails$ | async)?.name}}</h2>
+    <h2 class="title-product">{{(productDetail.productDetails$ | async)?.manufacturerName}}</h2>
+
     <!--sku-->
     <p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.skuName">SKU: {{(productDetail.productDetails$ | async)?.skuName}} </p>
 
@@ -259,6 +261,7 @@
 <!-- Description -->
     <div class="prd-detail-cnt">
         <h3>{{'products.TechSheet'|translate}}</h3>
+        <h3>{{productDetail.manufacturerName$}}</h3>
         <!--<p class="text-muted lh" [innerHtml]='(productDetail.productDetails$ | async)?.description | safeHtml'></p>-->
         <table class="table-car">
             <tbody>
