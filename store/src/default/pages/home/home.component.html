@@ -9,8 +9,7 @@
 
             <h2 class="evidece-car">AUTO IN EVIDENZA </h2>
             <mat-tab label="AUTO IN EVIDENZA">
-
-                <app-products-carousel [products]="listSandbox.featuredList$ | async"></app-products-carousel>
+                <app-products-card [products]="listSandbox.featuredList$ | async"></app-products-card>
             </mat-tab>
 
 

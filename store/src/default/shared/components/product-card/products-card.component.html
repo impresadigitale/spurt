@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-xl-10">
+        <div *ngIf="products && products.length>0" class="swiper-container" [swiper]="config">
+            <div *ngFor="let product of products" class="swiper-slide">
+                <mat-card class="product-item" *ngIf='product'>
+                    <mat-chip-list *ngIf="product.discount">
+                        <mat-chip selected="true" *ngIf="product.discount<=discountPrice" color="warn">
+                            {{product.discount}}%
+                        </mat-chip>
+                        <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount">
+                            {{product.discount}}%
+                        </mat-chip>
+                        <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">
+                            {{product.discount}}%
+                        </mat-chip>
+                    </mat-chip-list>
+
+                    <a [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
+                        <img *ngIf='product.image' [src]="imagePath+ '?path=' + product.image.containerName + '&name=' + product.image.image + '&width=260&height=260'" onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
+                        <img *ngIf='!product.image' src="assets/images/default_image.png">
+                    </a>
+                    <div class="title-car-card">
+                        <img class="brand-car-card" src="assets/images/default_image.png" alt="">
+                        <a [routerLink]="['/products/productdetails', product.productSlug]" class="title text-truncate">
+                    {{product.name}}
+                </a>
+                    </div>
+
+
+                    <div class="divider mt-2"></div>
+                    <div class="details" wfd-id="248">
+                        <div class="row align-items-center" wfd-id="249">
+                            <div class="col-xl-12" wfd-id="250">
+                                <ul wfd-id="251">
+                                    <li wfd-id="260">
+                                        <p><span wfd-id="261">KM</span>1</p>
+                                    </li>
+                                    <li wfd-id="258">
+                                        <p><span wfd-id="259">CC</span>999</p>
+                                    </li>
+                                    <li wfd-id="256">
+                                        <p><span wfd-id="257">PORTE</span>5</p>
+                                    </li>
+                                    <li wfd-id="254">
+                                        <p><span wfd-id="255">ANNO</span>2019</p>
+                                    </li>
+                                    <li wfd-id="252">
+                                        <p><span wfd-id="253">COLORE</span>black</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider mt-2"></div>
+                    <div class="icons">
+                        <app-controls [product]="product" [type]="'home'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
+                    </div>
+                </mat-card>
+            </div>
+
+            <!--<button mat-mini-fab class="swiper-button-prev swipe-arrow">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+            <button mat-mini-fab class="swiper-button-next swipe-arrow">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>-->
+        </div>
+    </div>
+</div>

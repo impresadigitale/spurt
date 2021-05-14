@@ -34,6 +34,8 @@ import {CartNavComponent} from './cart/cart.component';
 import {RelatedProductsComponent} from './related-products/related-products.component';
 import {WidgetProductsComponent} from './widget-products/widget-products.component';
 import { SpecificationControlsComponent } from './specification-controls/specification-controls.component';
+import {ProductsCardComponent} from './product-card/products-card.component';
+
 
 // modules
 import {PipesModule} from '../pipes/pipes.module';
@@ -110,7 +112,8 @@ export const COMPONENTS = [
     RelatedProductsComponent,
     WidgetProductsComponent,
     ControlsVariantComponent,
-    SpecificationControlsComponent
+    SpecificationControlsComponent,
+    ProductsCardComponent
 ];
 
 @NgModule({

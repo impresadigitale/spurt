@@ -1,5 +1,6 @@
 .swiper-container {
     display: grid;
+    grid-auto-flow: column;
     justify-content: center;
     padding: 16px 2px 2px 2px;
     .swiper-slide {
@@ -14,6 +15,10 @@
 
 .del {
     color: grey;
+}
+
+.swiper-wrappers {
+    display: flex;
 }
 
 
@@ -298,4 +303,28 @@ img {
 
 .product-item {
     padding: 0;
+    width: 450px;
+    margin-right: 20px;
+}
+
+span {
+    padding: 20px;
+    font-weight: 800;
+}
+
+.product-item .title {
+    font-size: 20px;
+    text-align: left;
+    margin: 0;
+    font-weight: 700;
+    color: #022754;
+    display: block;
+    text-decoration: none;
+    padding-right: 15px;
+    text-align: right;
+}
+
+.brand-car-card {
+    height: 50px;
+    width: 50px;
 }

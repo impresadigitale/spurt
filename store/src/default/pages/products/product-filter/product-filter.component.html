@@ -40,7 +40,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between center" class="filter-price">
             <mat-slider color="primary" max="1000" min="0" thumb-label="true" [(ngModel)]="priceFrom" (input)="priceFromValue($event)" (mouseup)="selectPrice()"></mat-slider>
-            <mat-slider color="warn" [max]="30000" [min]=1001 thumb-label="true" [(ngModel)]="priceTo" (input)="priceToValue($event)" (mouseup)="selectPrice()"></mat-slider>
+            <mat-slider color="warn" [max]="60000" [min]=1001 thumb-label="true" [(ngModel)]="priceTo" (input)="priceToValue($event)" (mouseup)="selectPrice()"></mat-slider>
         </div>
     </mat-expansion-panel>
 

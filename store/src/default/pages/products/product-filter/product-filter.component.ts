@@ -131,7 +131,7 @@ export class ProductFilterComponent implements OnInit, OnChanges, OnDestroy {
         if (this.filterPriceTo) {
           maximumPrice = this.filterPriceTo;
         } else {
-          maximumPrice = '30000';
+          maximumPrice = '60000';
         }
         if (maximumPrice && this.oneTimeAssignValue === 1) {
           const tempPriceTo = JSON.parse(maximumPrice);
