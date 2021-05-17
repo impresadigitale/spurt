@@ -75,8 +75,8 @@ export class BrandsCarouselComponent implements OnInit, AfterViewInit {
   // function calls at finally
   ngAfterViewInit() {
     this.config = {
-      slidesPerView: 7,
-      spaceBetween: 16,
+      slidesPerView: 9,
+      spaceBetween: 1,
       keyboard: true,
       navigation: true,
       pagination: false,
@@ -85,10 +85,10 @@ export class BrandsCarouselComponent implements OnInit, AfterViewInit {
       preloadImages: false,
       lazy: true,
       autoplay: {
-        delay: 5000,
+        delay: 2000,
         disableOnInteraction: false
       },
-      speed: 500,
+      speed: 1000,
       effect: 'slide',
       breakpoints: {
         320: {
