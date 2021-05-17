@@ -58,7 +58,7 @@
         </div>
     </mat-expansion-panel>
 
-    <!--<mat-expansion-panel expanded>
+    <mat-expansion-panel expanded>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <h4>{{'products.Brands'|translate}}</h4>
@@ -69,9 +69,9 @@
                 <img [src]="imagePath+ '?path=' + brand.imagePath + '&name=' + brand.image + '&width=180&height=80'"/>
             </button>
         </div>
-    </mat-expansion-panel>-->
+    </mat-expansion-panel>
 
-    <mat-expansion-panel expanded>
+    <!--<mat-expansion-panel expanded>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <h4>{{'products.Brands'|translate}}</h4>
@@ -82,6 +82,6 @@
                 <mat-checkbox [checked]="brand.isChecked" color="primary" (change)="selectBrand($event, brand.manufacturerId, brand)">{{ brand.name }}</mat-checkbox>
             </ng-container>
         </div>
-    </mat-expansion-panel>
+    </mat-expansion-panel>-->
 
 </mat-accordion>

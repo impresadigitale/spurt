@@ -41,7 +41,6 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   public configuration: SwiperConfigInterface = {};
   public product: any;
   // images
-  public brand: string;
   public imageObject: Array<object>;
   public image: any;
   public zoomImage: any;
@@ -104,6 +103,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   constructor(
+    public listSandbox: ListsSandbox,
     private activatedRoute: ActivatedRoute,
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -169,7 +169,6 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     // subscribe route params and trigger selected product detail, related products
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
-      this.getBrand();
       this.getProductdetail();
       this.getBannerList();
       this.getRelatedProducts();
@@ -177,6 +176,15 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.subcribeProductDetails();
   }
+
+  public getTodayDealList() {
+    const params: any = {};
+    params.limit = 0;
+    params.offset = 0;
+    params.keyword = '';
+    params.sku = '';
+    this.listSandbox.getTodayDealList(params);
+}
 
   public subcribeProductDetails() {
     this.optionValueArray = [];
