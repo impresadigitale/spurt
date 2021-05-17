@@ -169,7 +169,6 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     // subscribe route params and trigger selected product detail, related products
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
-      this.getBrand();
       this.getProductdetail();
       this.getBannerList();
       this.getRelatedProducts();
