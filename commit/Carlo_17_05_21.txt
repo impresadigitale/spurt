@@ -1,0 +1,2 @@
+creazione tabelle finaziamento sul db
+creazione API finaziamento
