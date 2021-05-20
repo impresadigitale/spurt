@@ -12,6 +12,13 @@ import {
     Param,
     Put, Delete, UploadedFile, BodyParam
 } from 'routing-controllers';
+import { ArtfinService } from '../services/ArtfinService';
+import { ListfinService } from '../services/ListfinService';
+import { AnafinService } from '../services/AnafinService';
+import { Anafin } from '../models/AnafinModel';
+import { Artfin } from '../models/ArtfinModel';
+import { Listfin } from '../models/ListfinModel';
+
 
 @JsonController('/finaziamento')
 export class FinController {

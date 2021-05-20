@@ -8334,13 +8334,8 @@ define({ "api": [
     "url": "",
     "version": "0.0.0",
     "filename": "src/public/apidoc/main.js",
-<<<<<<< HEAD
-    "group": "C:\\Users\\carna\\Desktop\\spurt\\api\\src\\public\\apidoc\\main.js",
-    "groupTitle": "C:\\Users\\carna\\Desktop\\spurt\\api\\src\\public\\apidoc\\main.js",
-=======
-    "group": "C:\\project\\spurt\\api\\src\\public\\apidoc\\main.js",
-    "groupTitle": "C:\\project\\spurt\\api\\src\\public\\apidoc\\main.js",
->>>>>>> 7fa9cd0d8e429cca4e05681603ea4201dc77eb02
+    "group": "C:\\Project\\api\\src\\public\\apidoc\\main.js",
+    "groupTitle": "C:\\Project\\api\\src\\public\\apidoc\\main.js",
     "name": ""
   },
   {
