@@ -15,6 +15,9 @@ import {
 import { ArtfinService } from '../services/ArtfinService';
 import { ListfinService } from '../services/ListfinService';
 import { AnafinService } from '../services/AnafinService';
+import { CreateAnafinRequest } from './requests/CeateAnafinRequest';
+import { CreateArtfinRequest } from './requests/CeateArtfinRequest';
+import { CreateLisfinRequest } from './requests/CeateLisfinRequest';
 import { Anafin } from '../models/AnafinModel';
 import { Artfin } from '../models/ArtfinModel';
 import { Listfin } from '../models/ListfinModel';
@@ -22,8 +25,7 @@ import { Listfin } from '../models/ListfinModel';
 
 @JsonController('/finaziamento')
 export class FinController {
-    constructor(){
-
+    constructor(private artfinService: ArtfinService, private anafinService: AnafinService) {
     }
 
     @Post('/finaziamento/add')

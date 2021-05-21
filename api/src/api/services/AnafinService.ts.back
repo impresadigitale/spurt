@@ -3,7 +3,7 @@ import { Service } from 'typedi';
 import { OrmRepository } from 'typeorm-typedi-extensions';
 import { Logger, LoggerInterface } from '../../decorators/Logger';
 import { Anafin } from '../models/AnafinModel';
-import { AnafinRepository } from '../repositories/AnafinRepository';
+import { AnafinRepository } from '../repositories/AnafinRepository.ts.back';
 import { Brackets, getConnection, Like } from 'typeorm';
 
 @Service()
