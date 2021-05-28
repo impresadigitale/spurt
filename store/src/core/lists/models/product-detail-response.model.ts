@@ -75,6 +75,8 @@ export class ProductDetailResponseModel {
     public isAvailable: boolean;
     public variantTirePrice: any;
     public productAttributes: any;
+    public manufacturerImagePath: any;
+    public manufacturerImage: any;
 
 
     constructor(listResponse: any) {
@@ -145,6 +147,8 @@ export class ProductDetailResponseModel {
         this.isAvailable = listResponse.isAvailable;
         this.variantTirePrice = listResponse.variantTirePrice || [];
         this.productAttributes = listResponse.productAttributes || [];
+        this.manufacturerImagePath=listResponse.manufacturerImagePath || 0;
+        this.manufacturerImage=listResponse.manufacturerImage || 0;
 
     }
 }

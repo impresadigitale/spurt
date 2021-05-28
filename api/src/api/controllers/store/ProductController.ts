@@ -112,6 +112,8 @@ export class ProductController {
         }
         const manufacturer = await this.manufacturerService.findOne({ manufacturerId: productDetails.manufacturerId });
         productDetails.manufacturerName = manufacturer ? manufacturer.name : '';
+        productDetails.manufacturerImage = (manufacturer && manufacturer.image) ? manufacturer.image : '';
+        productDetails.manufacturerImagePath = (manufacturer && manufacturer.imagePath) ? manufacturer.imagePath : '';
         productDetails.productImage = await this.productImageService.findAll({
             select: ['productId', 'image', 'containerName', 'defaultImage'],
             where: {
@@ -543,7 +545,7 @@ export class ProductController {
     @Get('/featureproduct-list')
     public async featureProductList(@QueryParam('limit') limit: number, @QueryParam('offset') offset: number, @QueryParam('keyword') keyword: string, @QueryParam('sku') sku: string, @QueryParam('count') count: number | boolean, @Req() request: any, @Res() response: any): Promise<any> {
 
-        const select = ['taxType', 'taxValue', 'productId', 'name', 'skuId', 'isSimplified', 'quantity', 'rating', 'description', 'sortOrder', 'price', 'productSlug', 'isActive', 'hasStock', 'outOfStockThreshold'];
+        const select = ['taxType', 'taxValue', 'productId', 'name', 'skuId', 'isSimplified', 'quantity', 'rating', 'description', 'sortOrder', 'price', 'productSlug', 'isActive', 'hasStock', 'outOfStockThreshold', 'manufacturerId'];
         const whereConditions = [
             {
                 name: 'deleteFlag',
@@ -588,10 +590,14 @@ export class ProductController {
                     result.taxValue = '';
                 }
             }
+            const manufacturer = await this.manufacturerService.findOne({ manufacturerId: result.manufacturerId });
             const temp: any = result;
             temp.skuName = '';
             let skuValue = undefined;
             temp.Images = productImage;
+            temp.manufacturerName = manufacturer ? manufacturer.name : '';
+            temp.manufacturerImage = (manufacturer && manufacturer.image) ? manufacturer.image : '';
+            temp.manufacturerImagePath = (manufacturer && manufacturer.imagePath) ? manufacturer.imagePath : '';
             let skuId = undefined;
             if (result.isSimplified === 1) {
                 skuValue = await this.skuService.findOne({ id: result.skuId });
@@ -700,7 +706,7 @@ export class ProductController {
     public async todayDealsList(@QueryParam('limit') limit: number, @QueryParam('offset') offset: number, @QueryParam('keyword') keyword: string, @QueryParam('sku') sku: string, @QueryParam('count') count: number | boolean, @Req() request: any, @Res() response: any): Promise<any> {
         const select = ['taxType', 'taxValue', 'productId', 'name', 'rating', 'description', 'location',
             'metaTagTitle', 'todayDeals', 'hasStock', 'outOfStockThreshold', 'quantity', 'skuId', 'isSimplified',
-            'price', 'isActive', 'productSlug'];
+            'price', 'isActive', 'productSlug', 'manufacturerId'];
         const whereConditions = [
             {
                 name: 'deleteFlag',
@@ -750,6 +756,10 @@ export class ProductController {
             let skuValue = undefined;
             temp.Images = productImage;
             let skuId = undefined;
+            const manufacturer = await this.manufacturerService.findOne({ manufacturerId: result.manufacturerId });
+            temp.manufacturerName = manufacturer ? manufacturer.name : '';
+            temp.manufacturerImage = (manufacturer && manufacturer.image) ? manufacturer.image : '';
+            temp.manufacturerImagePath = (manufacturer && manufacturer.imagePath) ? manufacturer.imagePath : '';
             if (result.isSimplified === 1) {
                 skuValue = await this.skuService.findOne({ id: result.skuId });
                 if (skuValue) {

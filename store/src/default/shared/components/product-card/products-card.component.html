@@ -20,7 +20,8 @@
                         <img *ngIf='!product.image' src="assets/images/default_image.png">
                     </a>
                     <div class="title-car-card">
-                        <img class="brand-car-card" src="assets/images/default_image.png" alt="">
+                        <img class="brand-car-card"*ngIf='product.manufacturerImage' [src]="imagePath+ '?path=' + product.manufacturerImagePath + '&name=' + product.manufacturerImage + '&width=60&height=60'" />
+                        <!-- <img class="brand-car-card" src="assets/images/default_image.png" alt=""> -->
                         <a [routerLink]="['/products/productdetails', product.productSlug]" class="title">
                     {{product.name}}
                 </a>

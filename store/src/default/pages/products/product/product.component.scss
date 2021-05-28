@@ -1,3 +1,8 @@
+
+
+
+
+
 .mat-card.product-image {
     padding: 0px;
     text-align: center;
@@ -739,4 +744,35 @@
     width: 25%;
     text-align: center;
 
+}
+
+
+.title-logo {
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 2px #ddd;
+    padding-bottom: 1rem;
+    h3 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #000;
+        margin: 0;
+    }
+    img {
+        max-width: 100px;
+    }
+}
+.product-courosel {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    .prd-cou-col {
+        width: 100%;
+        margin: 10px;
+        img {
+            width: 100%;
+            opacity: 0.5 !important;
+        }
+    }
 }

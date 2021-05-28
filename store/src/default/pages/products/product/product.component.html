@@ -1,3 +1,5 @@
+
+
 <div class="wrapper" *ngIf="(productControlSandbox.productAvailabilityLoading$ | async)">
     <div class="overlay">
         <div class="spinner-wrapper">
@@ -41,11 +43,44 @@
                 </ng-container>
     </div>-->
     <!--div-->
-    <div fxFlex="100" class="py-2 product-right" fxFlex.gt-md="65" fxFlex.md="80" ngClass.gt-sm="px-3 m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
+    <div fxFlex="100" class="py-2 product-right" fxFlex.gt-md="100" fxFlex.md="100" ngClass.gt-sm="m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
         <div #zoomViewer fxShow="false" fxShow.gt-md>
             <mat-card class="zoom-viewer mat-elevation-z18" [ngStyle]="{'background-image': 'url(' + zoomImage + ')'}">
             </mat-card>
         </div>
+
+
+        <div class="swiper-container product-image-swiper" [swiper]="configuration1">
+        <div class="swiper-wrapper h-100">
+       <div class="swiper-slide"  *ngFor= "let img of  (listSandbox.productDetails$ | async)?.productImage">
+         <div class="flex product-courosel">
+        
+        <div class="prd-cou-col">
+            <img  [src]="imagePath+ '?path=' + img.containerName + '&name=' + img.image + '&width=660&height=660'" onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
+        <!-- <img  [src]="img.img"   class="swiper-lazy"/> -->
+            
+        </div>
+
+    </div>
+ 
+
+        </div>
+      
+        </div>
+
+
+        <button mat-mini-fab class="swiper-button-prev swipe-arrow">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-mini-fab class="swiper-button-next swipe-arrow">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        </div>
+
+        </div>
+
+        <div fxFlex="100" class="py-2 product-right" fxFlex.gt-md="65" fxFlex.md="80" ngClass.gt-sm="m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
+
 
         <p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.Category[0]">Category : {{(productDetail.productDetails$ | async)?.Category[0].categoryName}}</p>
         <!--titolo veicolo-->
@@ -254,6 +289,14 @@
             <!-- options -->
 
         </ng-container>
+
+        <div class="flex title-logo">
+            <h3>F8 Tribute Coupe</h3>
+            <img    *ngIf= " (listSandbox.productDetails$ | async) as data"
+            [src]="imagePath+ '?path=' + data.manufacturerImagePath + '&name=' + data.manufacturerImage + '&width=660&height=660'"  />
+        </div>
+
+
 
         <!-- Description -->
         <div class="prd-detail-cnt">

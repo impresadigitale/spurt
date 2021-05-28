@@ -36,9 +36,13 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('zoomViewer') zoomViewer;
   @ViewChild(SwiperDirective) directiveRef: SwiperDirective;
 
+
+
+
   // configuration
   public config: SwiperConfigInterface = {};
   public configuration: SwiperConfigInterface = {};
+  public configuration1: SwiperConfigInterface = {};
   public product: any;
   // images
   public imageObject: Array<object>;
@@ -158,7 +162,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Initially initialize getProductdetail,getRelatedProducts when subscribed
    * subscribe productDetails$ and set initially default values for required options **/
   ngOnInit() {
-
+    
   
     this.currency = JSON.parse(localStorage.getItem('currency'));
     if (isPlatformBrowser(this.platformId)) {
@@ -176,6 +180,20 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.subcribeProductDetails();
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   public getTodayDealList() {
     const params: any = {};
@@ -374,6 +392,28 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
       observer: false,
       slidesPerView: 4,
       spaceBetween: 10,
+      keyboard: true,
+      navigation: true,
+      grabCursor: true,
+      pagination: false,
+      loop: false,
+      preloadImages: false,
+      lazy: true,
+      autoplay: false,
+      watchSlidesVisibility: true,
+      breakpoints: {
+        480: {
+          slidesPerView: 2
+        },
+        600: {
+          slidesPerView: 3
+        }
+      }
+    };
+    this.configuration1 = {
+      observer: false,
+      slidesPerView: 6,
+      spaceBetween: 5,
       keyboard: true,
       navigation: true,
       grabCursor: true,
