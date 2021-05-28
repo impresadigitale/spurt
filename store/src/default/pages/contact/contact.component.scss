@@ -10,7 +10,7 @@
                   }
                   
                   .container-fluid {
-                      width: 90%;
+                      width: 80%;
                       padding-right: 15px;
                       padding-left: 15px;
                       margin-right: auto;
@@ -84,14 +84,13 @@
                       }
                       .rowTitle {
                           padding: 30px 0;
-                          margin: 0;
                           border-bottom: 5px solid #ccc;
                           margin-bottom: 10px;
                       }
                       .align-items-center {
-                          -webkit-box-align: center!important;
-                          -ms-flex-align: center!important;
-                          align-items: center!important;
+                          -webkit-box-align: center !important;
+                          -ms-flex-align: center !important;
+                          align-items: center !important;
                       }
                   }
                   
@@ -104,19 +103,13 @@
                       }
                   }
                   
-                  #singleAuto .rowTitle h1,
+                  #singleAuto .rowTitle,
                   h2 {
-                      font-size: 2em;
                       font-weight: 800;
-                  }
-                  
-                  .rowTitle h1 {
-                      margin: 0;
                   }
                   
                   p {
                       margin-top: 0;
-                      margin-bottom: 1rem;
                   }
                   
                   .sendLead,
@@ -185,8 +178,8 @@
                   }
                   
                   .fakeUploadImg {
-                      background: none!important;
-                      padding: 0!important;
+                      background: none !important;
+                      padding: 0 !important;
                       margin: auto;
                       text-align: center;
                       display: block;
@@ -221,4 +214,14 @@
                       border-radius: 0px;
                       background: #af121e !important;
                       border: none;
+                  }
+                  
+                  .title-page {
+                      font-size: 32px;
+                      font-weight: 900;
+                      margin-top: 30px;
+                  }
+                  
+                  .subtitle-page {
+                      font-size: 32px;
                   }

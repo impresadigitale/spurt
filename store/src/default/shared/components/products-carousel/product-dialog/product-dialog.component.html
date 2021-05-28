@@ -27,17 +27,17 @@
         </div>
         <div fxFlex="100" fxFlex.gt-sm="50" ngClass.gt-sm="px-2 m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
             <h2>{{product.name}}</h2>
-            <div class="py-1 lh">
+            <!--<div class="py-1 lh">
                 <p><span class="text-muted fw-500">Category: </span><span>{{product.name }}</span></p>
                 <p><span class="text-muted fw-500">Availibility: </span><span>Available</span></p>
-            </div>
+            </div>-->
             <div class="py-1">
             </div>
             <p class="py-1 text-muted lh">
                 <td [innerHtml]='product.description'></td>
             </p>
             <div class="text-muted">
-                <h2 class="new-price" style="display:inline-block">
+                <!--<h2 class="new-price" style="display:inline-block">
                     <ng-container *ngIf="(product.flag=='' && product.pricerefer=='');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
                     </ng-container>
                     <ng-template #one>
@@ -45,7 +45,7 @@
                         <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue)  | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
 
                     </ng-template>
-                </h2>
+                </h2>-->
                 <div fxLayoutAlign="end" class="arroew">
 
                     <button [mat-dialog-close]="product" (click)="redirect()" mat-icon-button matTooltip="View full details">
