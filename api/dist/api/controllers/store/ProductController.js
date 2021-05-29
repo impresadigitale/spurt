@@ -119,6 +119,8 @@ let ProductController = class ProductController {
             }
             const manufacturer = yield this.manufacturerService.findOne({ manufacturerId: productDetails.manufacturerId });
             productDetails.manufacturerName = manufacturer ? manufacturer.name : '';
+            productDetails.manufacturerImage = (manufacturer && manufacturer.image) ? manufacturer.image : '';
+            productDetails.manufacturerImagePath = (manufacturer && manufacturer.imagePath) ? manufacturer.imagePath : '';
             productDetails.productImage = yield this.productImageService.findAll({
                 select: ['productId', 'image', 'containerName', 'defaultImage'],
                 where: {
@@ -566,7 +568,7 @@ let ProductController = class ProductController {
      */
     featureProductList(limit, offset, keyword, sku, count, request, response) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const select = ['taxType', 'taxValue', 'productId', 'name', 'skuId', 'isSimplified', 'quantity', 'rating', 'description', 'sortOrder', 'price', 'productSlug', 'isActive', 'hasStock', 'outOfStockThreshold'];
+            const select = ['taxType', 'taxValue', 'productId', 'name', 'skuId', 'isSimplified', 'quantity', 'rating', 'description', 'sortOrder', 'price', 'productSlug', 'isActive', 'hasStock', 'outOfStockThreshold', 'manufacturerId'];
             const whereConditions = [
                 {
                     name: 'deleteFlag',
@@ -611,10 +613,14 @@ let ProductController = class ProductController {
                         result.taxValue = '';
                     }
                 }
+                const manufacturer = yield this.manufacturerService.findOne({ manufacturerId: result.manufacturerId });
                 const temp = result;
                 temp.skuName = '';
                 let skuValue = undefined;
                 temp.Images = productImage;
+                temp.manufacturerName = manufacturer ? manufacturer.name : '';
+                temp.manufacturerImage = (manufacturer && manufacturer.image) ? manufacturer.image : '';
+                temp.manufacturerImagePath = (manufacturer && manufacturer.imagePath) ? manufacturer.imagePath : '';
                 let skuId = undefined;
                 if (result.isSimplified === 1) {
                     skuValue = yield this.skuService.findOne({ id: result.skuId });
@@ -731,7 +737,7 @@ let ProductController = class ProductController {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const select = ['taxType', 'taxValue', 'productId', 'name', 'rating', 'description', 'location',
                 'metaTagTitle', 'todayDeals', 'hasStock', 'outOfStockThreshold', 'quantity', 'skuId', 'isSimplified',
-                'price', 'isActive', 'productSlug'];
+                'price', 'isActive', 'productSlug', 'manufacturerId'];
             const whereConditions = [
                 {
                     name: 'deleteFlag',
@@ -781,6 +787,10 @@ let ProductController = class ProductController {
                 let skuValue = undefined;
                 temp.Images = productImage;
                 let skuId = undefined;
+                const manufacturer = yield this.manufacturerService.findOne({ manufacturerId: result.manufacturerId });
+                temp.manufacturerName = manufacturer ? manufacturer.name : '';
+                temp.manufacturerImage = (manufacturer && manufacturer.image) ? manufacturer.image : '';
+                temp.manufacturerImagePath = (manufacturer && manufacturer.imagePath) ? manufacturer.imagePath : '';
                 if (result.isSimplified === 1) {
                     skuValue = yield this.skuService.findOne({ id: result.skuId });
                     if (skuValue) {

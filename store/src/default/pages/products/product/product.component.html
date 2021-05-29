@@ -1,5 +1,3 @@
-
-
 <div class="wrapper" *ngIf="(productControlSandbox.productAvailabilityLoading$ | async)">
     <div class="overlay">
         <div class="spinner-wrapper">
@@ -61,30 +59,31 @@
             
         </div>
 
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <button mat-mini-fab class="swiper-button-prev swipe-arrow">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button mat-mini-fab class="swiper-button-next swipe-arrow">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+
     </div>
- 
 
-        </div>
-      
-        </div>
-
-
-        <button mat-mini-fab class="swiper-button-prev swipe-arrow">
-            <mat-icon>keyboard_arrow_left</mat-icon>
-        </button>
-        <button mat-mini-fab class="swiper-button-next swipe-arrow">
-            <mat-icon>keyboard_arrow_right</mat-icon>
-        </button>
-        </div>
-
-        </div>
-
-        <div fxFlex="100" class="py-2 product-right" fxFlex.gt-md="65" fxFlex.md="80" ngClass.gt-sm="m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
+    <div fxFlex="100" class="py-2 product-right" fxFlex.gt-md="65" fxFlex.md="80" ngClass.gt-sm="m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
 
 
         <p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.Category[0]">Category : {{(productDetail.productDetails$ | async)?.Category[0].categoryName}}</p>
-        <!--titolo veicolo-->
-        <h2 class="title-product">{{(productDetail.productDetails$ | async)?.name}}</h2>
+        <!--titolo veicolo
+        <h2 class="title-product">{{(productDetail.productDetails$ | async)?.name}}</h2>-->
 
         <!--sku-->
         <!--<p class="text-muted cat" *ngIf="(productDetail.productDetails$ | async)?.skuName">SKU: {{(productDetail.productDetails$ | async)?.skuName}} </p> -->
@@ -107,6 +106,7 @@
 
         <ng-container>
 
+
             <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted avlamt-comp">
                 <div class="avllft">
                     <ng-container *ngIf="(productDetail.productDetails$ | async)?.isAvailable">
@@ -115,8 +115,9 @@
 
                         <div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted">
                             <div class="flex amtlt">
-                                <h3>
-                                    <!--Prezzo-->
+                                <!--Prezzo-->
+                                <h2 class="title-product">{{(productDetail.productDetails$ | async)?.name}}</h2>
+                                <h3 class="price-product">
                                     <ng-container *ngIf="templateHidden;else noOptionsselected">
                                         <ng-container *ngIf="(((productDetail.productDetails$ | async)?.flag)=='')&&(((productDetail.productDetails$ | async)?.pricerefer) === '');else one">
                                             <ng-container *ngIf="((productDetail.productDetails$ | async)?.tirePrice ) && ((productDetail.productDetails$ | async)?.tirePrice !== ''); else normal">
@@ -189,9 +190,13 @@
                                         </ng-template>
                                     </ng-template>
                                 </h3>
-                                <span *ngIf="(productDetail.productDetails$ | async)?.discount"> <del>{{calculatePrice((productDetail.productDetails$ | async)?.price, (productDetail.productDetails$ | async)?.taxType, (productDetail.productDetails$ | async)?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}}</del></span>
-                                <p *ngIf="(productDetail.productDetails$ | async)?.discount">{{(productDetail.productDetails$ | async)?.discount}}% Off</p>
+
+                                <span *ngIf="(productDetail.productDetails$ | async)?.discount">
+                                    <del>{{calculatePrice((productDetail.productDetails$ | async)?.price, (productDetail.productDetails$ | async)?.taxType, (productDetail.productDetails$ | async)?.taxValue) | currencysymbol: (productDetail.symbolSetting$ | async)}}</del></span>
+                                <p *ngIf="(productDetail.productDetails$ | async)?.discount">
+                                    {{(productDetail.productDetails$ | async)?.discount}}% Off</p>
                             </div>
+
                             <!--<div class="quan-id">
                         <span class="tt">Quantity:</span>
                         <div class="id-rw flex">
@@ -201,8 +206,11 @@
                         </div>
                     </div>-->
                         </div>
+
                     </ng-container>
+
                 </div>
+
                 <!--lft-->
                 <div class="avlrht flex" *ngIf="(productDetail.productDetails$ | async) as details">
                     <ng-container *ngIf="user && details.quotationAvailable === 1">
@@ -223,42 +231,51 @@
                 </div>
                 <!--rht-->
             </div>
+            <div class="h-bar">
+
+            </div>
             <div class="avl-opt" *ngIf="(productDetail.productDetails$ | async)?.hasTirePrice == 1">
                 <ng-container *ngIf="(productDetail.productDetails$ | async)?.isSimplified == 0 && (productDetail.productDetails$ | async)?.variantTirePrice.length > 0">
                     <label class="trigger">
-                            <input type="checkbox" class="checkbox checkbox--red" style="cursor: pointer;"/> Tier Price Chart
-                            <span class="msg">
-                                <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px" width="100%">
-                                    <tr>
-                                        <th width="100px">Quantity</th>
-                                        <th>Price</th>
-                                    </tr>
-                                    <tr *ngFor="let list of (productDetail.productDetails$ | async)?.variantTirePrice">
-                                        <td>{{list.quantity}}</td>
-                                        <td>{{currency.symbol}}{{list.quantity * list.price}} (per unit = {{currency.symbol}}{{list.price}})</td>
-                                    </tr>
-                                </table>
-                            </span>
-                        </label>
+                        <input type="checkbox" class="checkbox checkbox--red" style="cursor: pointer;" /> Tier Price
+                        Chart
+                        <span class="msg">
+                            <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px"
+                                width="100%">
+                                <tr>
+                                    <th width="100px">Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr *ngFor="let list of (productDetail.productDetails$ | async)?.variantTirePrice">
+                                    <td>{{list.quantity}}</td>
+                                    <td>{{currency.symbol}}{{list.quantity * list.price}} (per unit =
+                                        {{currency.symbol}}{{list.price}})</td>
+                                </tr>
+                            </table>
+                        </span>
+                    </label>
                 </ng-container>
 
                 <ng-container *ngIf="(productDetail.productDetails$ | async)?.isSimplified != 0">
                     <label class="trigger">
-                            <input type="checkbox" class="checkbox checkbox--red" style="cursor: pointer;"/> Tier Price Chart
-                            <span class="msg">
-                                <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px" width="100%">
-                                    <tr>
-                                        <th width="100px">Quantity</th>
-                                        <th>Price</th>
-                                    </tr>
-                                    <tr *ngFor="let list of (productDetail.productDetails$ | async)?.productTirePrices">
-                                        <td>{{list.quantity}}</td>
-                                        <td>{{currency.symbol}}{{list.quantity * list.price}} (per unit = {{currency.symbol}}{{list.price}})</td>
-                                    </tr>
-                                
-                                </table>
-                            </span>
-                        </label>
+                        <input type="checkbox" class="checkbox checkbox--red" style="cursor: pointer;" /> Tier Price
+                        Chart
+                        <span class="msg">
+                            <table class="table table-responsive" cellspacing="0" cellpadding="0" border="1px"
+                                width="100%">
+                                <tr>
+                                    <th width="100px">Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr *ngFor="let list of (productDetail.productDetails$ | async)?.productTirePrices">
+                                    <td>{{list.quantity}}</td>
+                                    <td>{{currency.symbol}}{{list.quantity * list.price}} (per unit =
+                                        {{currency.symbol}}{{list.price}})</td>
+                                </tr>
+
+                            </table>
+                        </span>
+                    </label>
                 </ng-container>
 
             </div>
@@ -291,17 +308,14 @@
         </ng-container>
 
         <div class="flex title-logo">
-            <h3>F8 Tribute Coupe</h3>
-            <img    *ngIf= " (listSandbox.productDetails$ | async) as data"
-            [src]="imagePath+ '?path=' + data.manufacturerImagePath + '&name=' + data.manufacturerImage + '&width=660&height=660'"  />
+            <img *ngIf=" (listSandbox.productDetails$ | async) as data" [src]="imagePath+ '?path=' + data.manufacturerImagePath + '&name=' + data.manufacturerImage + '&width=660&height=660'" />
         </div>
 
 
 
         <!-- Description -->
         <div class="prd-detail-cnt">
-            <h3>{{'products.TechSheet'|translate}}</h3>
-            <h3>{{productDetail.manufacturerName$}}</h3>
+            <h3 class="title-sheet">{{'products.TechSheet'|translate}}</h3>
             <!--<p class="text-muted lh" [innerHtml]='(productDetail.productDetails$ | async)?.description | safeHtml'></p>-->
             <table class="table-car">
                 <tbody>
@@ -315,7 +329,7 @@
                         <td class="td-tabel-car-dark">NR PORTE</td>
                         <td class="td-tabel-car-light">5</td>
                         <td class="td-tabel-car-dark">IMMATRICOLAZIONE</td>
-                        <td class="td-tabel-car">03-2021</td>
+                        <td class="td-tabel-car-light">03-2021</td>
                     </tr>
                     <tr>
                         <td class="td-tabel-car-dark">CARROZZERIA</td>
@@ -332,7 +346,7 @@
                 </tbody>
             </table>
 
-            <h2 class="title-table">INFORMAZIONI AGGIUNTIVE</h2>
+            <h3 class="title-sheet">{{'products.AddInfo'|translate}}</h3>
 
             <table cellpadding="3" cellspacing="3" style="width: 100%;text-align: center;">
                 <tbody>
@@ -351,7 +365,7 @@
                 </tbody>
             </table>
 
-            <h2 class="fixings-title">ACCESSORI</h2>
+            <h3 class="title-sheet">{{'products.Accessories'|translate}}</h3>
 
             <table class="fixings-table">
                 <tbody>

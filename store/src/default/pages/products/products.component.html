@@ -4,165 +4,182 @@
         </app-spurt-product-filter>
     </mat-sidenav>
     <mat-sidenav-content class="all-products" ngClass.gt-sm="p-left">
-            <div class="matnavcontent">
+        <div class="matnavcontent">
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="filter-row mat-elevation-z1 text-muted">
-                    <button *ngIf="!sidenavOpen" mat-icon-button (click)="sidenav.toggle()" class="filter-nav">
+                <button *ngIf="!sidenavOpen" mat-icon-button (click)="sidenav.toggle()" class="filter-nav">
                 <mat-icon>more_vert</mat-icon>
             </button>
-            <div class="flex sortby">
-                <p>Sort By</p>
-                <ng-container *ngFor="let sort of sortings">
-                    <a href="javascript:void(0)" [ngClass]="{'active' : sortData === sort.order}" (click)="changeSorting(sort)">{{sort.order}}</a>
-                </ng-container>
-            </div>
-            <div class="list-grid">
-                <button mat-icon-button (click)="changeViewType('list', 100)">
+                <div class="flex sortby">
+                    <p>Sort By</p>
+                    <ng-container *ngFor="let sort of sortings">
+                        <a href="javascript:void(0)" [ngClass]="{'active' : sortData === sort.order}" (click)="changeSorting(sort)">{{sort.order}}</a>
+                    </ng-container>
+                </div>
+                <div class="list-grid">
+                    <button mat-icon-button (click)="changeViewType('list', 100)">
                     <img src="assets/img/list-view.svg">
                 </button>
-                <button mat-icon-button (click)="changeViewType('grid', 33.3)">
+                    <button mat-icon-button (click)="changeViewType('grid', 33.3)">
                     <img src="assets/img/grid-view.svg">
                 </button>
+                </div>
             </div>
-        </div>
 
-        <ng-container *ngIf="attributeData">
-            <div class="flex filters-drop">
-                <ng-container *ngFor="let attribute of attributeData">
-                    <a href="javascript:void(0)" (click)="openAttribute(attribute, attribute.id)" [ngClass]="{'active' : currentAttributeId === attribute.id }"> 
+            <ng-container *ngIf="attributeData">
+                <div class="flex filters-drop">
+                    <ng-container *ngFor="let attribute of attributeData">
+                        <a href="javascript:void(0)" (click)="openAttribute(attribute, attribute.id)" [ngClass]="{'active' : currentAttributeId === attribute.id }"> 
                         {{ attribute.sectionName }} 
                         <img src="assets/img/arrow-down.svg"> 
                     </a>
-                </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="currentAttribute">
+
+                <div class="filters-check flex">
+                    <ng-container *ngFor="let item of currentAttribute.sectionItem">
+                        <mat-checkbox [checked]="item.selected" (change)="selectAttribute(currentAttribute.id, currentAttribute.sectionName, item, $event.checked)">{{ item.itemName }}</mat-checkbox>
+                    </ng-container>
+                </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="selectedAttributeValues">
+                <div class="filters-result flex">
+
+                    <ng-container *ngFor="let item of selectedAttributeValues">
+
+                        <span> {{ item.itemName }} <a href="javascript:void(0)" (click)="selectAttribute(item.id, item.sectionName, item.item)"><img src="assets/img/close-span.svg"></a> </span>
+
+                    </ng-container>
+                </div>
+
+            </ng-container>
+
+            <div class="wrapper" *ngIf="listSandbox.productLoading$ | async">
+                <div class="overlay">
+                    <div class="spinner-wrapper">
+                        <app-spinner [isShow]="listSandbox.productLoading$ | async"></app-spinner>
+                    </div>
+                </div>
             </div>
-        </ng-container>
+            <div *ngIf="viewType == 'grid'" fxLayout="row wrap" class="products-wrapper">
 
-        <ng-container *ngIf="currentAttribute">
+                <div *ngFor="let product of (listSandbox.productlist$ | async)" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+                    <mat-card class="product-item text-center card-hover">
+                        <mat-chip-list *ngIf="product.discount">
+                            <mat-chip selected="true" *ngIf="product?.discount<=discountPrice" color="warn">{{product.discount}}% </mat-chip>
+                            <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount"> {{product.discount}}% </mat-chip>
+                            <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">{{product.discount}}%</mat-chip>
+                        </mat-chip-list>
+                        <a *ngIf="!isEmptyObject(product)" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
+                            <img *ngIf="product['Images'].defaultImage == 1" style="height:330px" [src]="imagePath+ '?path=' + product['Images'].containerName + '&name=' + product['Images'].image + '&width=260&height=260'" onError="this.src='/assets/images/default_image.png';">
+                        </a>
+                        <a *ngIf="isEmptyObject(product)" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
+                            <img style="height:200px" src="/assets/images/default_image.png">
+                        </a>
 
-            <div class="filters-check flex">
-                <ng-container *ngFor="let item of currentAttribute.sectionItem">
-                    <mat-checkbox [checked]="item.selected" (change)="selectAttribute(currentAttribute.id, currentAttribute.sectionName, item, $event.checked)">{{ item.itemName }}</mat-checkbox>
-                </ng-container>
+                        <a [routerLink]="['/products/productdetails', product.productSlug]" class="title text-truncate">
+                        {{product.name}}
+                    </a>
+                        <div class="details" wfd-id="248">
+                            <div class="row align-items-center" wfd-id="249">
+                                <div class="col-xl-12" wfd-id="250">
+                                    <ul wfd-id="251">
+                                        <li wfd-id="260">
+                                            <p><span wfd-id="261">KM</span>1</p>
+                                        </li>
+                                        <li wfd-id="258">
+                                            <p><span wfd-id="259">CC</span>999</p>
+                                        </li>
+                                        <li wfd-id="256">
+                                            <p><span wfd-id="257">PORTE</span>5</p>
+                                        </li>
+                                        <li wfd-id="254">
+                                            <p><span wfd-id="255">ANNO</span>2019</p>
+                                        </li>
+                                        <li wfd-id="252">
+                                            <p><span wfd-id="253">COLORE</span>black</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- stelle -->
+                        <!--<p style="text-align: left">
+                            <app-mat-star-rating [rating]="product.rating"></app-mat-star-rating>
+                        </p>-->
+                        <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
+                            <div fxLayout="column" fxLayoutAlign="center start">
+                            </div>
+                        </div>
+                        <div class="divider mt-2"></div>
+                        <div class="icons">
+                            <app-controls [product]="product" [type]="'all'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
+                        </div>
+                    </mat-card>
+                </div>
             </div>
 
-        </ng-container>
+            <div *ngIf="viewType == 'list'" fxLayout="row wrap" class="products-wrapper">
+                <div *ngFor="let product of (listSandbox.productlist$ | async) | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100" class="col">
+                    <mat-card class="product-item" style="height:98%">
+                        <div fxLayout="row wrap">
+                            <div fxFlex="100" fxFlex.gt-xs="40" class="p-2">
+                                <mat-chip-list *ngIf="product.discount">
+                                    <mat-chip selected="true" *ngIf="product.discount<=discountPrice" color="warn">{{product.discount}}% </mat-chip>
+                                    <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount"> {{product.discount}}% </mat-chip>
+                                    <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">{{product.discount}}%</mat-chip>
+                                </mat-chip-list>
+                                <a *ngIf="product.Images" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
+                                    <img *ngIf="product.Images" [src]="imagePath + '?path=' + product.Images.containerName + '&name=' + product.Images.image + '&width=280&height=280'" onError="this.src='/assets/images/default_image.png';">
+                                </a>
 
-        <ng-container *ngIf="selectedAttributeValues">
-            <div class="filters-result flex">
-        
-                <ng-container *ngFor="let item of selectedAttributeValues">
-        
-                    <span> {{ item.itemName }} <a href="javascript:void(0)" (click)="selectAttribute(item.id, item.sectionName, item.item)"><img src="assets/img/close-span.svg"></a> </span>
-        
-                </ng-container>
+                                <a *ngIf="!product.Images" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
+                                    <img style="height:200px" src="/assets/images/default_image.png">
+                                </a>
+                            </div>
+                            <div fxFlex="100" fxFlex.gt-xs="60" class="p-2">
+                                <h4 class="category text-muted"></h4>
+                                <a [routerLink]="['/products/productdetails', product.productSlug]" class="title">
+                                {{product.name}}
+                            </a>
+                                <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
+                                    <div fxLayout="column" fxLayoutAlign="center start">
+                                        <p class="new-price">
+                                            <ng-container *ngIf="(product.flag == '' && product.pricerefer == '');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</ng-container>
+                                            <ng-template #one>
+                                                <span *ngIf="product.flag === 0">{{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                                                <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
+                                            </ng-template>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="icons">
+                                    <app-controls [product]="product" [type]="'all'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
             </div>
-        
-        </ng-container>
+            <div *ngIf="(listSandbox.productLoaded$ | async) && (listSandbox.productlist$ | async)?.length == 0" fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-xs="90" class="p-2">
+                    <p style="margin-left: 50%;margin-top:10%;color:gray">No Results Found</p>
+                </div>
+            </div>
+            <div *ngIf="(listSandbox.productlist$ | async)?.length > 0" fxLayout="row wrap">
+                <div fxFlex="100">
+                    <mat-card class="p-0 text-center">
+                        <mat-paginator [length]="listSandbox.productcount$|async" [pageSize]="pagesize" [pageIndex]="index" [pageSizeOptions]="[10,15,20]" (page)="onPageChange($event)">
+                        </mat-paginator>
 
-        <div class="wrapper" *ngIf="listSandbox.productLoading$ | async">
-            <div class="overlay">
-                <div class="spinner-wrapper">
-                    <app-spinner [isShow]="listSandbox.productLoading$ | async"></app-spinner>
+                    </mat-card>
                 </div>
             </div>
         </div>
-        <div *ngIf="viewType == 'grid'" fxLayout="row wrap" class="products-wrapper">
-
-            <div *ngFor="let product of (listSandbox.productlist$ | async)" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
-                <mat-card class="product-item text-center card-hover">
-                    <mat-chip-list *ngIf="product.discount">
-                        <mat-chip selected="true" *ngIf="product?.discount<=discountPrice" color="warn">{{product.discount}}% </mat-chip>
-                        <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount"> {{product.discount}}% </mat-chip>
-                        <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">{{product.discount}}%</mat-chip>
-                    </mat-chip-list>
-                    <a *ngIf="!isEmptyObject(product)" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
-                        <img *ngIf="product['Images'].defaultImage == 1" style="height:200px" [src]="imagePath+ '?path=' + product['Images'].containerName + '&name=' + product['Images'].image + '&width=260&height=260'" onError="this.src='/assets/images/default_image.png';">
-                    </a>
-                    <a *ngIf="isEmptyObject(product)" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
-                        <img  style="height:200px" src="/assets/images/default_image.png">
-                    </a>
-
-                    <a [routerLink]="['/products/productdetails', product.productSlug]" class="title text-truncate">
-                        {{product.name}}
-                    </a>
-                    <p style="text-align: left">
-                        <app-mat-star-rating [rating]="product.rating"></app-mat-star-rating>
-                    </p>
-                    <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
-                        <div fxLayout="column" fxLayoutAlign="center start">
-                            <p class="new-price">
-                                <ng-container *ngIf="(product.flag == '' && product.pricerefer == '');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</ng-container>
-                                <ng-template #one>
-                                    <span *ngIf="product.flag === 0">{{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
-                                    <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
-                                </ng-template>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="divider mt-2"></div>
-                    <div class="icons">
-                        <app-controls [product]="product" [type]="'all'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
-                    </div>
-                </mat-card>
-            </div>
-        </div>
-
-        <div *ngIf="viewType == 'list'" fxLayout="row wrap" class="products-wrapper">
-            <div *ngFor="let product of (listSandbox.productlist$ | async) | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100" class="col">
-                <mat-card class="product-item" style="height:90%">
-                    <div fxLayout="row wrap">
-                        <div fxFlex="100" fxFlex.gt-xs="40" class="p-2">
-                            <mat-chip-list *ngIf="product.discount">
-                                <mat-chip selected="true" *ngIf="product.discount<=discountPrice" color="warn">{{product.discount}}% </mat-chip>
-                                <mat-chip selected="true" *ngIf="product.discount>=fiftyPercent" class="discount"> {{product.discount}}% </mat-chip>
-                                <mat-chip selected="true" class="averageDiscount" *ngIf="(product.discount>discountPrice)&&(product.discount<fiftyPercent)">{{product.discount}}%</mat-chip>
-                            </mat-chip-list>
-                            <a *ngIf="product.Images"[routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
-                                <img *ngIf="product.Images" [src]="imagePath + '?path=' + product.Images.containerName + '&name=' + product.Images.image + '&width=280&height=280'" onError="this.src='/assets/images/default_image.png';">
-                            </a>
-
-                            <a *ngIf="!product.Images" [routerLink]="['/products/productdetails', product.productSlug]" class="image-link">
-                                <img  style="height:200px" src="/assets/images/default_image.png">
-                            </a>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-xs="60" class="p-2">
-                            <h4 class="category text-muted"></h4>
-                            <a [routerLink]="['/products/productdetails', product.productSlug]" class="title">
-                                {{product.name}}
-                            </a>
-                            <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
-                                <div fxLayout="column" fxLayoutAlign="center start">
-                                    <p class="new-price">
-                                        <ng-container *ngIf="(product.flag == '' && product.pricerefer == '');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</ng-container>
-                                        <ng-template #one>
-                                            <span *ngIf="product.flag === 0">{{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
-                                            <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
-                                        </ng-template>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="icons">
-                                <app-controls [product]="product" [type]="'all'" (OpenProductDialog)="openProductDialog(product)"></app-controls>
-                            </div>
-                        </div>
-                    </div>
-                </mat-card>
-            </div>
-        </div>
-        <div *ngIf="(listSandbox.productLoaded$ | async) && (listSandbox.productlist$ | async)?.length == 0" fxLayout="row wrap">
-            <div fxFlex="100" fxFlex.gt-xs="90" class="p-2">
-                <p style="margin-left: 50%;margin-top:10%;color:gray">No Results Found</p>
-            </div>
-        </div>
-        <div *ngIf="(listSandbox.productlist$ | async)?.length > 0" fxLayout="row wrap">
-            <div fxFlex="100">
-                <mat-card class="p-0 text-center">
-                    <mat-paginator [length]="listSandbox.productcount$|async" [pageSize]="pagesize" [pageIndex]="index" [pageSizeOptions]="[10,15,20]" (page)="onPageChange($event)">
-                    </mat-paginator>
-                    
-                </mat-card>
-            </div>
-        </div>
-     </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

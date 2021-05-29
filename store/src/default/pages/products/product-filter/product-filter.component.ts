@@ -95,7 +95,7 @@ export class ProductFilterComponent implements OnInit, OnChanges, OnDestroy {
       this.variantValue = val.variantValue ? val.variantValue : '';
       this.routeBrands = val.brand;
       this.filterPriceFrom = val.priceFrom ? val.priceFrom : 0;
-      this.filterPriceTo = val.priceTo ? val.priceTo : '30000';
+      this.filterPriceTo = val.priceTo ? val.priceTo : '300000';
 
   });
 
@@ -131,7 +131,7 @@ export class ProductFilterComponent implements OnInit, OnChanges, OnDestroy {
         if (this.filterPriceTo) {
           maximumPrice = this.filterPriceTo;
         } else {
-          maximumPrice = '60000';
+          maximumPrice = '300000';
         }
         if (maximumPrice && this.oneTimeAssignValue === 1) {
           const tempPriceTo = JSON.parse(maximumPrice);

@@ -31,3 +31,28 @@
         cursor: pointer;
     }
 }
+
+.new-price {
+    font-weight: 800;
+    font-size: 22px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    color: #AF121E;
+}
+
+.text-muted {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.location {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.mat-icon-button {
+    margin-bottom: 10px;
+}

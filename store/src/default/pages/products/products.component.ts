@@ -156,7 +156,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     this.subscription.push(this.activatedRoute.queryParams.subscribe(val => {
       this.priceFrom = val.priceFrom ? val.priceFrom : 0;
-      this.priceTo = val.priceTo ? val.priceTo : '30000';
+      this.priceTo = val.priceTo ? val.priceTo : '300000';
       this.brand = val.brand;
       this.variantValue = val.variantValue ? val.variantValue : '';
       this.attributeValue = val.attribute ? val.attribute : '';
