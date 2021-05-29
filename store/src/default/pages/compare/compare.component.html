@@ -1,84 +1,175 @@
-<h3 class="cpr-tit">{{'compare.CompareProduct'|translate}}</h3>
+<!-- <h3 class="w-100 text-center py-2">{{'contact.CONTACTUS'|translate}}</h3>
 
-<div class="table-responsive" *ngIf="(compareSandbox.compareList$ | async)?.length > 0">
-
-    <table>
-        <tr>
-            <th width="20%"> <a href="javascript:void(0)" (click)="removeAll()">{{'compare.RemoveAll'|translate}}</a> </th>
-            <th width="30%" *ngFor="let product of compareSandbox.compareList$ | async"> <a href="javascript:void(0)" (click)="removeProduct(product)">x {{'compare.Remove'|translate}}</a> </th>
-        </tr>
-        <tr>
-            <td>
-                <h3>{{(compareSandbox.compareList$ | async)?.length}}</h3>
-                <h3>{{'compare.Product'|translate}}</h3>
-                <p>{{'compare.Compare'|translate}}</p>
-            </td>
-            <td *ngFor="let product of compareSandbox.compareList$ | async">
-                <h4 class="prd-tit">{{product.name}}</h4>
-                <h5 class="prd-price">
-                        <ng-container *ngIf="(product.flag == '' && product.pricerefer == '');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</ng-container>
-                        <ng-template #one>
-                            <span *ngIf="product.flag === 0">{{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
-                            <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
-                        </ng-template>
-                </h5>
-                <ng-container *ngIf="product.productImage; else default" >
-                    <div class="prd-img"> <img [src]="imagePath + '?path=' + product.productImage.containerName + '&name=' + product.productImage.image + '&width=280&height=380'" onError="this.src='/assets/images/default_image.png';"> </div>
-                </ng-container>
-                <ng-template #default>
-                    <div class="prd-img">
-                        <img src='/assets/images/default_image.png'>
+    <div class="divider w-100 mt-2"></div>-->
+<section id="singleAuto" class="about" wfd-id="294">
+    <div class="container-fluid" wfd-id="295">
+        <div class="row" wfd-id="296">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-10 offset-1" wfd-id="297">
+                <div class="row rowTitle align-items-center" wfd-id="300">
+                    <div class="col-xl-12 col-12" wfd-id="301">
+                        <h1 class="title-page">COMPRIAMO LA TUA AUTO</h1>
                     </div>
-                </ng-template>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3 class="td-tit">{{'compare.Brand'|translate}}</h3>
-            </td>
-            <td *ngFor="let product of compareSandbox.compareList$ | async">
-                <h5 class="prd-price">{{product.manufacturerName}}</h5>
+                </div>
+                <div class="row" wfd-id="298">
+                    <div class="col-xl-12" wfd-id="299">
+                        <h2 class="subtitle-page">Hai deciso di cambiare auto? Il tuo usato lo acquistiamo noi!</h2><br>
+                        <p>La nostra <strong>missione aziendale</strong> è <strong>soddisfare sempre il nostro cliente</strong>, e per questo acquistiamo la tua auto anche in sole 24 ore. E un' importante sottolineare che la nostra è una vera
+                            <strong>offerta</strong>, probabilmente inferiore rispetto a quanto potreste realizzare vendendo l'auto ad un privato, ma è <strong>reale, garantita e sicura</strong>.</p>
+                        <br>
+                        <p>Diffidate dalle quotazioni generate da software automatici e algoritmi. </p>
+                        <br>
+                        <p><strong>Gruppo Piccirillo vuole solo il meglio per te.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3 class="td-tit">{{'compare.Summary'|translate}}</h3>
-            </td>
-            <td *ngFor="let product of compareSandbox.compareList$ | async">
-                <div class="inner-comp" [innerHtml]="product.description"></div>
-            </td>
-        </tr>
-        <tr>
-            <!-- product.rating -->
-            <td>
-                <h3 class="td-tit">{{'compare.Rating'|translate}}</h3>
-            </td>
-            <td *ngFor="let product of compareSandbox.compareList$ | async">
-            </td>
-        </tr>
-        <tr class="cart-tr">
-            <td>
-                <h3 class="td-tit"></h3>
-            </td>
-            <td *ngFor="let product of compareSandbox.compareList$ | async">
-                <p class="td-cont"><a href="javascript:void(0)" (click)="addToCart(product)" class="cart"> {{'compare.AddToCart'|translate}} </a></p>
-            </td>
-        </tr>
-    </table>
+<section class="secLead" wfd-id="195">
+    <div class="container-fluid" wfd-id="196">
+        <div class="row" wfd-id="197">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-10 offset-1" wfd-id="198">
+                <div class="row titleLead" wfd-id="292">
+                    <div class="col-xl-12" wfd-id="293">
+                        <h3>Vendi la tua auto a Gruppo Piccirillo</h3>
+                        <p>Compila gratuitamente e senza impegno il form, indicando le specifiche della tua automobile<br>
+                            <strong>Un nostro operatore la contatteremo entro 24h per fissare un appuntamento!</strong></p>
+                    </div>
+                </div>
+                <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit(contactForm.value)" fxLayout="row wrap">
+                    <!--I tuoi dati-->
+                    <div class="rows">
+                        <strong>I tuoi dati personali</strong>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Nome <span>*</span></label>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Cognome <span>*</span></label>
 
-</div>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">E-mail <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Telefono <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Città <span>*</span></label>
+
+                    </div>
+                    <!--I dati della tua auto-->
+
+                    <div class="rows">
+                        <strong>I dati della tua auto</strong>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                                <option value="">Seleziona</option>
+                            </select>
+                        <label class="personal-label" for="">Marca <span>*</span></label>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                                <option value="">Seleziona</option>
+                            </select>
+                        <label class="personal-label" for="">Modello <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                                <option value="">Seleziona</option>
+                            </select>
+                        <label class="personal-label" for="">Versione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="text">
+                        <label class="personal-label" for="">Targa <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">KM <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <select class="personal-data" name="" id="">
+                                <option value="">Seleziona</option>
+                            </select>
+                        <label class="personal-label" for="">Alimentazione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">cilindrata </label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Kw </label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="date">
+                        <label class="personal-label" for="">Mese di immatricolazione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Anno di immatricolazione <span>*</span></label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Numero di propietari </label>
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <input class="personal-data" type="number">
+                        <label class="personal-label" for="">Valutazione desiderata <span>*</span></label>
+
+                    </div>
 
 
-<div class="no-product-compare" *ngIf="(compareSandbox.compareList$ | async)?.length === 0 && !(compareSandbox.compareAdding$ | async)">
 
-    <p><img src="assets/images/no-compare.png"></p>
-    <p>{{'compare.NoCompareProducts'|translate}}</p>
+                    <div class="divider w-100 mt-2"></div>
 
-</div>
-<div class="no-product-compare" *ngIf="compareSandbox.compareAdding$ | async">
+                    <label class="radiotext" wfd-id="239"><strong class="radiotext">Sei intenzionato a comprare un auto dopo questa permuta?</strong></label>
+                    <div class="boxRadio" wfd-id="237">
+                        <input type="radio" required="" name="new_auto" value="si" wfd-id="342">
+                        <label class="radiotext" wfd-id="238">SI</label>
+                    </div>
+                    <div class="boxRadio" wfd-id="235">
+                        <input type="radio" required="" id="new_auto" name="new_auto" value="no" wfd-id="341">
+                        <label class="radiotext" wfd-id="236">NO</label>
+                    </div>
+                    <div class="divider w-100 mt-2"></div>
 
-    <app-spinner [isShow]="compareSandbox.compareAdding$ | async"></app-spinner>
+                    <div class="row marTop" wfd-id="229">
+                        <div class="col-xl-12" wfd-id="230">
+                            <p><strong>Le foto della tua auto (frontale, posteriore, laterali ed interni)</strong></p>
+                        </div>
+                    </div>
 
-</div>
+
+
+
+
+                    <div class="w-100 py-2 text-center">
+                        <button class="btn-buy-car" mat-raised-button color="primary" type="Invia">{{'contact.Submit'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>

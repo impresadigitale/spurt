@@ -95,7 +95,7 @@ export class ProductFilterComponent implements OnInit, OnChanges, OnDestroy {
       this.variantValue = val.variantValue ? val.variantValue : '';
       this.routeBrands = val.brand;
       this.filterPriceFrom = val.priceFrom ? val.priceFrom : 0;
-      this.filterPriceTo = val.priceTo ? val.priceTo : '30000';
+      this.filterPriceTo = val.priceTo ? val.priceTo : '300000';
 
   });
 
