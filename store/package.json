@@ -70,6 +70,7 @@
     "ng-image-slider": "^2.8.0",
     "ng-starrating": "^1.0.6",
     "ngx-bar-rating": "^1.1.0",
+    "ngx-lightbox": "^2.3.0",
     "ngx-pagination": "3.2.1",
     "ngx-perfect-scrollbar": "7.0.0",
     "ngx-sharebuttons": "^4.1.4",

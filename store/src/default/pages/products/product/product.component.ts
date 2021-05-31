@@ -21,7 +21,8 @@ import { ProductControlSandbox } from '../../../../core/product-control/product-
 import { MatDialog } from '@angular/material/dialog';
 import { isPlatformBrowser } from '@angular/common';
 import { MakeQuatationComponent } from '../modal/make-quatation/make-quatation.component';
-
+import { Lightbox } from 'ngx-lightbox';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -31,7 +32,6 @@ import { MakeQuatationComponent } from '../modal/make-quatation/make-quatation.c
 
 
 export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
-
   // decorator
   @ViewChild('zoomViewer') zoomViewer;
   @ViewChild(SwiperDirective) directiveRef: SwiperDirective;
@@ -95,17 +95,18 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   // default quantity for count change
   public quantity: any = 1;
 
-   // tire price
-   public tireQuantityArray: any = [];
-   public tirePrice: any = '';
-   public currency: any;
+  // tire price
+  public tireQuantityArray: any = [];
+  public tirePrice: any = '';
+  public currency: any;
 
   // pushed option value id in this array(unique id)
   public selectedOptions: any = [];
   public selectedOptionsName: any = [];
   public variantDetails = [];
 
-
+  private _albums: any = [];
+  
   constructor(
     public listSandbox: ListsSandbox,
     private activatedRoute: ActivatedRoute,
@@ -116,6 +117,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     private configService: ConfigService,
     private changeDetectRef: ChangeDetectorRef,
     private router: Router,
+    private _lightbox: Lightbox,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.router.events.subscribe(evt => {
@@ -124,46 +126,49 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
         window.scrollTo(0, 0);
       }
     });
+
+
+
   }
 
   slides = [
-    {img: "https://via.placeholder.com/600.png/09f/fff"},
-    {img: "https://via.placeholder.com/600.png/021/fff"},
-    {img: "https://via.placeholder.com/600.png/321/fff"},
-    {img: "https://via.placeholder.com/600.png/422/fff"},
-    {img: "https://via.placeholder.com/600.png/654/fff"}
+    { img: "https://via.placeholder.com/600.png/09f/fff" },
+    { img: "https://via.placeholder.com/600.png/021/fff" },
+    { img: "https://via.placeholder.com/600.png/321/fff" },
+    { img: "https://via.placeholder.com/600.png/422/fff" },
+    { img: "https://via.placeholder.com/600.png/654/fff" }
   ];
-  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
-  
+  slideConfig = { "slidesToShow": 4, "slidesToScroll": 4 };
+
   addSlide() {
-    this.slides.push({img: "http://placehold.it/350x150/777777"})
+    this.slides.push({ img: "http://placehold.it/350x150/777777" })
   }
-  
+
   removeSlide() {
     this.slides.length = this.slides.length - 1;
   }
-  
+
   slickInit(e) {
     console.log('slick initialized');
   }
-  
+
   breakpoint(e) {
     console.log('breakpoint');
   }
-  
+
   afterChange(e) {
     console.log('afterChange');
   }
-  
+
   beforeChange(e) {
     console.log('beforeChange');
-  } 
-  
+  }
+
   /** Initially initialize getProductdetail,getRelatedProducts when subscribed
    * subscribe productDetails$ and set initially default values for required options **/
   ngOnInit() {
-    
-  
+
+
     this.currency = JSON.parse(localStorage.getItem('currency'));
     if (isPlatformBrowser(this.platformId)) {
       this.user = JSON.parse(localStorage.getItem('storeUser'));
@@ -202,7 +207,7 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     params.keyword = '';
     params.sku = '';
     this.listSandbox.getTodayDealList(params);
-}
+  }
 
   public subcribeProductDetails() {
     this.optionValueArray = [];
@@ -241,10 +246,10 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           if (this.product.hasStock === 1) {
             if (this.product.minQuantityAllowedCart > 0) {
-             this.quantity = this.product.minQuantityAllowedCart;
-             this.tirePriceCalculation();
+              this.quantity = this.product.minQuantityAllowedCart;
+              this.tirePriceCalculation();
             }
-         }
+          }
           if (data.tirePrice !== '') {
             const tempTirePriceTag = parseFloat(data.tirePrice);
             this.tireBasePrice = tempTirePriceTag;
@@ -274,10 +279,10 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   generateVariant() {
     const variantDetails = [];
     if (this.productDetails.productVariant && this.productDetails.productVariant.length > 0) {
-        this.productDetails.productVariant.forEach((variant: any) => {
-          const temp = variant;
-          variantDetails.push(variant);
-        });
+      this.productDetails.productVariant.forEach((variant: any) => {
+        const temp = variant;
+        variantDetails.push(variant);
+      });
     }
     this.variantDetails = variantDetails;
   }
@@ -532,70 +537,44 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
   // change quantity of the product
   public changeCount(operation) {
     if (this.product.hasStock === 1) {
-        if (operation === 'remove') {
-          if (this.quantity > this.product.minQuantityAllowedCart) {
-            this.quantity -= 1;
-            this.tirePriceCalculation();
-          }
-        } else if (operation === 'add') {
-          if (this.quantity >= this.product.minQuantityAllowedCart && this.quantity < this.product.maxQuantityAllowedCart) {
-            this.quantity += 1;
-            this.tirePriceCalculation();
-          }
+      if (operation === 'remove') {
+        if (this.quantity > this.product.minQuantityAllowedCart) {
+          this.quantity -= 1;
+          this.tirePriceCalculation();
         }
+      } else if (operation === 'add') {
+        if (this.quantity >= this.product.minQuantityAllowedCart && this.quantity < this.product.maxQuantityAllowedCart) {
+          this.quantity += 1;
+          this.tirePriceCalculation();
+        }
+      }
     } else {
-          if (operation === 'remove' && this.quantity > 1) {
-            this.quantity -= 1;
-            this.tirePriceCalculation();
+      if (operation === 'remove' && this.quantity > 1) {
+        this.quantity -= 1;
+        this.tirePriceCalculation();
 
-          } else if (operation === 'add') {
-            this.quantity += 1;
-            this.tirePriceCalculation();
-          }
-        }
+      } else if (operation === 'add') {
+        this.quantity += 1;
+        this.tirePriceCalculation();
+      }
+    }
   }
 
   getClosest(list, qty) {
-    return qty - list.reduce(function(closest, v) {
-        return qty >= v.quantity ? Math.min(qty - v.quantity, closest) : closest;
+    return qty - list.reduce(function (closest, v) {
+      return qty >= v.quantity ? Math.min(qty - v.quantity, closest) : closest;
     }, 1e100);
   }
 
   tirePriceCalculation() {
-       if (this.product.hasTirePrice === 1) {
+    if (this.product.hasTirePrice === 1) {
 
-        if (this.product.isSimplified === 0) {
-          if (this.product.variantTirePrice && this.product.variantTirePrice.length > 0) {
-            const minQty = Math.min.apply(Math, this.tireQuantityArray);
-            let isMatched = false;
-           if (this.quantity >= minQty) {
-              this.product.variantTirePrice.forEach(data => {
-                if (data.quantity === this.quantity) {
-                  this.tirePrice = data.price;
-                  const tempTirePriceTag = parseFloat(this.tirePrice);
-                  this.tireBasePrice = tempTirePriceTag;
-                  this.productDetail.changeCount(this.tirePrice);
-                  isMatched = true;
-                }
-              });
-              if (!isMatched) {
-                const result = this.getClosest(this.product.variantTirePrice, this.quantity);
-                const resultObj = this.product.variantTirePrice.find(_list => _list.quantity === result);
-                this.tirePrice = resultObj.price;
-                const tempTirePriceTag = parseFloat(this.tirePrice);
-                  this.tireBasePrice = tempTirePriceTag;
-                this.productDetail.changeCount(this.tirePrice);
-              }
-          } else {
-            this.tirePrice = '';
-            this.productDetail.changeCount(this.tirePrice);
-          }
-          }
-        } else {
+      if (this.product.isSimplified === 0) {
+        if (this.product.variantTirePrice && this.product.variantTirePrice.length > 0) {
           const minQty = Math.min.apply(Math, this.tireQuantityArray);
           let isMatched = false;
-         if (this.quantity >= minQty) {
-            this.product.productTirePrices.forEach(data => {
+          if (this.quantity >= minQty) {
+            this.product.variantTirePrice.forEach(data => {
               if (data.quantity === this.quantity) {
                 this.tirePrice = data.price;
                 const tempTirePriceTag = parseFloat(this.tirePrice);
@@ -605,19 +584,45 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             });
             if (!isMatched) {
-              const result = this.getClosest(this.product.productTirePrices, this.quantity);
-              const resultObj = this.product.productTirePrices.find(_list => _list.quantity === result);
+              const result = this.getClosest(this.product.variantTirePrice, this.quantity);
+              const resultObj = this.product.variantTirePrice.find(_list => _list.quantity === result);
               this.tirePrice = resultObj.price;
               const tempTirePriceTag = parseFloat(this.tirePrice);
-                this.tireBasePrice = tempTirePriceTag;
+              this.tireBasePrice = tempTirePriceTag;
               this.productDetail.changeCount(this.tirePrice);
             }
+          } else {
+            this.tirePrice = '';
+            this.productDetail.changeCount(this.tirePrice);
+          }
+        }
+      } else {
+        const minQty = Math.min.apply(Math, this.tireQuantityArray);
+        let isMatched = false;
+        if (this.quantity >= minQty) {
+          this.product.productTirePrices.forEach(data => {
+            if (data.quantity === this.quantity) {
+              this.tirePrice = data.price;
+              const tempTirePriceTag = parseFloat(this.tirePrice);
+              this.tireBasePrice = tempTirePriceTag;
+              this.productDetail.changeCount(this.tirePrice);
+              isMatched = true;
+            }
+          });
+          if (!isMatched) {
+            const result = this.getClosest(this.product.productTirePrices, this.quantity);
+            const resultObj = this.product.productTirePrices.find(_list => _list.quantity === result);
+            this.tirePrice = resultObj.price;
+            const tempTirePriceTag = parseFloat(this.tirePrice);
+            this.tireBasePrice = tempTirePriceTag;
+            this.productDetail.changeCount(this.tirePrice);
+          }
         } else {
           this.tirePrice = '';
           this.productDetail.changeCount(this.tirePrice);
         }
 
-        }
+      }
 
     } else {
       return;
@@ -652,6 +657,27 @@ export class ProductComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedOptions = event;
   }
 
+
+  open(data, index: number): void {
+    console.log("ss",data)
+    data.forEach(element => {
+    let params: any = {}
+    params.src=this.imagePath+ '?path=' + element.containerName + '&name=' + element.image + '&width=1500&height=1000';
+    params.caption = 'Image'+ ' caption here';
+    params.thumb= this.imagePath+ '?path=' + element.containerName + '&name=' + element.image + '&width=660&height=660';
+
+    this._albums.push(params)
+  });
+    this._lightbox.open(this._albums,index,{showZoom:true,showRotate:true,fitImageInViewPort:true,disableScrolling:false});
+
+  }
+
+
+
+  close(): void {
+ 
+    this._lightbox.close();
+  }
   // unsubscribe subscribed events while destroy the page
   ngOnDestroy() {
     this.optionValueArray = [];

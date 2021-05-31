@@ -49,15 +49,16 @@
 
 
         <div class="swiper-container product-image-swiper" [swiper]="configuration1">
-            <div class="swiper-wrapper h-100">
-                <div class="swiper-slide" *ngFor="let img of  (listSandbox.productDetails$ | async)?.productImage">
-                    <div class="flex product-courosel">
+        <div class="swiper-wrapper h-100" *ngIf="(listSandbox.productDetails$ | async)?.productImage as image">
+       <div class="swiper-slide"  *ngFor= "let img of  (listSandbox.productDetails$ | async)?.productImage; let i=index">
+         <div class="flex product-courosel">
+        
+        <div class="prd-cou-col">
+            <img  [src]="imagePath+ '?path=' + img.containerName + '&name=' + img.image + '&width=660&height=660'" (click)="open(image,i)"onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
+        <!-- <img  [src]="img.img"   class="swiper-lazy"/> -->
+            
+        </div>
 
-                        <div class="prd-cou-col">
-                            <img [src]="imagePath+ '?path=' + img.containerName + '&name=' + img.image + '&width=660&height=660'" onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
-                            <!-- <img  [src]="img.img"   class="swiper-lazy"/> -->
-
-                        </div>
 
                     </div>
 

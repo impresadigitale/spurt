@@ -47,7 +47,8 @@
                             "src/manifest.json"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/ngx-lightbox/lightbox.css"
                         ],
                         "scripts": [
                         ],
