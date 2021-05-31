@@ -320,7 +320,48 @@ export class MediaController {
      *        "status": 0,
      *    }
      */
-    @Get('/image-resize')
+@Get('/image-resize')
+    public async image_resize(@QueryParam('width') width: string, @QueryParam('height') height: string, @QueryParam('name') name: string, @QueryParam('path') path: string, @Req() request: any, @Res() response: any): Promise<any> {
+        console.log('Dim' + width + height);
+        const widthString = width;
+        const heightString = height;
+        const imgPath = path;
+        const imgName = name;
+        console.log('Dim' + width + height);
+        console.log('Path' + imgPath);
+        console.log('filename' + imgName);
+        const ext = imgName.split('.');
+        console.log('ext ' + ext[1]);
+        if (ext[1] === 'jpg' || ext[1] === 'jpeg' || ext[1] === 'png') {
+            let val: any;
+            if (env.imageserver === 's3') {
+                val = await this.s3Service.resizeImage(imgName, imgPath, widthString, heightString);
+            } else {
+                val = await this.imageService.resizeImage(imgName, imgPath, widthString, heightString);
+
+            }
+            if (val) {
+
+                return new Promise(() => {
+                     var _img = new Buffer(val, 'base64');
+
+                     response.writeHead(200, {
+                         'Content-Type': 'image/jpeg',
+                         'Content-Length': _img.length
+                       });
+                     response.end(_img); 
+
+                   //  response.writeHead(200, { 'Content-Type': 'image/jpeg' });
+                   //  response.write(val, 'binary');
+                    // response.end(undefined, 'binary');
+                });
+            }
+        } else {
+            return response.status(400).send({status: 0, message: 'Only allow jpg/jpeg/png format image!'});
+        }
+    }
+
+/*    @Get('/image-resize')
     public async image_resize(@QueryParam('width') width: string, @QueryParam('height') height: string, @QueryParam('name') name: string, @QueryParam('path') path: string, @Req() request: any, @Res() response: any): Promise<any> {
         const widthString = width;
         const heightString = height;
@@ -347,7 +388,7 @@ export class MediaController {
             return response.status(400).send({ status: 0, message: 'Only allow jpg/jpeg/png/PNG/JPG format image!' });
         }
     }
-
+*/
     // Get folder API
     /**
      * @api {get} /api/media/search-folder search Folder API
