@@ -469,6 +469,9 @@
 
     },
     "compare": {
+        "Model": "Model",
+        "KM": "KM",
+        "Price": "Price",
         "CompareProduct": "Product Compare",
         "RemoveAll": "Remove All",
         "Remove": "Remove",

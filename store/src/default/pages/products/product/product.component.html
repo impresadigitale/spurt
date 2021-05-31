@@ -49,15 +49,15 @@
 
 
         <div class="swiper-container product-image-swiper" [swiper]="configuration1">
-        <div class="swiper-wrapper h-100" *ngIf="(listSandbox.productDetails$ | async)?.productImage as image">
-       <div class="swiper-slide"  *ngFor= "let img of  (listSandbox.productDetails$ | async)?.productImage; let i=index">
-         <div class="flex product-courosel">
-        
-        <div class="prd-cou-col">
-            <img  [src]="imagePath+ '?path=' + img.containerName + '&name=' + img.image + '&width=660&height=660'" (click)="open(image,i)"onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
-        <!-- <img  [src]="img.img"   class="swiper-lazy"/> -->
-            
-        </div>
+            <div class="swiper-wrapper h-100" *ngIf="(listSandbox.productDetails$ | async)?.productImage as image">
+                <div class="swiper-slide" *ngFor="let img of  (listSandbox.productDetails$ | async)?.productImage; let i=index">
+                    <div class="flex product-courosel">
+
+                        <div class="prd-cou-col">
+                            <img [src]="imagePath+ '?path=' + img.containerName + '&name=' + img.image + '&width=660&height=660'" (click)="open(image,i)" onError="this.src='/assets/images/default_image.png';" style="height:200px" class="swiper-lazy" alt="" />
+                            <!-- <img  [src]="img.img"   class="swiper-lazy"/> -->
+
+                        </div>
 
 
                     </div>
@@ -383,9 +383,9 @@
             </table>
 
         </div>
-        <!-- Description 
-<app-specification-controls [attribute]="(productDetail.productDetails$ | async)?.productAttributes">
-</app-specification-controls>-->
+
+        <app-specification-controls [attribute]="(productDetail.productDetails$ | async)?.productAttributes">
+        </app-specification-controls>
         <!-- Review & Questions
 
     <div class="prd-detail-cnt">

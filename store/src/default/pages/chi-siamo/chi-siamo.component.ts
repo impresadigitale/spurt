@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '../../theme/utils/app-validators';
 import { ListsSandbox } from '../../../core/lists/lists.sandbox';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-chi-siamo',
     templateUrl: './chi-siamo.component.html',
@@ -22,13 +22,17 @@ export class ChiSiamoComponent implements OnInit {
     public contactForm: FormGroup;
     public submitted = false;
 
-
     constructor(public formBuilder: FormBuilder,
-                public listSandbox: ListsSandbox) { }
+                public listSandbox: ListsSandbox,
+                public router: Router) { }
 
 
     ngOnInit() {
         this.initContactForm();
+    }
+    
+    public goHome(): void {
+      this.router.navigate(['/']);
     }
 
     initContactForm() {
@@ -55,3 +59,6 @@ export class ChiSiamoComponent implements OnInit {
     }
 
 }
+
+
+

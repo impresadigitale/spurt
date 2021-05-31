@@ -31,6 +31,8 @@
                 <p><span class="text-muted fw-500">Category: </span><span>{{product.name }}</span></p>
                 <p><span class="text-muted fw-500">Availibility: </span><span>Available</span></p>
             </div>-->
+            <app-specification-controls [attribute]="(productDetail.productDetails$ | async)?.productAttributes">
+            </app-specification-controls>
             <div class="py-1">
             </div>
             <p class="py-1 text-muted lh">

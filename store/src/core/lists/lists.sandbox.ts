@@ -67,6 +67,7 @@ import {
   zoneFailed,
   getMaxProductPrice,
   todayDealList,
+  carParkList,
   todayDealLoading,
   todayDealLoaded,
   todayDealFailed,
@@ -137,7 +138,10 @@ import {
   filterLoaded,
   filterFailed,
   vendorProductListCount,
-  vendorProductListCountLoaded
+  vendorProductListCountLoaded,
+  carParkLoading,
+  carParkFailed,
+  carParkLoaded
 } from './reducer/lists.selector';
 import { FeaturedProductModel } from './models/featured-product.model';
 import { ContactUsRequestModel } from './models/contact-us-request.model';
@@ -271,6 +275,12 @@ export class ListsSandbox {
   public todayDealLoading$ = this.appState$.select(todayDealLoading);
   public todayDealLoaded$ = this.appState$.select(todayDealLoaded);
   public todayDealFailed$ = this.appState$.select(todayDealFailed);
+
+  /* today deal list status*/
+  public carParkList$ = this.appState$.select(carParkList);
+  public carParkLoading$ = this.appState$.select(carParkLoading);
+  public carParkLoaded$ = this.appState$.select(carParkLoaded);
+  public carParklFailed$ = this.appState$.select(carParkFailed);
 
   /* available options seleted */
   public availableOptionsArray$ = this.appState$.select(

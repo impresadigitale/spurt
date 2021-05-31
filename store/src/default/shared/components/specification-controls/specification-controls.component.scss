@@ -166,7 +166,7 @@
             font-size: 0.875rem;
             font-weight: 400;
             color: #000;
-            border-top:solid thin #e8e8e8;
+            border-top: solid thin #e8e8e8;
             &:nth-child(1) {
                 background: #f8f8f8;
                 text-transform: uppercase;
@@ -175,7 +175,36 @@
     }
 }*/
 
+.att-cont {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+}
+
+.title-sheet {
+    margin: 10px 10px 10px 0px;
+    font-size: 20px
+}
+
+td {
+    width: 25%;
+    padding: 15px;
+}
+
+.td-dark {
+    width: 25%;
+    font-weight: 800;
+    margin: 1px;
+    background: #dbdbdb;
+}
+
+.td-light {
+    width: 25%;
+    margin: 1px;
+    background: #f2f2f2;
+}
+
 table {
-    display: flex;
+    display: grid;
     flex-direction: column
 }

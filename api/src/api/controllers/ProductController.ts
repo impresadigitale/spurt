@@ -74,6 +74,7 @@ import { AttributeService } from '../services/AttributeService';
 import { env } from '../../env';
 import { S3Service } from '../services/S3Service';
 import { VendorCouponProductCategoryService } from '../services/VendorCouponProductCategoryService';
+import { UpdateCarParkParam } from './requests/UpdateCarParkParam';
 
 @JsonController('/product')
 export class ProductController {
@@ -375,6 +376,7 @@ export class ProductController {
         newProduct.isActive = product.status;
         newProduct.isFeatured = 0;
         newProduct.todayDeals = 0;
+        newProduct.carPark = 0;
         newProduct.sortOrder = product.sortOrder ? product.sortOrder : 1;
         newProduct.manufacturerId = product.manufacturerId ? product.manufacturerId : 0;
         newProduct.height = (product && product.height) ? product.height : 0;
@@ -1551,6 +1553,62 @@ export class ProductController {
         }
     }
 
+
+     // update product to Car Park API
+    /**
+     * @api {put} /api/product/update-carPark/:id Update Car Park API
+     * @apiGroup Product
+     * @apiHeader {String} Authorization
+     * @apiParam (Request body) {number} carPark carPark should be 0 or 1
+     * @apiParamExample {json} Input
+     * {
+     *      "carPark" : "",
+     * }
+     * @apiSuccessExample {json} Success
+     * HTTP/1.1 200 OK
+     * {
+     *      "message": "Successfully updated product to car Park.",
+     *      "status": "1"
+     * }
+     * @apiSampleRequest /api/product/update-carPark/:id
+     * @apiErrorExample {json} carPark error
+     * HTTP/1.1 500 Internal Server Error
+     */
+     @Put('/update-carPark/:id')
+     @Authorized()
+     public async updateCarPark(@Param('id') id: number, @Body({ validate: true }) updateCarParkParam: UpdateCarParkParam, @Res() response: any): Promise<any> {
+ 
+         const product = await this.productService.findOne({
+             where: {
+                 productId: id,
+             },
+         });
+         if (!product) {
+             const errorResponse: any = {
+                 status: 0,
+                 message: 'Invalid productId',
+             };
+             return response.status(400).send(errorResponse);
+         }
+ 
+         product.carPark = updateCarParkParam.carPark;
+         const productSave = await this.productService.create(product);
+         if (productSave) {
+             const successResponse: any = {
+                 status: 1,
+                 message: 'product updated successfully .',
+                 data: productSave,
+             };
+             return response.status(200).send(successResponse);
+         } else {
+             const errorResponse: any = {
+                 status: 0,
+                 message: 'unable to update product',
+             };
+             return response.status(400).send(errorResponse);
+         }
+     }
+
     // Recent viewLog list API
     /**
      * @api {get} /api/product/viewLog-list Product View Log List
@@ -2507,6 +2565,7 @@ export class ProductController {
                         product.stockStatusId = 1;
                         product.isFeatured = 0;
                         product.todayDeals = 0;
+                        product.carPark = 0;
                         product.isActive = 0;
                         product.sortOrder = 1;
                         product.isSimplified = 1;

@@ -295,6 +295,13 @@ export class DoProductDetailIsFeatureAction implements Action {
   constructor(public payload: DetailModel) {}
 }
 
+export class DoProductDetailCarParkAction implements Action {
+  type = ActionTypes.DO_IS_FEATURE_DETAIL;
+
+  constructor(public payload: DetailModel) {}
+}
+
+
 export class DoProductDetailIsFeatureSuccess implements Action {
   type = ActionTypes.DO_IS_FEATURE_DETAIL_SUCCESS;
 

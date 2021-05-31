@@ -1,44 +1,36 @@
 <div class="row products-section products-sub-section">
-  <div class="col-12 ">
-    <div class="breadcrumbs-row">
-      <div class="bc-col">
-        <ul>
-          <li>
-            <a> {{ 'catalog.categories.Catalog' | translate }} </a>
-          </li>
-          <li>{{ 'catalog.product.Products' | translate }}</li>
-        </ul>
-      </div>
-      <div class="bc-col-btn" >
-        <button class="btn" [routerLink]="['/catalog/product/add']" [queryParams]="filterParams" [appHideIfUnauthorized]="'create-product'">
+    <div class="col-12 ">
+        <div class="breadcrumbs-row">
+            <div class="bc-col">
+                <ul>
+                    <li>
+                        <a> {{ 'catalog.categories.Catalog' | translate }} </a>
+                    </li>
+                    <li>{{ 'catalog.product.Products' | translate }}</li>
+                </ul>
+            </div>
+            <div class="bc-col-btn">
+                <button class="btn" [routerLink]="['/catalog/product/add']" [queryParams]="filterParams" [appHideIfUnauthorized]="'create-product'">
           <img src="assets/img/add-white-ico.png" />{{
             'catalog.product.AddProduct' | translate
           }}
         </button>
-      </div>
-    </div>
-  </div>
-  <!--Breadcrumbs-->
-  <div class="col-12">
-    <div class="flex filter-row">
-      <div class="filter-lft">
-        <div class="toggle">
-          <p>{{ 'catalog.product.Filters' | translate }}</p>
-          <input
-            class="tgl tgl-light"
-            id="cb1"
-            type="checkbox"
-            [checked]="true"
-            (change)="changeFilter($event)"
-          />
-          <label class="tgl-btn" for="cb1"></label>
+            </div>
         </div>
-        <div class="order-status">
-          <p>{{ 'Sales.Orders.Status' | translate }}</p>
-          <li style="list-style: none">
-            <span
-              style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"
-            ></span
+    </div>
+    <!--Breadcrumbs-->
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>{{ 'catalog.product.Filters' | translate }}</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <div class="order-status">
+                    <p>{{ 'Sales.Orders.Status' | translate }}</p>
+                    <li style="list-style: none">
+                        <span style="display: inline-block;width: 14px;height: 16px;margin-right: 6px;vertical-align: middle;background-color: #56b768;"></span
             >Active
             <span
               style="display: inline-block;width: 14px;height: 16px;margin-left: 3px;margin-right: 7px;vertical-align: middle;background-color: #f14e6e;"
@@ -118,6 +110,7 @@
               {{ 'catalog.product.Feature' | translate }}
             </th>
             <th scope="col" width="100px" [appHideIfUnauthorized]="'make-today-deal'">Today Deals</th>
+            <th scope="col" width="100px" [appHideIfUnauthorized]="'make-car-park'">Car Park</th>
             <th scope="col" [appHideIfUnauthorized]="'view-product' || 'delete-product' || 'edit-product'">{{ 'catalog.product.Action' | translate }}</th>
           </tr>
         </thead>
@@ -226,6 +219,9 @@
                 }}
               </p>
             </td>
+            <!--Car Park-->
+            
+           
             <td  [appHideIfUnauthorized]="'make-feature'">
               <div class="toggle">
                 <input
@@ -250,7 +246,18 @@
                 <label class="tgl-btn" for="{{ product.name }}"></label>
               </div>
             </td>
-
+            <td  [appHideIfUnauthorized]="'make-car-park'">
+              <div class="toggle">
+                <input
+                  class="tgl tgl-light"
+                  id="{{ product.skuName }}"
+                  [(ngModel)]="product.CarPark"
+                  (change)="CarParkChange($event, product)"
+                  type="checkbox"
+                />
+                <label class="tgl-btn" for="{{ product.skuName }}"></label>
+              </div>
+            </td>
             <td >
               <i 
               *ngIf="product.isActive === 1" 

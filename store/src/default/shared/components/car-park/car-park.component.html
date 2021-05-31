@@ -12,7 +12,18 @@
                         </div>
                     </div>
                     <!-- MATLUI - LISTA ARTICOLI IN EVIDENZA 2 INIZIO-->
+                    <div class="content">
 
+                        <mat-tab-group mat-stretch-tabs>
+
+                            <mat-tab>
+                                <app-products-card [products]="listSandbox.carParkList$ | async"></app-products-card>
+                            </mat-tab>
+
+
+                        </mat-tab-group>
+
+                    </div>
                     <!-- MATLUI - LISTA ARTICOLI IN EVIDENZA 2 FINE-->
 
                 </div>

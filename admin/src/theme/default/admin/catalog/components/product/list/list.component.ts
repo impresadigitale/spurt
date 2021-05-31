@@ -178,6 +178,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
 
+  
   /**
    * Handles  'onFilterChange' event. Calls productSandbox productIsFeature function if FeatureValu is true,
    * else calls productSandbox productIsFeature
@@ -185,7 +186,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
    * @param event and prodinfo form onFilterChange input.
    *
    */
-  onFilterChange(event: any, prodinfo) {
+   onFilterChange(event: any, prodinfo) {
     const params: any = {};
     params.productId = prodinfo.productId;
     const FeatureValue = event.target.checked;
@@ -198,6 +199,30 @@ export class ProductListComponent implements OnInit, OnDestroy {
       params.isFeature = '0';
 
       this.productSandbox.productIsFeature(params);
+    }
+  }
+
+
+  /**
+   * Handles  'onFilterChange' event. Calls productSandbox productIsFeature function if FeatureValu is true,
+   * else calls productSandbox productIsFeature
+   *
+   * @param event and prodinfo form onFilterChange input.
+   *
+   */
+  CarParkChange(event: any, prodinfo) {
+    const params: any = {};
+    params.productId = prodinfo.productId;
+    const FeatureValue = event.target.checked;
+    if (FeatureValue === true) {
+      params.CarPark = '1';
+
+      this.productSandbox.productCarPark(params);
+      this.layoutSandbox.getCatalogCount();
+    } else {
+      params.CarPark = '0';
+
+      this.productSandbox.productCarPark(params);
     }
   }
 

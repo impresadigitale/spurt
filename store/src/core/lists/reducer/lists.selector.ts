@@ -288,6 +288,24 @@ export const todayDealFailed = createSelector(
   fromList.getTodayDealFailed
 );
 
+
+export const carParkList = createSelector(
+  getState,
+  fromList.getCarParkList
+);
+export const carParkLoading = createSelector(
+  getState,
+  fromList.getCarParkLoading
+);
+export const carParkLoaded = createSelector(
+  getState,
+  fromList.getCarParkLoaded
+);
+export const carParkFailed = createSelector(
+  getState,
+  fromList.getCarParkFailed
+);
+
 export const subCategoryList = createSelector(
   getState,
   fromList.subCategoryList

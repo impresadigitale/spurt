@@ -1,4 +1,12 @@
-
+/*
+ * spurtcommerce
+ * version 4.4
+ * http://www.spurtcommerce.com
+ *
+ * Copyright (c) 2021 piccosoft ltd
+ * Author piccosoft ltd <support@piccosoft.com>
+ * Licensed under the MIT license.
+ */
 import {
   Component,
   OnInit,
@@ -17,13 +25,13 @@ import { ListsSandbox } from '../../../../core/lists/lists.sandbox';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-car-park',
-  templateUrl: './car-park.component.html',
-  styleUrls: ['./car-park.component.scss'],
+  selector: 'app-products-card-park',
+  templateUrl: './products-card-park.component.html',
+  styleUrls: ['./products-card-park.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class CarParkComponent implements OnInit, AfterViewInit {
+export class ProductsCardParkComponent implements OnInit, AfterViewInit {
 
   @Input() brands: Array<any> = [];
   public BrandImagePath: string;

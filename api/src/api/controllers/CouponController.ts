@@ -408,7 +408,7 @@ export class CouponController {
             const obj: any = {};
             if (data.type === 1) {
                 const product = await this.productService.findOne({
-                    select: ['productId', 'sku', 'name', 'quantity', 'price', 'image', 'imagePath', 'isFeatured', 'todayDeals', 'productSlug', 'isActive'],
+                    select: ['productId', 'sku', 'name', 'quantity', 'price', 'image', 'imagePath', 'isFeatured', 'todayDeals','carPark', 'productSlug', 'isActive'],
                     where: {
                         productId: data.referenceId,
                     },
@@ -423,6 +423,7 @@ export class CouponController {
                     obj.imagePath = product.imagePath;
                     obj.isFeatured = product.isFeatured;
                     obj.todayDeals = product.todayDeals;
+                    obj.carParkDeals = product.carPark;
                     obj.productSlug = product.productSlug;
                     obj.isActive = product.isActive;
                     const defaultValue = await this.productImageService.findOne({

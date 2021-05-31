@@ -1,9 +1,6 @@
 <div class="prd-detail-cnt">
 
-    <h3>Specifications</h3>
-
-
-    <div class="row" *ngFor="let list of groupAttribute; let group = index" >
+    <!-- <div class="row" *ngFor="let list of groupAttribute; let group = index" >
         <div style="width: 25%; float: left; display: inline;" *ngFor="let item of list.value ">
             {{item.attributeName}}
         </div>
@@ -16,20 +13,25 @@
         <div style="width: 25%; float: left; display: inline;" *ngFor="let item of list.value ">
             {{item.text}}
         </div>
-    </div>
+    </div>-->
 
     <!--Tabella -->
-   <!-- <ng-container *ngFor="let list of groupAttribute; let group = index">
+    <ng-container *ngFor="let list of groupAttribute; let group = index">
         <table class="table spec-table" cellpadding=" 0 " cellspacing="0 ">
-            <tr>
+            <tr class="title-sheet">
                 <th colspan="2">{{list.group}}</th>
             </tr>
-            <tr *ngFor="let item of list.value ">
-                <td class="attribute-name " fxFlex="100" fxFlex.gt-sm="33.3">{{item.attributeName}}</td>
-                <td class="attribute-text " fxFlex="100" fxFlex.gt-sm="33.3">{{item.text}}</td>
-            </tr>
+            <div class="att-cont">
 
+                <tr class="grupp-att" *ngFor="let item of list.value ">
+                    <div class="att-name">
+                        <td class="attribute-name td-dark" fxFlex="" fxFlex.gt-sm="">{{item.attributeName}}</td>
+                        <td class="attribute-text td-light" fxFlex="" fxFlex.gt-sm="">{{item.text}}</td>
+                    </div>
+                </tr>
+
+            </div>
         </table>
-    </ng-container>-->
-    
+    </ng-container>
+
 </div>

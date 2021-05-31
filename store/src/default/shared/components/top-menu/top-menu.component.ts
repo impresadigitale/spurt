@@ -125,6 +125,9 @@ export class TopMenuComponent implements OnInit, OnDestroy {
       } else if (this.language === 'French') {
         localStorage.setItem('language', 'french');
         this.translate.setDefaultLang('fr');
+      }else if (this.language === 'Italiano') {
+        localStorage.setItem('language', 'italiano');
+        this.translate.setDefaultLang('it');
       }
     }
   }

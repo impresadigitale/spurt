@@ -291,6 +291,12 @@ public selectedVariantId$ = this.appState.select(selectedVariantId);
     );
   }
 
+  public productCarPark(value) {
+    this.appState.dispatch(
+      new productActions.DoProductDetailCarParkAction(value)
+    );
+  }
+
   public productIsFeature(value) {
     this.appState.dispatch(
       new productActions.DoProductDetailIsFeatureAction(value)

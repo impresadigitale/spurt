@@ -141,6 +141,8 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.activeSlug = 'Home';
         } else if (title === 'Service') {
             this.activeSlug = 'Service';
+        } else if (title === 'ChiSiamo') {
+            this.activeSlug = 'Chiiamo';
         }
     }
 

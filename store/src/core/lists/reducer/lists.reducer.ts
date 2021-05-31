@@ -1740,6 +1740,12 @@ export const getTodayDealLoading = (state: ListsState) =>
 export const getTodayDealLoaded = (state: ListsState) => state.todayDealLoaded;
 export const getTodayDealFailed = (state: ListsState) => state.todayDealFailed;
 
+export const getCarParkList = (state: ListsState) => state.carPark;
+export const getCarParkLoading = (state: ListsState) =>
+  state.carParkLoading;
+export const getCarParkLoaded = (state: ListsState) => state.carParkLoaded;
+export const getCarParkFailed = (state: ListsState) => state.carParkFailed;
+
 export const subCategoryList = (state: ListsState) => state.subcategory;
 export const subCategoryLoading = (state: ListsState) =>
   state.subcategoryLoading;

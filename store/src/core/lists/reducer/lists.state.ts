@@ -20,6 +20,7 @@ import { CountryResponseModel } from '../models/country-response.model';
 import { TodayDealsResponseModel } from '../models/today-deals-response.model';
 import { ProductDetailMandatoryResponseModel } from '../models/product-detail-mandatory-response.model';
 import { ProductRatingResponseModel } from '../models/product-rating-response.model';
+import { CarParksResponseModel } from '../models/car-park-response.model';
 
 export interface ListsState extends Map<string, any> {
   products: Array<ProductsResponseModel>;
@@ -101,6 +102,11 @@ export interface ListsState extends Map<string, any> {
   todayDealLoading: boolean;
   todayDealLoaded: boolean;
   todayDealFailed: boolean;
+  
+  carPark: Array<CarParksResponseModel>;
+  carParkLoading: boolean;
+  carParkLoaded: boolean;
+  carParkFailed: boolean;
 
   subcategory: any;
   subcategoryLoading: boolean;
