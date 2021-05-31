@@ -36,6 +36,7 @@ import { PostAnswerComponent } from './modal/post-answer/post-answer.component';
 import { ReportAbuseComponent } from './modal/report-abuse/report-abuse.component';
 import { PostQuestionComponent } from './modal/post-question/post-question.component';
 import { MakeQuatationComponent } from './modal/make-quatation/make-quatation.component';
+import { LightboxModule } from 'ngx-lightbox';
 
 export const routes = [
   {
@@ -109,6 +110,7 @@ const shareProp = {
     HttpClientModule,
     HttpClientJsonpModule,
     NumberAcceptModule,
+    LightboxModule
   ],
   declarations: [
     ProductsComponent,

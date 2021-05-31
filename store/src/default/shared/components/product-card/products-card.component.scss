@@ -318,7 +318,10 @@ span {
     margin: 0;
     font-weight: 700;
     color: #022754;
-    display: block;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     padding-right: 15px;
     text-align: left;
@@ -331,7 +334,7 @@ span {
     padding-right: 10px;
 }
 
-.title-car-card{
+.title-car-card {
     display: flex;
     padding: 10px;
 }

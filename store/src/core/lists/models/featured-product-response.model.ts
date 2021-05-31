@@ -25,6 +25,8 @@ export class FeaturedProductResponseModel {
     public productSlug: string;
     public taxType: number;
     public taxValue: number;
+    public manufacturerImage: any;
+    public manufacturerImagePath: any;
 
     constructor(featureResponse: any) {
         this.productId = featureResponse.productId || '';
@@ -48,5 +50,7 @@ export class FeaturedProductResponseModel {
         this.productSlug = featureResponse.productSlug || '';
         this.taxType = featureResponse.taxType || 0;
         this.taxValue = featureResponse.taxValue || 0;
+        this.manufacturerImage= featureResponse.manufacturerImage|| 0;
+        this.manufacturerImagePath=featureResponse.manufacturerImagePath|| 0;
     }
 }

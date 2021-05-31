@@ -15,8 +15,8 @@
 export const environment = {
     production: false,
 
-    storeUrl: "http://localhost:8000/api/",
-    imageUrl: "http://localhost:8000/api/media/image-resize",
+    storeUrl: "http://94.177.168.63:8000/api/",
+    imageUrl: "http://94.177.168.63:8000/api/media/image-resize",
 
 };
 

@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayout.xs="column" [fxLayoutAlign]="align" class="text-muted">
+<div fxLayout="row" fxLayout.xs="column" class="text-muted">
     <div *ngIf="type === 'detail'">
         <span>Quantity:</span>
         <button mat-icon-button matTooltip="Remove" (click)="changeCount('remove')"><mat-icon>remove</mat-icon></button>
@@ -6,30 +6,32 @@
         <button mat-icon-button matTooltip="Add" (click)="changeCount('add')"><mat-icon>add</mat-icon></button>
     </div>
     <div class='prod-icon'>
-        <button *ngIf="type==='home'||type==='all'" mat-icon-button matTooltip="Quick view" (click)="openProductDialog(product)"><mat-icon>remove_red_eye</mat-icon></button>
-        <button *ngIf="type==='all'||type==='detail'||type==='popup'" mat-icon-button matTooltip="Add cart" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
 
-        <!--   <app-product-compare [product]="product"></app-product-compare>
+        <button *ngIf="type==='home'||type==='all'" mat-icon-button matTooltip="Quick view" (click)="openProductDialog(product)"><mat-icon>remove_red_eye</mat-icon></button>
+        <a href="">Curti</a>
+        <!--<button *ngIf="type==='all'||type==='detail'||type==='popup'" mat-icon-button matTooltip="Add cart" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
+
+           <app-product-compare [product]="product"></app-product-compare>
         <span *ngIf="type==='home'" class="cart-lk">
             <a  (click)="addToCart(product)"> Add Cart </a>
         </span>-->
     </div>
-    
-            <p class="new-price">
-                <ng-container *ngIf="(product.flag=='')&&(product.pricerefer=='');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
-                </ng-container>
-                <ng-template #one>
-                    <div *ngIf="product.flag === 0">
-                        {{ calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
-                        <div class="transparent-card"> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
-                        </div>
-                    </div>
-                    <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
 
-                </ng-template>
+    <p class="new-price">
+        <ng-container *ngIf="(product.flag=='')&&(product.pricerefer=='');else one">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+        </ng-container>
+        <ng-template #one>
+            <div *ngIf="product.flag === 0">
+                {{ calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                <div class="transparent-card"> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}
+                </div>
+            </div>
+            <span *ngIf="product.flag === 1"><del class="del">{{calculatePrice(product.price, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</del> {{calculatePrice(product.pricerefer, product.taxType, product.taxValue) | currencysymbol: (listSandbox.symbolSetting$ | async)}}</span>
 
-            </p>
-        
+        </ng-template>
+
+    </p>
+
 </div>
 <div *ngIf="product?.availibilityCount == 0 && type=='all'" class="bg-warn p-1 mt-2">
     Sorry, this item is unavailable. Please choose a different one.
