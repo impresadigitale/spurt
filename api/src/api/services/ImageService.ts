@@ -98,6 +98,39 @@ export class ImageService {
     }
 
     // Image resize
+public async resizeImage(imgName: string = '', imgPath: string = '', widthString: string = '', heightString: string = ''): Promise<any> 
+    {
+        
+        const directoryPath = path.join(process.cwd(), 'uploads' + '/' + imgPath + imgName);
+        console.log('Path: ' + directoryPath);
+
+        return new  Promise(async (resolve, reject) => {
+
+            const fileSystem = require('fs');
+            const image = fileSystem.readFileSync(directoryPath, 'base64');
+
+
+              const sharp =  require('sharp');
+              let height :number= parseInt(heightString);
+              let width :number= parseInt(widthString);
+
+                var img = new Buffer(image, 'base64');
+                await sharp(img)
+                    .resize(width, height)
+                    .toBuffer()
+                    .then(resizedImageBuffer => {
+                        let resizedImageData = resizedImageBuffer.toString('base64');
+                        //let resizedBase64 = `data:${mimType};base64,${resizedImageData}`;
+                        resolve(resizedImageData);
+                    })
+                    .catch(error => {
+                        // error handeling
+                        reject(error)
+                    })
+
+            });
+}
+/*
     public async resizeImage(imgName: string = '', imgPath: string = '', widthString: string = '', heightString: string = ''): Promise<any> {
         const directoryPath = path.join(process.cwd(), 'uploads' + '/' + imgPath + imgName);
         return new Promise((resolve, reject) => {
@@ -113,6 +146,7 @@ export class ImageService {
                 });
         });
     }
+*/
 
     // Image resize
     public async resizeImageBase64(imgName: string = '', imgPath: string = '', widthString: string = '', heightString: string = ''): Promise<any> {
